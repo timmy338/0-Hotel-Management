@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomRegister {
-    int id;
-    Room room;
-    double deposit;
-    String guestName;
-    String guestIdType;
-    String guestId;
-    String tel;
-    Timestamp arriveTime;
-    Timestamp leaveTime;
-    int guestCount;
-    Integer memberId;
+    private int id;
+    private Room room;
+    private double deposit;
+    private String guestName;
+    private String guestIdType;
+    private String guestId;
+    private String tel;
+    private Timestamp arriveTime;
+    private Timestamp leaveTime;
+    private int guestCount;
+    private Integer memberId;
 }

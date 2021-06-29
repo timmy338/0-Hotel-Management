@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomType {
-    String name;
-    int capacity;
-    String remarks;
+    private String name;
+    private int capacity;
+    private String remarks;
 }

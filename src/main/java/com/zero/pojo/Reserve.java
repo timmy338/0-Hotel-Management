@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reserve {
-    RoomRegister roomRegister;
-    int id;
-    String status;
-    User user;
-    String remarks;
+    private RoomRegister roomRegister;
+    private int id;
+    private String status;
+    private User user;
+    private String remarks;
 }

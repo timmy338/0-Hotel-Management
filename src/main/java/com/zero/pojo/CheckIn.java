@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckIn {
-    RoomRegister roomRegister;
-    int id;
-    User user;
-    String remarks;
-    Boolean provideBreakfast;
-    Boolean provideClock;
-    Integer preRoomID;
+    private RoomRegister roomRegister;
+    private int id;
+    private User user;
+    private String remarks;
+    private Boolean provideBreakfast;
+    private Boolean provideClock;
+    private Integer preRoomID;
 }

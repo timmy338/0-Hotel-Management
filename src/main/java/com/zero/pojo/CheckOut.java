@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckOut {
-    CheckIn checkIn;
-    int days;
-    Cost cost;
-    double foodPrice;
-    double telPrice;
-    double shouldPrice;
-    double shouldDeposit;
-    String wayToPay;
-    double realRecived;
-    double giveChange;
-    User user;
-    String remarks;
+    private CheckIn checkIn;
+    private int days;
+    private Cost cost;
+    private double foodPrice;
+    private double telPrice;
+    private  double shouldPrice;
+    private double shouldDeposit;
+    private String wayToPay;
+    private double realRecived;
+    private  double giveChange;
+    private  User user;
+    private  String remarks;
 }

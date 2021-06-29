@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
-    int id;
-    RoomType type;
-    Floor floor;
-    String status;
-    double standardPrice;
-    double discountPrice;
-    double memberPrice;
-    double vipPrice;
-    String remarks;
+    private int id;
+    private RoomType type;
+    private Floor floor;
+    private String status;
+    private double standardPrice;
+    private double discountPrice;
+    private double memberPrice;
+    private double vipPrice;
+    private String remarks;
 }

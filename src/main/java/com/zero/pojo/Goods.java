@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Goods {
-    int id;
-    String name;
-    GoodsType type;
-    double price;
-    String unit;
-    String remarks;
+    private int id;
+    private String name;
+    private GoodsType type;
+    private double price;
+    private String unit;
+    private String remarks;
 }

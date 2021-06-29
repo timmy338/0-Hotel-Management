@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Log {
-    int id;
-    int uid;
-    String operation;
-    Timestamp time;
-    String remarks;
+    private int id;
+    private int uid;
+    private String operation;
+    private Timestamp time;
+    private String remarks;
 }

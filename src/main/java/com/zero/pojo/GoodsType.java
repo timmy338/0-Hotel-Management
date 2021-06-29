@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoodsType {
-    int id;
-    String name;
-    String remarks;
+    private int id;
+    private String name;
+    private String remarks;
 }

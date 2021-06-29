@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-    int id;
-    String name;
-    String sex; //enum
-    String pwd;
-    String tel;
-    String addr;
-    String email;
-    double point;
-    Boolean isVIP;
-    Timestamp lastIn; //DATETIME
-    Timestamp lastRe;	//DATETIME
-    String remarks;
+    private int id;
+    private String name;
+    private String sex; //enum
+    private String pwd;
+    private String tel;
+    private String addr;
+    private String email;
+    private double point;
+    private Boolean isVIP;
+    private Timestamp lastIn; //DATETIME
+    private Timestamp lastRe;	//DATETIME
+    private String remarks;
 }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Floor {
-    String name;
-    String remarks;
+    private String name;
+    private String remarks;
 }
