@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cost {
+    private Integer id;
     private CheckIn checkIn;
     private HashMap<Goods,Integer> goodsList;
-    private double price;
-    private double discount;
-    private double discountPrice;
-    private double toutalPrice;
+    private Double price;
+    private Double discount;
+    private Double discountPrice;
+    private Double totalPrice;
     private User user;
     private Timestamp time;
     private String remarks;

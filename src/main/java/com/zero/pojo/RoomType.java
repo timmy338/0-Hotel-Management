@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RoomType {
     private String name;
-    private int capacity;
+    private Integer capacity;
     private String remarks;
 }

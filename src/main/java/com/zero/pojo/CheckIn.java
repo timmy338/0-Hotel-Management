@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CheckIn {
     private RoomRegister roomRegister;
-    private int id;
+    private Integer id;
     private User user;
     private String remarks;
     private Boolean provideBreakfast;

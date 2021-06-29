@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Reserve {
     private RoomRegister roomRegister;
-    private int id;
+    private Integer id;
     private String status;
     private User user;
     private String remarks;
