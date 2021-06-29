@@ -56,15 +56,14 @@ jdbc.connTimeout=10000
 3. mapper文件放在resources/mapper下，与dao层接口同名
 
 4. ```java
-  //   缩进为
+    //缩进为
      if(a==b){
          
      }
-  //   即使只有一行，也要写大括号
+    //即使只有一行，也要写大括号
      if(a==b){
          a=c;
      }
-  ```
 
 5. .jsp文件放在jsp下
 
@@ -81,7 +80,7 @@ jdbc.connTimeout=10000
     * @return 改变影响数
     */
    int addDept(Dept dept);
-   ```
+
 
 9. 方法声明之间空一行，变量声明之间不空行，变量与方法声明之间空一行
 
@@ -90,3 +89,4 @@ jdbc.connTimeout=10000
 ~~没有遵守的给我买瓶可乐~~:sweat_smile:
 
 家人们自觉遵守嗷:family:
+
