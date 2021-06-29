@@ -35,6 +35,6 @@
     <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="com.zero.mapper" />
+        <property name="basePackage" value="com.zero.dao" />
     </bean>
 </beans>

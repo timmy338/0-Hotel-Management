@@ -24,28 +24,55 @@ jdbc.connTimeout=10000
 
 1. 变量全部private
 
-2. mapper层命名为dao层
+2. 代码中的mapper层命名为dao层(具体请看目录树)
+
+   ```
+   ├───.idea
+   ├───src
+   │   ├───main
+   │   │   ├───java
+   │   │   │   └───com
+   │   │   │       └───zero
+   │   │   │           ├───controller
+   │   │   │           ├───dao
+   │   │   │           ├───pojo
+   │   │   │           └───service
+   │   │   ├───resources
+   │   │   │   └───mapper
+   │   │   └───webapp
+   │   │       ├───jsp
+   │   │       ├───resources
+   │   │       │   ├───css
+   │   │       │   ├───img
+   │   │       │   └───js
+   │   │       └───WEB-INF
+   │   │           └───jsp
+   │   └───test
+   │       └───java
+   ```
+
+   
 
 3. mapper文件放在resources/mapper下，与dao层接口同名
 
 4. ```java
-   缩进为
-   if(a==b){
-       
-   }
-   即使只有一行，也要写大括号
-   if(a==b){
-       a=c;
-   }
-   ```
+  //   缩进为
+     if(a==b){
+         
+     }
+  //   即使只有一行，也要写大括号
+     if(a==b){
+         a=c;
+     }
+  ```
 
-4. .jsp文件放在jsp下
+5. .jsp文件放在jsp下
 
-5. service接口与实现分离，命名为 接口名+Impl
+6. service接口与实现分离，命名为 接口名+Impl
 
-6. mysql语句关键词全部小写
+7. mysql语句关键词全部小写
 
-7. 接口必须提供注释 例如：
+8. 接口必须提供注释 例如：
 
    ```java
    /**
@@ -56,8 +83,9 @@ jdbc.connTimeout=10000
    int addDept(Dept dept);
    ```
 
-8. 方法声明之间空一行，变量声明之间不空行，变量与方法声明之间空一行
-9. ....（待补充）
+9. 方法声明之间空一行，变量声明之间不空行，变量与方法声明之间空一行
+
+10. ....（待补充）
 
 ~~没有遵守的给我买瓶可乐~~:sweat_smile:
 
