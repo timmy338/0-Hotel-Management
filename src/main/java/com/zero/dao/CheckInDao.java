@@ -50,12 +50,12 @@ public interface CheckInDao {
      */
     int fillCheckIn(CheckIn checkIn);
 
-    /**
-     * 打印入住单
-     * @param checkIn 入住对象
-     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
-     */
-    int printCheckIn(CheckIn checkIn);
+//    /**
+//     * 打印入住单
+//     * @param checkIn 入住对象
+//     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
+//     */
+//    int printCheckIn(CheckIn checkIn);
 
     /**
      * 保存登记信息
