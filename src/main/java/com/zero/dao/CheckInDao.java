@@ -76,7 +76,7 @@ public interface CheckInDao {
      * @param roomType 客房类型
      * @return 返回查询到的客房信息列表
      */
-    List<CheckIn> selectCheckInByRoomType(RoomType roomType);
+    List<CheckIn> selectCheckInByRoomType(@Param("roomType") String roomType);
 
     /**
      *根据客房编号查询入住客房信息
@@ -90,7 +90,7 @@ public interface CheckInDao {
      * @param user 入住人对象
      * @return 返回查询到的客房信息列表
      */
-    List<CheckIn> selectCheckInByUser(User user);
+    List<CheckIn> selectCheckInByUser(@Param("user") Integer user);
 
     /**
      * 预定转入住
