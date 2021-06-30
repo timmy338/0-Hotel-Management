@@ -40,9 +40,6 @@
             <if test="roomPrice!=null">
                 or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
             </if>
-            <if test="roomPrice=null">
-                1=0
-            </if>
         </where>
     </select>
 
