@@ -1,7 +1,6 @@
 package com.zero.dao;
 
 import com.zero.pojo.Log;
-import com.zero.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
