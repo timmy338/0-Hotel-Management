@@ -20,7 +20,7 @@ public interface CostDao {
      * @param goodsTypeName 商品类别名
      * @return 返回查询到的商品列表
      */
-    List<Goods> selectGoodsById(@Param("goodsTypeName")String goodsTypeName);
+    List<Goods> selectGoodsByName(@Param("goodsTypeName")String goodsTypeName);
 
     /**
      * 消费入账
