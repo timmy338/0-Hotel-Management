@@ -23,10 +23,10 @@ public interface GoodsDao {
 
     /**
      * 修改商品
-     * @param goodsId 商品id
+     * @param goods 商品对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int  updateGoods(@Param("goodsId") Integer goodsId);
+    int  updateGoods(Goods goods);
 
     /**
      * 通过商品id查询商品

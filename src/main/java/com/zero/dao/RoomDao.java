@@ -24,10 +24,10 @@ public interface RoomDao {
 
     /**
      * 修改客房
-     * @param roomId 客房id
+     * @param room 客房对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateRoom(@Param("roomId")Integer roomId);
+    int UpdateRoom(Room room);
 
     /**
      *通过编号查询客房

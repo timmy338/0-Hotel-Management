@@ -31,10 +31,10 @@ public interface CostDao {
 
     /**
      * 修改消费信息
-     * @param costId 消费id
+     * @param cost 消费对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int updateCost(@Param("costId") Integer costId);
+    int updateCost(Cost cost);
 
     /**
      * 删除消费信息

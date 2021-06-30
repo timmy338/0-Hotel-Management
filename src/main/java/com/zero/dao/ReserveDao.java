@@ -24,10 +24,10 @@ public interface ReserveDao {
 
     /**
      * 修改预定，已入住不能修改
-     * @param reserveId 预定id
+     * @param reserve 预定对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateReserve(@Param("reserveId")Integer reserveId);
+    int UpdateReserve(Reserve reserve);
 
     /**
      *通过预定单号查询预定
