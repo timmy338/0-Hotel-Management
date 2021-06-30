@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RoomRegister {
     private Integer id;
-    private Room room;
+    private Integer room;
     private Double deposit;
     private String guestName;
     private String guestIdType;
