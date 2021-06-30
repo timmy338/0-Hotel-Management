@@ -53,8 +53,9 @@ public interface CheckInDao {
     /**
      * 打印入住单
      * @param checkIn 入住对象
+     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    void printCheckIn(CheckIn checkIn);
+    int printCheckIn(CheckIn checkIn);
 
     /**
      * 保存登记信息
@@ -90,4 +91,19 @@ public interface CheckInDao {
      * @return 返回查询到的客房信息列表
      */
     List<CheckIn> selectCheckInByUser(User user);
+
+    /**
+     * 预定转入住
+     * @param reserve 预定对象
+     * @return 入住后的CheckIn列表
+     * */
+    List<CheckIn> reserveToCheckIn(Reserve reserve);
+
+    /**
+     * 换房
+     * @param checkIn 需要更改的CheckIn对象
+     * @param room 更改后的room
+     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
+     */
+    int changeRoom(CheckIn checkIn,Room room);
 }
