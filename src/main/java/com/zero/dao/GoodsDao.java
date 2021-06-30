@@ -40,5 +40,5 @@ public interface GoodsDao {
      * @param goodsTypeName 商品类别名
      * @return 返回查询到的商品列表
      */
-    List<Goods> selectGoodsById(@Param("goodsTypeName")String goodsTypeName);
+    List<Goods> selectGoodsByType(@Param("goodsTypeName")String goodsTypeName);
 }

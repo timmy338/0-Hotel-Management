@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.GoodsDao">
+    <insert id="insertGoods">
+        insert into goods
+        values (#{id},#{name},#{typeid},#{price},#{unit},#{remarks})
+    </insert>
+
+    <delete id="deleteGoods">
+        delete from goods g
+        where g.id=#{id}
+    </delete>
+
+    <update id="updateGoods">
+        update goods g
+        set g.typeid=#{typeid},g.price=#{price},g.unit=#{unit},g.remarks=#{remarks}
+        where id=#{id}
+    </update>
+
+    <select id="selectGoodsById" resultType="com.zero.pojo.Goods">
+        select *
+        from goods g
+        where g.id=#{id}
+    </select>
+
+    <select id="selectGoodsByType" resultType="com.zero.pojo.Goods">
+        select *
+        from goods g
+        where g.typeid=#{typeid}
+    </select>
+</mapper>
