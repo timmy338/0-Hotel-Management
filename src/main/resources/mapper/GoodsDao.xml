@@ -4,7 +4,7 @@
 <mapper namespace="com.zero.dao.GoodsDao">
     <insert id="insertGoods">
         insert into goods
-        values (#{id},#{name},#{typeid},#{price},#{unit},#{remarks})
+        values (#{id},#{name},#{type.id},#{price},#{unit},#{remarks})
     </insert>
 
     <delete id="deleteGoods">

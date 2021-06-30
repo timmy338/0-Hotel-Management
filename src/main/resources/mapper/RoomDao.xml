@@ -6,7 +6,7 @@
 
     <insert id="insertRoom">
         insert into room
-        values (#{id},#{type},#{floor},#{status})
+        values (#{id},#{type},#{floor},#{status},#{standardPrice},#{discountPrice},#{memberPrice},#{vipPrice},#{remarks})
     </insert>
 
     <delete id="deleteRoom">
@@ -34,9 +34,15 @@
     </select>
 
     <select id="selectRoomByPrice" resultType="com.zero.pojo.Room">
-        # 数据库表没完善呢
         select * from room r
-        where 1=0
+        <where>
+            <if test="roomPrice!=null">
+                or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
+            </if>
+            <if test="roomPrice=null">
+                1=0
+            </if>
+        </where>
     </select>
 
     <select id="selectRoom" resultType="com.zero.pojo.Room">
@@ -44,16 +50,16 @@
         <where>
         <if test="room!=null">
             <if test="room.id!=null">
-                and id=#{room.id}
+                and r.id=#{room.id}
             </if>
             <if test="room.type!=null and room.type!=''">
-                and type=#{room.type}
+                and r.type=#{room.type}
             </if>
             <if test="room.floor!=null and room.floor.name!=''">
-                and floor=#{room.floor.name}
+                and r.floor=#{room.floor.name}
             </if>
             <if test="room.status!=null and room.status!=''">
-                and `status`=#{room.status}
+                and r.`status`=#{room.status}
             </if>
         </if>
         </where>

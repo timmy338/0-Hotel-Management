@@ -62,7 +62,7 @@ public interface RoomDao {
      * @param roomPrice 客房价格
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoomByPrice(@Param("roomPrice")double roomPrice);
+    List<Room> selectRoomByPrice(@Param("roomPrice")Double roomPrice);
 
     /**
      *查询客房
