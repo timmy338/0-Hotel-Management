@@ -22,10 +22,10 @@ public interface GoodsTypeDao {
 
     /**
      * 修改商品类型
-     * @param goodsType 商品类型对象
+     * @param id 商品id
      * @return 0表明修改失败
      */
-    int updateGoodsType(GoodsType goodsType);
+    int updateGoodsType(Integer id);
 
     /**
      * 查询所有商品类型

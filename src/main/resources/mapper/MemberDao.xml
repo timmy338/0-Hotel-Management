@@ -15,7 +15,7 @@
     <update id="updateMember">
         update member
         set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
-        where id=#{Id}
+        where id=#{id}
     </update>
 
     <select id="selectAllMember" resultType="Member">

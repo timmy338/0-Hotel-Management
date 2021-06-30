@@ -26,8 +26,8 @@ public class GoodsTypeServiceImpl implements GoodsTypeService{
     }
 
     @Override
-    public int updateGoodsType(GoodsType goodsType) {
-        return goodsTypeDao.updateGoodsType(goodsType);
+    public int updateGoodsType(Integer id) {
+        return goodsTypeDao.updateGoodsType(id);
     }
 
     @Override

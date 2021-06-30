@@ -22,10 +22,10 @@ public interface MemberDao {
 
     /**
      * 修改会员
-     * @param Member 会员对象
+     * @param id 会员id
      * @return 0表明修改失败
      */
-    int updateMember(Member Member);
+    int updateMember(Integer id);
 
     /**
      * 查询所有会员
