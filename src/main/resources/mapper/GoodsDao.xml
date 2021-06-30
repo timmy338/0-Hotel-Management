@@ -9,7 +9,7 @@
 
     <delete id="deleteGoods">
         delete from goods g
-        where g.id=#{goodsId}
+        where g.id=#{id}
     </delete>
 
     <update id="updateGoods">
@@ -21,7 +21,7 @@
     <select id="selectGoodsById" resultType="Goods">
         select *
         from goods g
-        where g.id=#{goodsId}
+        where g.id=#{id}
     </select>
 
     <select id="selectGoodsByType" resultType="Goods">
