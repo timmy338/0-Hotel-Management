@@ -21,7 +21,7 @@
 
     <select id="selectRoomByType" resultType="Room" parameterType="RoomType">
         select * from room r
-        where type=#{roomType.id}
+        where type=#{roomType}
     </select>
 
     <select id="selectRoomByStatus" resultType="Room">
@@ -31,7 +31,7 @@
 
     <select id="selectRoomByFloor" resultType="Room">
         select * from room r
-        where floor=#{name}
+        where floor=#{floor}
     </select>
 
     <select id="selectRoomByPrice" resultType="Room">

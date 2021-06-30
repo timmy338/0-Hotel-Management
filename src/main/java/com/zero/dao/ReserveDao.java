@@ -41,7 +41,7 @@ public interface ReserveDao {
      * @param roomType 客房类型
      * @return 返回查询到的预定列表
      */
-    List<Reserve> selectReserveByType(RoomType roomType);
+    List<Reserve> selectReserveByType(@Param("roomType") String roomType);
 
 
     /**

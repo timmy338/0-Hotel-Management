@@ -15,22 +15,22 @@ public interface FloorDao {
 
     /**
      *删除楼层
-     * @param floorName 楼层名
+     * @param name 楼层名
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int deleteFloor(@Param("floorName")String floorName);
+    int deleteFloor(@Param("name")String name);
 
     /**
      *修改楼层
-     * @param floorName 楼层名
+     * @param name 楼层名
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int updateFloor(@Param("floorName") String floorName);
+    int updateFloor(@Param("name") String name);
 
     /**
      * 查寻楼层
-     * @param floorName 楼层名
+     * @param name 楼层名
      * @return 返回查询到的楼层列表
      */
-    List<Floor> selectFloor(@Param("floorName") String floorName);
+    List<Floor> selectFloor(@Param("name") String name);
 }
