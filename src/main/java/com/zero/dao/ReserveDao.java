@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ReserveDao {
-    //查询客房信息请调用ReserveDao接口
+    //查询客房信息请调用RoomDao接口
     /**
      * 增加预定
      * @param reserve 预定对象
