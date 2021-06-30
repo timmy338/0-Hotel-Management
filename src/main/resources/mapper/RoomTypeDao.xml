@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.RoomTypeDao">
+    <insert id="insertRoomType">
+        insert into roomtype
+        values (#{name},#{capacity},#{remarks})
+    </insert>
+
+    <delete id="deleteRoomType">
+        delete from roomtype
+        where roomtype.id=#{roomId}
+    </delete>
+
+    <update id="updateRoomType">
+        update roomtype r
+        set r.name=#{name},r.capacity=#{capacity),r.remarks=#{remarks}
+        where r.id=#{id}
+    </update>
+
+    <select id="selectAllRoomType" resultType="com.zero.pojo.RoomType">
+        select *
+        from roomtype
+    </select>
+</mapper>
