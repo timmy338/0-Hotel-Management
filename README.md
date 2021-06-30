@@ -8,7 +8,7 @@ jdbc.properties已被移除版本库管理，请自行编写
 
 ```
 jdbc.driver=com.mysql.cj.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/数据库名字?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=serverTimezone=GMT%2B8
+jdbc.url=jdbc:mysql://localhost:3306/数据库名字?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
 jdbc.user=root
 jdbc.password=你的密码
 jdbc.connTimeout=10000
