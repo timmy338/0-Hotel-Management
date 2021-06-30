@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Cost {
     private Integer id;
-    private CheckIn checkIn;
+    private Integer checkIn;
     private Double price;
     private Double discount;
     private Double discountPrice;
     private Double totalPrice;
-    private User user;
+    private Integer user;
     private Timestamp time;
     private String remarks;
 }
