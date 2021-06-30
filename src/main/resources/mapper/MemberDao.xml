@@ -9,13 +9,13 @@
     
     <delete id="deleteMember">
         delete from member
-        where id=#{id}
+        where id=#{memberId}
     </delete>
     
     <update id="updateMember">
         update member
-        set id=#{id},name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
-        where id=#{id}
+        set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
+        where id=#{Id}
     </update>
 
     <select id="selectAllMember" resultType="Member">
@@ -26,13 +26,13 @@
     <select id="selectMemberById" resultType="Member">
         select *
         from member m
-        where m.id=#{id}
+        where m.id=#{memberId}
     </select>
 
-    <select id="selectMemberByName" resultType="Member">
+    <select id="selectMembersByName" resultType="com.zero.pojo.Member">
         select *
         from member m
-        where m.name=#{name}
+        where m.name=#{memberName}
     </select>
 
 </mapper>

@@ -14,10 +14,10 @@ public interface CheckOutDao {
      */
     List<CheckOut> selectCheckOutByCheckIn(CheckIn checkIn);
 
-    /**
-     * 打印账单
-     * @param checkOut 退房结账对象
-     * @return 返回操作条数
-     */
-    int printCheckOut(CheckOut checkOut);
+//    /**
+//     * 打印账单
+//     * @param checkOut 退房结账对象
+//     * @return 返回操作条数
+//     */
+//    int printCheckOut(CheckOut checkOut);
 }
