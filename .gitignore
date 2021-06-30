@@ -12,7 +12,7 @@ buildNumber.properties
 src/main/resources/jdbc.properties
 
 .DS_Store
-src/main/webapp/vue/node_modules
+src/main/vue/node_modules
 
 
 # local env files
