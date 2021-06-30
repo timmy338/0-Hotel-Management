@@ -3,7 +3,7 @@
     <div id="managerTop">
       <div id="logo"></div>
       <span id="title">酒店管理系统</span>
-      <span id="user">用戶:{{}}</span>
+      <span id="user">用戶:{{}},你好</span>
     </div>
 
     <div id="middle">
@@ -128,7 +128,7 @@ export default {
 #managerTop #user {
   float: right;
   margin-top: 100px;
-  margin-right: 140px;
+  margin-right: 80px;
   color: white;
 }
 #managerTop #logo
@@ -165,7 +165,7 @@ export default {
 }
 .manager #function .el-menu
 {
-
+  width: 298px;
 
 }
 </style>
