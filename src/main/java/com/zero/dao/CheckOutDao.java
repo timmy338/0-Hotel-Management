@@ -12,12 +12,12 @@ public interface CheckOutDao {
      * @param checkIn 登记入住信息
      * @return 退房结账信息列表
      */
-    List<CheckOut> selectCheckOutByCheckIn(CheckIn checkIn);
+    List<CheckOut> selectCheckOutByCheckIn(@Param("checkIn") Integer checkIn);
 
-    /**
-     * 打印账单
-     * @param checkOut 退房结账对象
-     * @return 返回操作条数
-     */
-    int printCheckOut(CheckOut checkOut);
+//    /**
+//     * 打印账单
+//     * @param checkOut 退房结账对象
+//     * @return 返回操作条数
+//     */
+//    int printCheckOut(CheckOut checkOut);
 }

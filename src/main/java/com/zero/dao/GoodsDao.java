@@ -16,10 +16,10 @@ public interface GoodsDao {
 
     /**
      * 删除商品
-     * @param goodsId 商品id
+     * @param id 商品id
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int deleteGoods(@Param("goodsId") Integer goodsId);
+    int deleteGoods(@Param("id") Integer id);
 
     /**
      * 修改商品
@@ -30,15 +30,15 @@ public interface GoodsDao {
 
     /**
      * 通过商品id查询商品
-     * @param goodsId 商品id
+     * @param id 商品id
      * @return 返回查询到的商品列表
      */
-    List<Goods> selectGoodsById(@Param("goodsId") Integer goodsId);
+    List<Goods> selectGoodsById(@Param("id") Integer id);
 
     /**
      * 根据类别名查询商品
-     * @param goodsTypeName 商品类别名
+     * @param type 商品类别名
      * @return 返回查询到的商品列表
      */
-    List<Goods> selectGoodsById(@Param("goodsTypeName")String goodsTypeName);
+    List<Goods> selectGoodsByType(@Param("type")String type);
 }

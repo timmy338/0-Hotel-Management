@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class Consume {
     Integer id;
     Integer cid;	//cost id
-    Goods goods;
+    String goods;
     Integer count;
 }

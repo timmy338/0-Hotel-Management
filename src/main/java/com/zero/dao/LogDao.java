@@ -12,10 +12,10 @@ public interface LogDao {
      * 从时间段和用户查询日志
      * @param min 起始时间
      * @param max 终止时间
-     * @param user 用户对象
+     * @param uid 用户id
      * @return 满足条件的日志
      */
-    List<Log> selectLogByTimeAndUser(@Param("min") Timestamp min, @Param("max") Timestamp max, @Param("user") User user);
+    List<Log> selectLogByTimeAndUser(@Param("min") Timestamp min, @Param("max") Timestamp max,Integer uid);
 
     /**
      * 从时间段删除日志

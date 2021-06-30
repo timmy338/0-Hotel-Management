@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.MemberDao">
+    <insert id="insertMember">
+        insert into member
+        values (#{id},#{name},#{sex},#{pwd},#{tel},#{addr},#{email},#{point},#{isVIP},#{lastIn},#{lastRe},#{remarks})
+    </insert>
+    
+    <delete id="deleteMember">
+        delete from member
+        where id=#{memberId}
+    </delete>
+    
+    <update id="updateMember">
+        update member
+        set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
+        where id=#{id}
+    </update>
+
+    <select id="selectAllMember" resultType="Member">
+        select *
+        from member
+    </select>
+
+    <select id="selectMemberById" resultType="Member">
+        select *
+        from member m
+        where m.id=#{memberId}
+    </select>
+
+    <select id="selectMembersByName" resultType="com.zero.pojo.Member">
+        select *
+        from member m
+        where m.name=#{memberName}
+    </select>
+
+</mapper>

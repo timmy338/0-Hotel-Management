@@ -41,7 +41,7 @@ public interface RoomDao {
      * @param roomType 客房类型
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoomByType(RoomType roomType);
+    List<Room> selectRoomByType(@Param("roomType") String roomType);
 
     /**
      *通过状态查询客房
@@ -55,14 +55,14 @@ public interface RoomDao {
      * @param floor 楼层对象
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoomByFloor(Floor floor);
+    List<Room> selectRoomByFloor(@Param("floor") String floor);
 
     /**
      *通过价格查询客房
      * @param roomPrice 客房价格
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoomByPrice(@Param("roomPrice")double roomPrice);
+    List<Room> selectRoomByPrice(@Param("roomPrice")Double roomPrice);
 
     /**
      *查询客房
