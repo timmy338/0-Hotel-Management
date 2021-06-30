@@ -205,7 +205,7 @@ export default {
      
    },
     getUserList() {
-      axios.get("http://localhost:8080/demo_war_exploded/getPUserList").then(
+      axios.get(this.http+"getPUserList").then(
         (res) => {
           /* console.log(res); */
           this.UserList = res.data;
@@ -227,12 +227,10 @@ export default {
     addUser() {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/addPUser?username=" +
+          this.http+"login?uname=" +
             this.form.name +
             "&password=" +
-            this.form.password +
-            "&usertype=" +
-            this.form.resource
+            this.form.password
         )
         .then(
           (res) => {
@@ -245,7 +243,7 @@ export default {
     delUser(id) {
       
       axios
-        .get("http://localhost:8080/demo_war_exploded/delPUser?id=" + id)
+        .get(this.http+"delPUser?id=" + id)
         .then(
           (res) => {
             /* console.log("del"); */
@@ -261,7 +259,7 @@ export default {
     searchById(search) {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/getPUserByID?userid=" +
+          this.http+"getPUserByID?userid=" +
             search
         )
         .then(
@@ -275,7 +273,7 @@ export default {
     editClick() {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/updatePUser?userid=" +
+          this.http+"updatePUser?userid=" +
             this.editId +
             "&username=" +
             this.form.name +
@@ -296,7 +294,7 @@ export default {
 
   data() {
     return {
-
+      http:"http://localhost:8080/0_Hotel_Management_war/",
       UserList: [],
       page: 0,
       nowpage: 1,

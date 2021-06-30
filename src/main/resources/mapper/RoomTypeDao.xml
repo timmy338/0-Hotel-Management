@@ -13,8 +13,8 @@
     </delete>
 
     <update id="updateRoomType">
-        update roomtype r
-        set r.name=#{name},r.capacity=#{capacity),r.remarks=#{remarks}
+        update roomtype
+        set name=#{name},capacity=#{capacity},remarks=#{remarks}
         where r.id=#{id}
     </update>
 

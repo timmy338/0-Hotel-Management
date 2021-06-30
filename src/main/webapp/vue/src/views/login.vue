@@ -2,26 +2,7 @@
   <div id="background">
     <div id="login">
       <p id="title">酒店管理系统</p>
-      <!-- <div id="formDiv">
-        <form action="" method="post">
-          <div id="loginName">
-            <div>
-              <span><i class="el-icon-user-solid"></i></span>
-            </div>
-            <input type="text" name="account" />
-          </div>
 
-          <div id="loginPwd">
-            <div>
-              <span><i class="el-icon-lock"></i></span>
-            </div>
-
-            <input type="password" name="pwd" />
-          </div>
-
-          <input type="button" value="登入" id="button" @click="login()" />
-        </form>
-      </div> -->
      
      <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
   <el-form-item
@@ -46,7 +27,8 @@
     <el-input v-model="domain.value"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
+    <!--submitForm('dynamicValidateForm')-->
+    <el-button type="primary" @click="login()">提交</el-button>
     <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
   </el-form-item>
 </el-form>
@@ -61,6 +43,7 @@ const axios = require("axios");
 export default {
   data() {
          return {
+           http:"http://localhost:8080/0_Hotel_Management_war/",
         dynamicValidateForm: {
           domains: [{
             value: ''
@@ -73,11 +56,30 @@ export default {
   },
 
   methods: {
-  
-      submitForm() {
-       console.log(this.dynamicValidateForm.name+this.dynamicValidateForm.domains[0].value);//2個值
-       this.$router.push("/manager");
-      },
+    login() {
+      axios
+          .get(
+              this.http+"login?uname="+this.dynamicValidateForm.name+"&pwd="+this.dynamicValidateForm.domains[0].value
+          )
+          .then(
+              (res) => {
+
+                /*console.log(this.dynamicValidateForm.name+this.dynamicValidateForm.domains[0].value);//2個值
+                console.log(res.data.contains);*/
+                if (res.data.contains==true)
+                {
+                  this.$router.push("/manager");
+                }
+                else
+                {
+                  alert("输入有误");
+                }
+
+              },
+              (res) => {}
+          );
+    },
+
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
