@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.LogDao">
+    <delete id="deleteLogByTime">
+
+    </delete>
+    <select id="selectLogByTimeAndUser" resultType="com.zero.pojo.Log">
+        select *
+        from log l
+        <where>
+            <if test="user!=null and user.id!=null">
+            and l.uid=#{user.id}
+            </if>
+            <!-- “&lt;”表示小于号 "&gt;"表示大于号-->
+            l.time &lt; #{max} and l.time &gt; #{min}
+        </where>
+    </select>
+
+    <select id="selectLogByTime" resultType="com.zero.pojo.Log">
+        select *
+        from log l
+        <where>
+            <!-- “&lt;”表示小于号 "&gt;"表示大于号-->
+            l.time &lt; #{max} and l.time &gt; #{min}
+        </where>
+    </select>
+</mapper>
