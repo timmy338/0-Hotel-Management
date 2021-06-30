@@ -18,7 +18,7 @@
               </el-form-item>
 
               <el-form-item label="用户密码">
-                <el-input v-model="form.password"></el-input>
+                <el-input v-model="form.pwd"></el-input>
               </el-form-item>
 
               <el-form-item label="权限">
@@ -68,13 +68,15 @@
         border
         style="width: 100%"
       >
-        <el-table-column fixed prop="userid" label="用户编号" width="150">
+        <el-table-column fixed prop="id" label="用户编号" width="150">
         </el-table-column>
-        <el-table-column prop="username" label="用戶名" width="120">
+        <el-table-column prop="uname" label="用戶名" width="180">
         </el-table-column>
-        <el-table-column prop="password" label="密码" width="120">
+        <el-table-column prop="pwd" label="密码" width="180">
         </el-table-column>
-        <el-table-column prop="usertype" label="权限" width="120">
+        <el-table-column prop="power" label="权限" width="180">
+        </el-table-column>
+        <el-table-column prop="remarks" label="备注" width="268">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
@@ -109,7 +111,7 @@
             </el-form-item>
 
             <el-form-item label="用户密码">
-              <el-input v-model="form.password"></el-input>
+              <el-input v-model="form.pwd"></el-input>
             </el-form-item>
 
             <el-form-item label="权限">
@@ -169,19 +171,20 @@ export default {
       //刪除功能
       //row為當前用戶的數據
       /* console.log(row); */
-      this.delUser(row.userid);
+      this.delUser(row.id);
     },
     editButton(row) {
-      this.form.name = row.username;
-      this.form.password = row.password;
-      this.form.resource = row.usertype;
-      this.editId = row.userid;
+      this.form.name = row.uname;
+      this.form.pwd = row.pwd;
+      this.form.resource = row.power;
+      this.editId = row.id;
     },
 
     resetForm() {
       this.form.name = "";
-      this.form.password = "";
+      this.form.pwd = "";
       this.form.resource = "";
+      this.form.remarks = "";
     },
     handleClose(done) {
       //彈出框屬性
@@ -199,13 +202,13 @@ export default {
    delPageChange()
    {
      
-       console.log("come?");
+      /* console.log("come?");*/
        this.nowpage=this.nowpage-1;
        this.page=this.page-6;
      
    },
     getUserList() {
-      axios.get("http://localhost:8080/demo_war_exploded/getPUserList").then(
+      axios.get(this.http+"getPUserList").then(
         (res) => {
           /* console.log(res); */
           this.UserList = res.data;
@@ -227,12 +230,10 @@ export default {
     addUser() {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/addPUser?username=" +
+          this.http+"login?uname=" +
             this.form.name +
-            "&password=" +
-            this.form.password +
-            "&usertype=" +
-            this.form.resource
+            "&pwd=" +
+            this.form.pwd
         )
         .then(
           (res) => {
@@ -245,7 +246,7 @@ export default {
     delUser(id) {
       
       axios
-        .get("http://localhost:8080/demo_war_exploded/delPUser?id=" + id)
+        .get(this.http+"delPUser?id=" + id)
         .then(
           (res) => {
             /* console.log("del"); */
@@ -261,7 +262,7 @@ export default {
     searchById(search) {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/getPUserByID?userid=" +
+          this.http+"getPUserByID?id=" +
             search
         )
         .then(
@@ -275,13 +276,13 @@ export default {
     editClick() {
       axios
         .get(
-          "http://localhost:8080/demo_war_exploded/updatePUser?userid=" +
+          this.http+"updatePUser?id=" +
             this.editId +
-            "&username=" +
+            "&uname=" +
             this.form.name +
-            "&password=" +
-            this.form.password +
-            "&usertype=" +
+            "&pwd=" +
+            this.form.pwd +
+            "&power=" +
             this.form.resource
         )
         .then(
@@ -296,7 +297,7 @@ export default {
 
   data() {
     return {
-
+      http:"http://localhost:8080/0_Hotel_Management_war/",
       UserList: [],
       page: 0,
       nowpage: 1,
@@ -307,8 +308,9 @@ export default {
       form: {
         //用戶資料
         name: "",
-        password: "",
+        pwd: "",
         resource: "",
+        remarks:"",
       },
       formInline: {
         //搜尋用戶
@@ -335,9 +337,10 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+
 }
+
 #userManager #addAndSearch {
-  margin-top: 10px;
   padding: 20px;
   width: 100%;
   height: 50px;
@@ -362,6 +365,12 @@ export default {
   bottom: 20px;
   left: 370px;
   position: absolute;
+}
+
+#userManager #formDiv .el-table th,#userManager #formDiv  .el-table tr,#userManager #formDiv .el-table__empty-block
+{
+  border: 1px solid #CBCBCB;
+ background-color: #EEEEEE;
 }
 </style>
 
