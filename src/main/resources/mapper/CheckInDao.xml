@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.CheckInDao">
+
+    <select id="selectRoomById" resultType="com.zero.pojo.Room">
+        select *
+        from room
+        where room.id=#{roomId}
+    </select>
+
+    <select id="selectRoomByType" resultType="com.zero.pojo.Room">
+        select *
+        from room join roomtype on room.type=roomtype.name
+        where roomtype.name=#{roomType}
+    </select>
+
+    <select id="selectRoomByStatus" resultType="com.zero.pojo.Room">
+        select *
+        from room
+        where room.status=#{roomStatus}
+    </select>
+
+    <select id="selectRoomByFloor" resultType="com.zero.pojo.Room">
+        select *
+        from room
+        where room.floor=#{floor}
+    </select>
+
+    <select id="selectRoomByPrice" resultType="Room">
+        select * from room r
+        <where>
+            <if test="roomPrice!=null">
+                or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
+            </if>
+            <if test="roomPrice=null">
+                1=0
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertCheckIn">
+        insert into checkin
+        values (#{id},#{user},#{roomRegister},#{remarks},#{provideBreakfast},#{provideClock},#{preRoomID},#{checkInDate})
+    </insert>
+
+    <select id="selectCheckInById" resultType="com.zero.pojo.CheckIn">
+        select *
+        from checkin
+        where checkin.id=#{checkInId}
+    </select>
+
+    <select id="selectCheckInByRoomType" resultType="com.zero.pojo.CheckIn">
+        select *
+        from checkin join roomregister on checkin.roomRegister=roomregister.id
+        join room on roomregister.room=room.id
+        where room.type=#{roomType}
+    </select>
+
+    <select id="selectCheckInByRoomId" resultType="com.zero.pojo.CheckIn">
+        select *
+        from checkin join roomregister on checkin.roomRegister=roomregister.id
+        where roomregister.room=#{roomId}
+    </select>
+
+    <select id="selectCheckInByUser" resultType="com.zero.pojo.CheckIn">
+        select *
+        from checkin join roomregister on checkin.roomRegister=roomregister.id
+        where roomregister.guestName=#{guest}
+    </select>
+
+    <update id="changeRoom">
+        update checkin
+        set preRoomID=(select roomregister.room from checkin join roomregister on checkin.roomRegister=roomregister.id where checkin.id=#{checkInId})
+        where id=#{checkInId};
+        update roomregister
+        set room=#{roomId}
+        where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId})
+    </update>
+
+</mapper>
