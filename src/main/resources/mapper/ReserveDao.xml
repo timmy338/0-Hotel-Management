@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.dao.ReserveDao">
+
+
+    <insert id="insertReserve">
+        insert into reserve
+        values (#{id},#{roomRegister},#{user},#{remarks},#{status},#{reserveDate})
+    </insert>
+
+    <update id="UpdateReserve">
+        update reserve
+        set roomRegister=#{roomRegister},user=#{user},remarks=#{remarks},status=#{status},reserveDate=#{reserveDate}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteReserve">
+        delete from reserve
+        where reserve.id=#{reserveId}
+    </delete>
+
+    <select id="selectReserveById" resultType="Reserve">
+        select *
+        from reserve r
+        where r.id=#{reserveId}
+    </select>
+
+    <select id="selectReserveByType" resultType="Reserve">
+        select *
+        from reserve join roomregister on reserve.roomRegister=roomregister.id
+            join room on roomRegister.room=room.id
+        where room.type=#{roomType}
+    </select>
+
+    <select id="selectReserveByFloor" resultType="Reserve">
+        select *
+        from reserve join roomregister on reserve.roomRegister=roomregister.id
+            join room on roomRegister.room=room.id
+        where room.floor=#{floor}
+    </select>
+
+    <select id="selectReserveByStatus" resultType="Reserve">
+        select *
+        from reserve
+        where reserve.status=#{reserveStatus}
+    </select>
+
+    <select id="selectReserveByName" resultType="Reserve">
+        select *
+        from reserve join roomregister on reserve.roomRegister=roomregister.id
+        where roomregister.guestName=#{reserveGuestName}
+    </select>
+</mapper>

@@ -24,10 +24,10 @@ public interface ReserveDao {
 
     /**
      * 修改预定，已入住不能修改
-     * @param reserve 预定对象
+     * @param id 预定编号
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateReserve(Reserve reserve);
+    int UpdateReserve(Integer id);
 
     /**
      *通过预定单号查询预定
@@ -45,11 +45,11 @@ public interface ReserveDao {
 
 
     /**
-     *通过客房编号查询预定
-     * @param  roomId 客房编号
+     *通过客房楼层查询预定
+     * @param  floor 客房楼层
      * @return 返回查询到的预定列表
      */
-    List<Reserve> selectReserveByFloor(@Param("roomId")Integer roomId);
+    List<Reserve> selectReserveByFloor(@Param("floor")String floor);
 
     /**
      *通过预定状态查询预定
@@ -64,11 +64,4 @@ public interface ReserveDao {
      * @return 返回查询到的预定列表
      */
     List<Reserve> selectReserveByName(@Param("reserveGuestName")String reserveGuestName);
-
-    /**
-     *查询预定
-     * @param reserve 预定对象
-     * @return 返回查询到的预定列表
-     */
-    List<Reserve> selectReserve(Reserve reserve);
 }
