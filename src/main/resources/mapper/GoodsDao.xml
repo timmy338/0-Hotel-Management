@@ -4,29 +4,29 @@
 <mapper namespace="com.zero.dao.GoodsDao">
     <insert id="insertGoods">
         insert into goods
-        values (#{id},#{name},#{type.id},#{price},#{unit},#{remarks})
+        values (#{id},#{name},#{type},#{price},#{unit},#{remarks})
     </insert>
 
     <delete id="deleteGoods">
         delete from goods g
-        where g.id=#{id}
+        where g.id=#{goodsId}
     </delete>
 
     <update id="updateGoods">
         update goods
-        set typeid=#{typeid},price=#{price},unit=#{unit},remarks=#{remarks}
+        set name=#{name},typeid=#{type},price=#{price},unit=#{unit},remarks=#{remarks}
         where id=#{id}
     </update>
 
     <select id="selectGoodsById" resultType="Goods">
         select *
         from goods g
-        where g.id=#{id}
+        where g.id=#{goodsId}
     </select>
 
     <select id="selectGoodsByType" resultType="Goods">
         select *
         from goods g
-        where g.typeid=#{typeid}
+        where g.typeid=#{type}
     </select>
 </mapper>

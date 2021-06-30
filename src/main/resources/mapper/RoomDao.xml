@@ -18,9 +18,10 @@
         select * from room r
         where id=#{roomId}
     </select>
+
     <select id="selectRoomByType" resultType="Room" parameterType="RoomType">
         select * from room r
-        where type=#{name}
+        where type=#{roomType.id}
     </select>
 
     <select id="selectRoomByStatus" resultType="Room">
@@ -67,7 +68,9 @@
 
     <update id="UpdateRoom">
         update room r
-        set type=#{type},floor=#{floor},status=#{status}
+        set type=#{type},floor=#{floor},status=#{status},
+            standardPrice=#{standardPrice},discountPrice=#{discountPrice},
+            memberPrice=#{memberPrice},vipPrice=#{vipPrice},remarks=#{remarks}
         where id=#{id}
     </update>
 
