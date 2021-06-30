@@ -1,11 +1,11 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.GoodsType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface GoodsTypeDao {
+public interface GoodsTypeService {
     /**
      * 增加商品类型
      * @param goodsType 商品类型对象

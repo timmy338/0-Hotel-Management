@@ -1,11 +1,11 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
     /**
      * 增加用户信息
      * @param user 用户对象
