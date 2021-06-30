@@ -9,13 +9,13 @@
 
     <delete id="deleteRoomType">
         delete from roomtype
-        where roomtype.id=#{roomId}
+        where roomtype.name=#{roomTypeName}
     </delete>
 
     <update id="updateRoomType">
-        update roomtype r
-        set r.name=#{name},r.capacity=#{capacity),r.remarks=#{remarks}
-        where r.id=#{id}
+        update roomtype
+        set capacity=#{capacity},remarks=#{remarks}
+        where name=#{name}
     </update>
 
     <select id="selectAllRoomType" resultType="com.zero.pojo.RoomType">

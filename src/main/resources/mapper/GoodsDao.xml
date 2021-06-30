@@ -13,8 +13,8 @@
     </delete>
 
     <update id="updateGoods">
-        update goods g
-        set g.typeid=#{typeid},g.price=#{price},g.unit=#{unit},g.remarks=#{remarks}
+        update goods
+        set typeid=#{typeid},price=#{price},unit=#{unit},remarks=#{remarks}
         where id=#{id}
     </update>
 

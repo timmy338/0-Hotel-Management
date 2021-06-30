@@ -13,9 +13,9 @@
     </delete>
     
     <update id="updateMember">
-        update member m
-        set m.id=#{id},m.name=#{name},m.sex=#{sex},m.pwd=#{pwd},m.tel=#{tel},m.addr=#{addr},m.email=#{email},m.point=#{point},m.lastIn=#{lastIn},m.lastRe=#{lastRe},m.remarks=#{remarks}
-        where m.id=#{id}
+        update member
+        set id=#{id},name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
+        where id=#{id}
     </update>
 
     <select id="selectAllMember" resultType="com.zero.pojo.Member">
