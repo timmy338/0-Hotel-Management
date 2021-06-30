@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class Cost {
     private Integer id;
     private CheckIn checkIn;
-    private HashMap<Goods,Integer> goodsList;
     private Double price;
     private Double discount;
     private Double discountPrice;
