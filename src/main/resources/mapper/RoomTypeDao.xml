@@ -18,7 +18,7 @@
         where name=#{name}
     </update>
 
-    <select id="selectAllRoomType" resultType="com.zero.pojo.RoomType">
+    <select id="selectAllRoomType" resultType="RoomType">
         select *
         from roomtype
     </select>

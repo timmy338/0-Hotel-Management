@@ -14,26 +14,26 @@
         where #{roomId}=r.id
     </delete>
 
-    <select id="selectRoomById" resultType="com.zero.pojo.Room">
+    <select id="selectRoomById" resultType="Room">
         select * from room r
         where id=#{roomId}
     </select>
-    <select id="selectRoomByType" resultType="com.zero.pojo.Room" parameterType="com.zero.pojo.RoomType">
+    <select id="selectRoomByType" resultType="Room" parameterType="RoomType">
         select * from room r
         where type=#{name}
     </select>
 
-    <select id="selectRoomByStatus" resultType="com.zero.pojo.Room">
+    <select id="selectRoomByStatus" resultType="Room">
         select * from room r
         where status=#{roomStatus}
     </select>
 
-    <select id="selectRoomByFloor" resultType="com.zero.pojo.Room">
+    <select id="selectRoomByFloor" resultType="Room">
         select * from room r
         where floor=#{name}
     </select>
 
-    <select id="selectRoomByPrice" resultType="com.zero.pojo.Room">
+    <select id="selectRoomByPrice" resultType="Room">
         select * from room r
         <where>
             <if test="roomPrice!=null">
@@ -45,7 +45,7 @@
         </where>
     </select>
 
-    <select id="selectRoom" resultType="com.zero.pojo.Room">
+    <select id="selectRoom" resultType="Room">
         select * from room r
         <where>
         <if test="room!=null">

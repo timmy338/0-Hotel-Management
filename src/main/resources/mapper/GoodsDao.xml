@@ -18,13 +18,13 @@
         where id=#{id}
     </update>
 
-    <select id="selectGoodsById" resultType="com.zero.pojo.Goods">
+    <select id="selectGoodsById" resultType="Goods">
         select *
         from goods g
         where g.id=#{id}
     </select>
 
-    <select id="selectGoodsByType" resultType="com.zero.pojo.Goods">
+    <select id="selectGoodsByType" resultType="Goods">
         select *
         from goods g
         where g.typeid=#{typeid}

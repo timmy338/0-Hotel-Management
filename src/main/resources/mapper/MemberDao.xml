@@ -18,18 +18,18 @@
         where id=#{id}
     </update>
 
-    <select id="selectAllMember" resultType="com.zero.pojo.Member">
+    <select id="selectAllMember" resultType="Member">
         select *
         from member
     </select>
 
-    <select id="selectMemberById" resultType="com.zero.pojo.Member">
+    <select id="selectMemberById" resultType="Member">
         select *
         from member m
         where m.id=#{id}
     </select>
 
-    <select id="selectMemberByName" resultType="com.zero.pojo.Member">
+    <select id="selectMemberByName" resultType="Member">
         select *
         from member m
         where m.name=#{name}

@@ -18,7 +18,7 @@
         where id=#{id}
     </update>
 
-    <select id="selectAllGoodsType" resultType="com.zero.pojo.GoodsType">
+    <select id="selectAllGoodsType" resultType="GoodsType">
         select *
         from goodstype
     </select>

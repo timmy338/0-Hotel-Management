@@ -18,7 +18,7 @@
         where name=#{name}
     </update>
 
-    <select id="selectFloor" resultType="com.zero.pojo.Floor">
+    <select id="selectFloor" resultType="Floor">
         select *
         from floor f
         where f.name=#{name}
