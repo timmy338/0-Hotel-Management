@@ -148,16 +148,24 @@ export default {
 {
   width: 1140px;
   height: 600px;
-  margin-left: 30px;
-  border: 1px solid black;
+
 }
 .manager #middle #function,.manager #middle #mainFunction
 {
   float: left;
 }
-
+.manager #middle #function {
+  background-color: #002141;
+}
 /* 左邊導航栏width更改 */
 .manager #function .el-col-12 {
-  width: 300px;
+  width: 298px;
+  height: 700px;
+
+}
+.manager #function .el-menu
+{
+
+
 }
 </style>

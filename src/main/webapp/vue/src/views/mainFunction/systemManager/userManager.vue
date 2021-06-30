@@ -70,13 +70,13 @@
       >
         <el-table-column fixed prop="id" label="用户编号" width="150">
         </el-table-column>
-        <el-table-column prop="uname" label="用戶名" width="120">
+        <el-table-column prop="uname" label="用戶名" width="180">
         </el-table-column>
-        <el-table-column prop="pwd" label="密码" width="120">
+        <el-table-column prop="pwd" label="密码" width="180">
         </el-table-column>
-        <el-table-column prop="power" label="权限" width="120">
+        <el-table-column prop="power" label="权限" width="180">
         </el-table-column>
-        <el-table-column prop="remarks" label="备注" width="120">
+        <el-table-column prop="remarks" label="备注" width="268">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
@@ -336,7 +336,6 @@ export default {
 #userManager {
   width: 100%;
   height: 100%;
-  background-color: rgb(238,238,238);
   position: relative;
 
 }
@@ -367,9 +366,11 @@ export default {
   left: 370px;
   position: absolute;
 }
-#userManager #formDiv
-{
 
+#userManager #formDiv .el-table th,#userManager #formDiv  .el-table tr,#userManager #formDiv .el-table__empty-block
+{
+  border: 1px solid #CBCBCB;
+ background-color: #EEEEEE;
 }
 </style>
 
