@@ -27,7 +27,7 @@
     <select id="selectUserByName" resultType="User">
         select *
         from user u
-        where u.uname=#{userName}
+        where u.uname like CONCAT('%',#{userName},'%')
     </select>
 
     <select id="getUser" resultType="com.zero.pojo.User">

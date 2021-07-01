@@ -83,4 +83,24 @@ public class UserController {
         map.put("handle",isSuccess);
         return map;
     }
+
+    @RequestMapping("searchUserById")
+    @ResponseBody
+    public HashMap<String,Object> searchUserById(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<User> userList= userService.selectUserById(Integer.parseInt(id));
+        map.put("List",userList);
+        return map;
+    }
+
+    @RequestMapping("searchUserByUname")
+    @ResponseBody
+    public HashMap<String,Object> searchUserByUname(String uname)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<User> userList= userService.selectUserByName(uname);
+        map.put("List",userList);
+        return map;
+    }
 }
