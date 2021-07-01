@@ -51,6 +51,15 @@ public class UserController {
         return map;
     }
 
+    @RequestMapping("delUser")
+    @ResponseBody
+    public HashMap<String,Object> delUser(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        boolean isSuccess= userService.deleteUser(Integer.parseInt(id))>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
 
 
 }
