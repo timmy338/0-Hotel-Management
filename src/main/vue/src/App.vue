@@ -11,7 +11,7 @@
 <style>
 html,body {
   height: 100%;
-  width: 1580px;
+  width: 1600px;
   margin: 0;
   padding: 0;
           

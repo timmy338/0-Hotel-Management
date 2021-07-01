@@ -18,13 +18,14 @@
   <el-form-item
     v-for="(domain, index) in dynamicValidateForm.domains"
     label="密码"
+
     :key="domain.key"
     :prop="'domains.' + index + '.value'"
     :rules="{
       required: true, message: '密码不能为空', trigger: 'blur'
     }"
   >
-    <el-input v-model="domain.value"></el-input>
+    <el-input v-model="domain.value" show-password=true></el-input>
   </el-form-item>
   <el-form-item>
     <!--submitForm('dynamicValidateForm')-->
@@ -68,8 +69,7 @@ export default {
                 console.log(res.data.contains);*/
                 if (res.data.contains==true)
                 {
-                  this.$router.push("/manager");
-                  this.$bus.$emit('uname',this.dynamicValidateForm.name);
+                  this.$router.push({path:'/manager', query :{ name: this.dynamicValidateForm.name} });
 
                 }
                 else

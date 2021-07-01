@@ -3,7 +3,7 @@
     <div id="managerTop">
       <div id="logo"></div>
       <span id="title">酒店管理系统</span>
-      <span id="user">用戶:{{this.uname}},你好</span>
+      <span id="user">用戶 {{this.uname}} , 你好</span>
     </div>
 
     <div id="middle">
@@ -91,7 +91,7 @@
 <script>
 export default {
   mounted(){
-
+    this.getUserName();
   },
   data() {
     return {
@@ -99,14 +99,14 @@ export default {
     };
 
   },
-  created() {
-    this.$bus.$on('uname',(e) => {
-      console.log(e)
-    })
-  },
+
 
   methods: {
-
+    getUserName()
+    {
+      console.log(this.$route.query);
+      this.uname=this.$route.query.name;
+    },
     oneClickFunction(keyPath)
     {
       /* console.log(keyPath.index); */

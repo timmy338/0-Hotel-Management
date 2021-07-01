@@ -21,6 +21,10 @@
                 <el-input v-model="form.pwd"></el-input>
               </el-form-item>
 
+              <el-form-item label="备注">
+                <el-input v-model="form.remarks"></el-input>
+              </el-form-item>
+
               <el-form-item label="权限">
                 <el-radio-group v-model="form.power">
                   <el-radio label="管理员"></el-radio>
@@ -64,7 +68,7 @@
     </div>
     <div id="formDiv">
       <el-table
-        :data="UserList.slice(page, page + 6)"
+        :data="UserList"
         border
         style="width: 100%"
       >
@@ -110,8 +114,12 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-form-item label="用户密码">
+            <el-form-item label="用户密码" >
               <el-input v-model="form.pwd"></el-input>
+            </el-form-item>
+
+            <el-form-item label="备注">
+              <el-input v-model="form.remarks"></el-input>
             </el-form-item>
 
             <el-form-item label="权限">
@@ -140,10 +148,10 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="this.totalPage"
+        :total="300"
         @current-change="handleCurrentChange"
-        :current-page="nowpage"
       >
+        <!--上面的屬性 :current-page="nowpage"-->
       </el-pagination>
     </div>
   </div>
@@ -196,33 +204,23 @@ export default {
     },
     handleCurrentChange(val) {
       /* console.log(` ${val}`); */
-      this.page = (` ${val}` - 1) * 6;
-      this.nowpage=(+`${val}`);
+   
     },
-   delPageChange()
-   {
-
-      /* console.log("come?");*/
-       this.nowpage=this.nowpage-1;
-       this.page=this.page-6;
-
-   },
+  
     getUserList() {
-      axios.get(this.http+"getPUserList").then(
+      axios.get(this.http+"getUserList").then(
         (res) => {
           /* console.log(res); */
+
           this.UserList = res.data;
-          if (res.data.length / 6 != 0) {
+         /* if (res.data.length / 6 != 0) {
             this.totalPage = res.data.length / 6;
           } else {
             this.totalPage = res.data.length / 6 - 1;
           }
-          this.totalPage = this.totalPage * 10;
+          this.totalPage = this.totalPage * 10;*/
           /* console.log(this.totalPage); */
-           if(this.UserList.slice(this.page, this.page + 6).length==0)
-            {
-              this.delPageChange();
-            }
+         
         },
         (res) => {}
       );
@@ -230,7 +228,7 @@ export default {
     addUser() {
       axios
         .get(
-          this.http+"addPUser?uname=" +
+          this.http+"addUser?uname=" +
             this.form.name +
             "&pwd=" +
             this.form.pwd+"&power="+this.form
@@ -246,7 +244,7 @@ export default {
     delUser(id) {
 
       axios
-        .get(this.http+"delPUser?id=" + id)
+        .get(this.http+"delUser?id=" + id)
         .then(
           (res) => {
             /* console.log("del"); */
@@ -262,7 +260,7 @@ export default {
     searchById(search) {
       axios
         .get(
-          this.http+"getPUserByID?id=" +
+          this.http+"getUserByID?id=" +
             search
         )
         .then(
@@ -276,7 +274,7 @@ export default {
     editClick() {
       axios
         .get(
-          this.http+"updatePUser?id=" +
+          this.http+"updateUser?id=" +
             this.editId +
             "&uname=" +
             this.form.name +
@@ -298,10 +296,18 @@ export default {
   data() {
     return {
       http:"http://localhost:8080/0_Hotel_Management_war/",
-      UserList: [],
+      UserList: [
+        {
+          id:12,
+          uname:"timmy",
+          pwd:"1234",
+          power: "管理员",
+          remarks: "",
+        }
+      ],
       page: 0,
       nowpage: 1,
-      totalPage: 10,
+      /*totalPage: 10,*/
       addDialogVisible: false, //add彈出框屬性
       centerDialogVisible: false, //
       editId: "",
