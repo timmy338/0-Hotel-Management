@@ -25,7 +25,7 @@
       required: true, message: '密码不能为空', trigger: 'blur'
     }"
   >
-    <el-input v-model="domain.value" show-password=true></el-input>
+    <el-input v-model="domain.value" :show-password=true></el-input>
   </el-form-item>
   <el-form-item>
     <!--submitForm('dynamicValidateForm')-->
