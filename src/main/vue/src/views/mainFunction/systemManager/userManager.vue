@@ -161,7 +161,7 @@
 const axios = require("axios");
 export default {
   mounted() {
-    this.getUserList();
+    this.getUser("1");
   },
   methods: {
     onSubmit() {
@@ -203,16 +203,17 @@ export default {
         .catch((_) => {});
     },
     handleCurrentChange(val) {
-      /* console.log(` ${val}`); */
-   
+       /*console.log(val);*/
+      this.getUser(val);
+      this.nowpage=val;
     },
   
-    getUserList() {
-      axios.get(this.http+"getUserList").then(
+    getUser(page) {
+      axios.get(this.http+"getUser?page="+page).then(
         (res) => {
-          /* console.log(res); */
+         /* console.log(res);*/
 
-          this.UserList = res.data;
+          this.UserList = res.data.List;
          /* if (res.data.length / 6 != 0) {
             this.totalPage = res.data.length / 6;
           } else {
@@ -236,7 +237,7 @@ export default {
         .then(
           (res) => {
             /* console.log("addFinish"); */
-            this.getUserList();
+            this.getUser();
           },
           (res) => {}
         );
@@ -247,11 +248,9 @@ export default {
         .get(this.http+"delUser?id=" + id)
         .then(
           (res) => {
-            /* console.log("del"); */
+            console.log(res.data);
 
-            this.getUserList();
-             console.log(this.UserList.slice(this.page, this.page + 6));
-
+            this.getUser(this.nowpage);
           },
           (res) => {}
         );
@@ -285,7 +284,7 @@ export default {
         )
         .then(
           (res) => {
-            this.getUserList();
+            this.getUser();
             this.resetForm();
           },
           (res) => {}
@@ -373,7 +372,7 @@ export default {
   position: absolute;
 }
 
-#userManager #formDiv .el-table th,#userManager #formDiv  .el-table tr,#userManager #formDiv .el-table__empty-block
+#userManager #formDiv .el-table th,#userManager #formDiv .el-table tr,#userManager #formDiv .el-table__empty-block,#userManager .el-table__row
 {
   border: 1px solid #CBCBCB;
  background-color: #EEEEEE;
