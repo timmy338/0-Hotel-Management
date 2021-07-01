@@ -56,10 +56,20 @@ public class UserController {
     public HashMap<String,Object> delUser(String id)
     {
         HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryDelUser:ID:"+id);
         boolean isSuccess= userService.deleteUser(Integer.parseInt(id))>0;
         map.put("handle",isSuccess);
         return map;
     }
 
-
+    @RequestMapping("addUser")
+    @ResponseBody
+    public HashMap<String,Object> addUser(User user)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryAddUser:"+user);
+        boolean isSuccess=userService.insertUser(user)>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
 }
