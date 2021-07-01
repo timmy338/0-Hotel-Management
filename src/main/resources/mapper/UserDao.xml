@@ -29,4 +29,9 @@
         from user u
         where u.uname=#{userName}
     </select>
+
+    <select id="getUser" resultType="com.zero.pojo.User">
+        select * from user
+        limit 6 offset #{page};
+    </select>
 </mapper>

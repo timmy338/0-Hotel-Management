@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +16,16 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class UserController {
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping("login")
     @ResponseBody
-    public HashMap login(String uname,String pwd)
+    public HashMap<String,Object> login(String uname,String pwd)
     {
         HashMap<String,Object> map=new HashMap<>();
         List<User> userList= userService.selectUserByName(uname);
@@ -37,4 +40,17 @@ public class UserController {
         map.put("contains",isRight);
         return map;
     }
+
+    @RequestMapping("getUser")
+    @ResponseBody
+    public HashMap<String,Object> getUser(String page)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<User> userList= userService.getUser(Integer.parseInt(page));
+        map.put("List",userList);
+        return map;
+    }
+
+
+
 }

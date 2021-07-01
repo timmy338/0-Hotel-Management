@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService{
 
+    private final UserDao userDao;
+    //改为构造器注入
     @Autowired
-    private UserDao userDao;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public int insertUser(User user) {
@@ -38,5 +42,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> selectUserByName(String userName) {
         return userDao.selectUserByName(userName);
+    }
+
+    @Override
+    public List<User> getUser(int page) {
+        int offset =6*(page-1);
+        return userDao.getUser(offset);
     }
 }

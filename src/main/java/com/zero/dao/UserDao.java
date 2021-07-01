@@ -40,4 +40,11 @@ public interface UserDao {
      * @return 返回查询到的用户列表
      */
     List<User> selectUserByName(@Param("userName")String userName);
+
+    /**
+     * 分页查询所有用户信息
+     * @param page 偏移数，一页显示六个
+     * @return 分页查询用户列表
+     */
+    List<User> getUser(@Param("page") int page);
 }
