@@ -21,24 +21,25 @@
 
     <select id="selectRoomByType" resultType="Room" parameterType="RoomType">
         select * from room r
-        where type=#{roomType}
+        where type LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectRoomByStatus" resultType="Room">
         select * from room r
-        where status=#{roomStatus}
+        where status LIKE CONCAT('%',#{roomStatus},'%')
     </select>
 
     <select id="selectRoomByFloor" resultType="Room">
         select * from room r
-        where floor=#{floor}
+        where floor LIKE CONCAT('%',#{floor},'%')
     </select>
 
     <select id="selectRoomByPrice" resultType="Room">
+        <bind name="rp" value="'%' + roomPrice + '%'" />
         select * from room r
         <where>
             <if test="roomPrice!=null">
-                or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
+                or r.standardPrice LIKE #{rp} or r.vipPrice LIKE #{rp} or r.memberPrice LIKE #{rp} or r.discountPrice LIKE #{rp}
             </if>
             <if test="roomPrice=null">
                 1=0
@@ -54,13 +55,13 @@
                 and r.id=#{room.id}
             </if>
             <if test="room.type!=null and room.type!=''">
-                and r.type=#{room.type}
+                and r.type LIKE CONCAT('%',#{room.type},'%')
             </if>
             <if test="room.floor!=null and room.floor.name!=''">
-                and r.floor=#{room.floor.name}
+                and r.floor LIKE CONCAT('%',#{room.floor.name},'%')
             </if>
             <if test="room.status!=null and room.status!=''">
-                and r.`status`=#{room.status}
+                and r.`status` LIKE CONCAT('%',#{room.status},'%')
             </if>
         </if>
         </where>

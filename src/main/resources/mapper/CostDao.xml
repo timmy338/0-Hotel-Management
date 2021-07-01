@@ -25,7 +25,7 @@
 
     <select id="selectGoodsByName" resultType="com.zero.pojo.Goods">
         select * from goods
-        where name =#{goodsTypeName}
+        where name  LIKE CONCAT('%',#{goodsTypeName},'%')
     </select>
 
     <select id="selectCostByRoomId" resultType="com.zero.pojo.Cost">

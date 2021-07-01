@@ -27,6 +27,6 @@
     <select id="selectGoodsByType" resultType="Goods">
         select *
         from goods g
-        where g.typeid=#{type}
+        where g.typeid LIKE CONCAT('%',#{type},'%')
     </select>
 </mapper>

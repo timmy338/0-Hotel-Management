@@ -12,26 +12,27 @@
     <select id="selectRoomByType" resultType="com.zero.pojo.Room">
         select *
         from room join roomtype on room.type=roomtype.name
-        where roomtype.name=#{roomType}
+        where roomtype.name LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectRoomByStatus" resultType="com.zero.pojo.Room">
         select *
         from room
-        where room.status=#{roomStatus}
+        where room.status LIKE CONCAT('%',#{roomStatus},'%')
     </select>
 
     <select id="selectRoomByFloor" resultType="com.zero.pojo.Room">
         select *
         from room
-        where room.floor=#{floor}
+        where room.floor LIKE CONCAT('%',#{floor},'%')
     </select>
 
     <select id="selectRoomByPrice" resultType="Room">
+        <bind name="rp" value="'%' + roomPrice + '%'" />
         select * from room r
         <where>
             <if test="roomPrice!=null">
-                or r.standardPrice=#{roomPrice} or r.vipPrice=#{roomPrice} or r.memberPrice=#{roomPrice} or r.discountPrice=#{roomPrice}
+                or r.standardPrice like #{rp} or r.vipPrice like #{rp} or r.memberPrice like #{rp} or r.discountPrice like #{rp}
             </if>
             <if test="roomPrice=null">
                 1=0
@@ -54,7 +55,7 @@
         select *
         from checkin join roomregister on checkin.roomRegister=roomregister.id
         join room on roomregister.room=room.id
-        where room.type=#{roomType}
+        where room.type LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectCheckInByRoomId" resultType="com.zero.pojo.CheckIn">
@@ -75,7 +76,7 @@
         where id=#{checkInId};
         update roomregister
         set room=#{roomId}
-        where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId})
+        where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId});
     </update>
 
 </mapper>

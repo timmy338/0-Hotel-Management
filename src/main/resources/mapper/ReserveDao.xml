@@ -30,25 +30,25 @@
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
             join room on roomRegister.room=room.id
-        where room.type=#{roomType}
+        where room.type LIKE CONCAT('%',#{roomType},'%')
     </select>
 
     <select id="selectReserveByFloor" resultType="Reserve">
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
             join room on roomRegister.room=room.id
-        where room.floor=#{floor}
+        where room.floor LIKE CONCAT('%',#{floor},'%')
     </select>
 
     <select id="selectReserveByStatus" resultType="Reserve">
         select *
         from reserve
-        where reserve.status=#{reserveStatus}
+        where reserve.status LIKE CONCAT('%',#{reserveStatus},'%')
     </select>
 
     <select id="selectReserveByName" resultType="Reserve">
         select *
         from reserve join roomregister on reserve.roomRegister=roomregister.id
-        where roomregister.guestName=#{reserveGuestName}
+        where roomregister.guestName LIKE CONCAT('%',#{reserveGuestName},'%')
     </select>
 </mapper>
