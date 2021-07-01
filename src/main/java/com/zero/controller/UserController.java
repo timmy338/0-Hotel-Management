@@ -72,4 +72,15 @@ public class UserController {
         map.put("handle",isSuccess);
         return map;
     }
+
+    @RequestMapping("editUser")
+    @ResponseBody
+    public HashMap<String,Object> editUser(User user)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryUpdateUser:"+user);
+        boolean isSuccess=userService.updateUser(user)>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
 }
