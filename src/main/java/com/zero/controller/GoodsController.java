@@ -66,4 +66,14 @@ public class GoodsController {
         map.put("handle",isSuccess);
         return map;
     }
+
+    @RequestMapping("searchGoods")
+    @ResponseBody
+    public HashMap<String,Object> searchGoods(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<Goods> GoodsList= goodsService.selectGoodsById(Integer.parseInt(id));
+        map.put("List",GoodsList);
+        return map;
+    }
 }
