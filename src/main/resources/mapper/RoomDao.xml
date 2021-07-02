@@ -80,4 +80,8 @@
         limit 6 offset #{page};
     </select>
 
+    <select id="countAllRooms" resultType="java.lang.Integer">
+        select count(*) from room
+    </select>
+
 </mapper>

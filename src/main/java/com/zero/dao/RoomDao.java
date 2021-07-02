@@ -77,4 +77,10 @@ public interface RoomDao {
      * @return 分页查询客房列表
      */
     List<Room> getRoom(@Param("page") int page);
+
+    /**
+     * 计算房间总数
+     * @return 房间总数
+     */
+    int countAllRooms();
 }

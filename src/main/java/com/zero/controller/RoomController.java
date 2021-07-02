@@ -29,6 +29,8 @@ public class RoomController {
     {
         HashMap<String,Object> map=new HashMap<>();
         List<Room> roomList= roomService.getRoom(Integer.parseInt(page));
+        int count=roomService.countAllRooms();
+        map.put("count",count);
         map.put("List",roomList);
         return map;
     }

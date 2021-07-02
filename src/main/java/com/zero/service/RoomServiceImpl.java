@@ -66,4 +66,9 @@ public class RoomServiceImpl implements RoomService{
         int offset =6*(page-1);
         return roomDao.getRoom(offset);
     }
+
+    @Override
+    public int countAllRooms() {
+        return roomDao.countAllRooms();
+    }
 }
