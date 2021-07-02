@@ -1,13 +1,12 @@
-package com.zero.dao;
+package com.zero.service;
 
-import com.zero.pojo.Floor;
 import com.zero.pojo.Room;
-import com.zero.pojo.RoomType;
+import com.zero.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface RoomDao {
+public interface RoomService {
     /**
      * 增加客房
      * @param room 客房对象

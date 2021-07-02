@@ -67,12 +67,17 @@
         </where>
     </select>
 
-    <update id="UpdateRoom">
+    <update id="updateRoom">
         update room r
         set type=#{type},floor=#{floor},status=#{status},
             standardPrice=#{standardPrice},discountPrice=#{discountPrice},
             memberPrice=#{memberPrice},vipPrice=#{vipPrice},remarks=#{remarks}
         where id=#{id}
     </update>
+
+    <select id="getRoom" resultType="com.zero.pojo.Room">
+        select * from room
+        limit 6 offset #{page};
+    </select>
 
 </mapper>
