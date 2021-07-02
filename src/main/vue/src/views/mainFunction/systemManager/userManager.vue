@@ -58,7 +58,7 @@
             >
             </el-option>
           </el-select>
-          <el-input v-model="formInline.search" placeholder="输入"></el-input>
+          <el-input v-model="formInline.search"   @keyup.enter="onSearch()" placeholder="输入"></el-input>
 
           <el-form-item>
             <el-button type="primary" @click="onSearch()">查询</el-button>
@@ -148,7 +148,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="300"
+        :total="this.totalPage"
         @current-change="handleCurrentChange"
         :current-page="nowpage"
       >
@@ -180,8 +180,10 @@ export default {
     },
     onSearch() {
       console.log(this.formInline.search);
+
       if(this.value=="id")
       {
+
         this.searchById(this.formInline.search);
       }
       else
@@ -228,7 +230,7 @@ export default {
     getUser(page) {
       axios.get(this.http+"getUser?page="+page).then(
         (res) => {
-         /* console.log(res);*/
+          console.log(res);
 
           this.UserList = res.data.List;
           if(res.data.List.length==0 && this.nowpage!=1)
@@ -237,12 +239,12 @@ export default {
               this.getUser(this.nowpage);
           }
 
-         /* if (res.data.length / 6 != 0) {
-            this.totalPage = res.data.length / 6;
+         if (res.data.count / 6 != 0) {
+            this.totalPage = res.data.count / 6;
           } else {
-            this.totalPage = res.data.length / 6 - 1;
+            this.totalPage = res.data.count / 6 - 1;
           }
-          this.totalPage = this.totalPage * 10;*/
+          this.totalPage = this.totalPage * 10;
           /* console.log(this.totalPage); */
          
         },
@@ -364,7 +366,7 @@ export default {
       ],
       page: 0,
       nowpage: 1,
-      /*totalPage: 10,*/
+      totalPage: 10,
       addDialogVisible: false, //add彈出框屬性
       centerDialogVisible: false, //
       editId: "",
@@ -425,8 +427,8 @@ export default {
   width: 280px;
 }
 #userManager #page {
-  bottom: 20px;
-  left: 370px;
+  bottom: 0;
+  left:50%;
   position: absolute;
 }
 
