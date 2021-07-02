@@ -65,8 +65,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public List<Room> getRoom(int page) {
-        int offset =6*(page-1);
-        return roomDao.getRoom(offset);
+        return roomDao.getRoom(6*(page-1));
     }
 
     @Override

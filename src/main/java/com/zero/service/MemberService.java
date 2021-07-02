@@ -1,11 +1,11 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.Member;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface MemberDao {
+public interface MemberService {
     /**
      * 增加会员
      * @param Member 会员对象
@@ -49,8 +49,8 @@ public interface MemberDao {
 
     /**
      * 分页查询会员
-     * @param offset 偏移量
+     * @param page page
      * @return 会员List
      */
-    List<Member> getMembers(@Param("offset")Integer offset);
+    List<Member> getMembers(Integer page);
 }

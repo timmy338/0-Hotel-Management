@@ -35,4 +35,10 @@
         where m.name=#{memberName}
     </select>
 
+    <select id="getMembers" resultType="com.zero.pojo.Member">
+        select *
+        from member
+        limit 6 offset #{offset}
+    </select>
+
 </mapper>
