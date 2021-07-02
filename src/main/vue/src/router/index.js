@@ -8,6 +8,12 @@ const UserManager = () => import('../views/mainFunction/systemManager/userManage
 const LogManager = () => import('../views/mainFunction/systemManager/logManager')
 const RoomManager = () => import('../views/mainFunction/roomManager/roomManager')
 
+//房客管理頁面
+const Roomregister = () => import('../views/mainFunction/rommerManager/roomregister')
+const ReserveManager = () => import('../views/mainFunction/rommerManager/reserveManager')
+const Checkin = () => import('../views/mainFunction/rommerManager/checkin')
+const Checkout = () => import('../views/mainFunction/rommerManager/checkout')
+
 //基础信息维护頁面
 const FloorManager = () => import('../views/mainFunction/dataManager/floorManager')
 const GoodsManager = () => import('../views/mainFunction/dataManager/goodsManager')
@@ -71,6 +77,22 @@ const routes = [
       {
         path:'consumeManager',
         component:ConsumeManager
+      },
+      {
+        path:'roomregister',
+        component:Roomregister
+      },
+      {
+        path: 'reserveManager',
+        component:ReserveManager
+      },
+      {
+        path: 'checkin',
+        component:Checkin
+      },
+      {
+        path: 'checkout',
+        component:Checkout
       }
     ]
   },
