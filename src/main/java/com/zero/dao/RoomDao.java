@@ -69,7 +69,7 @@ public interface RoomDao {
      * @param room 客房对象
      * @return 返回查询到的客房列表
      */
-    List<Room> selectRoom(Room room);
+    List<Room> selectRoom(@Param("room") Room room);
 
     /**
      * 分页查询所有客房信息
