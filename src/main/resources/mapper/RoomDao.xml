@@ -35,11 +35,10 @@
     </select>
 
     <select id="selectRoomByPrice" resultType="Room">
-        <bind name="rp" value="'%' + roomPrice + '%'" />
         select * from room r
         <where>
             <if test="roomPrice!=null">
-                or r.standardPrice LIKE #{rp} or r.vipPrice LIKE #{rp} or r.memberPrice LIKE #{rp} or r.discountPrice LIKE #{rp}
+                or r.standardPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.vipPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.memberPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.discountPrice LIKE CONCAT('%',#{room.standardPrice},'%')
             </if>
             <if test="roomPrice=null">
                 1=0
@@ -48,7 +47,6 @@
     </select>
 
     <select id="selectRoom" resultType="Room">
-        <bind name="rp" value="'%' + room.standardPrice + '%'" />
         select * from room r
         <where>
         <if test="room!=null">
@@ -65,7 +63,7 @@
                 and r.`status`=#{room.status}
             </if>
             <if test="room.standardPrice!=null">
-                and (r.standardPrice LIKE #{rp} or r.vipPrice LIKE #{rp} or r.memberPrice LIKE #{rp} or r.discountPrice LIKE #{rp})
+                and (r.standardPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.vipPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.memberPrice LIKE CONCAT('%',#{room.standardPrice},'%') or r.discountPrice LIKE CONCAT('%',#{room.standardPrice},'%'))
             </if>
         </if>
         </where>
