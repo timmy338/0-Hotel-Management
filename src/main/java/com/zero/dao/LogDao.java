@@ -14,7 +14,7 @@ public interface LogDao {
      * @param uid 用户id
      * @return 满足条件的日志
      */
-    List<Log> selectLogByTimeAndUser(@Param("min") Timestamp min, @Param("max") Timestamp max,Integer uid);
+    List<Log> selectLogByTimeAndUser(@Param("min") Timestamp min, @Param("max") Timestamp max,@Param("uid") Integer uid);
 
     /**
      * 从时间段删除日志

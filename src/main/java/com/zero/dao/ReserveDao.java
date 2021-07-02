@@ -27,7 +27,7 @@ public interface ReserveDao {
      * @param id 预定编号
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int UpdateReserve(Integer id);
+    int UpdateReserve(@Param("id")Integer id);
 
     /**
      *通过预定单号查询预定

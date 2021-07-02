@@ -25,7 +25,7 @@ public interface MemberDao {
      * @param id 会员id
      * @return 0表明修改失败
      */
-    int updateMember(Integer id);
+    int updateMember(@Param("id")Integer id);
 
     /**
      * 查询所有会员
