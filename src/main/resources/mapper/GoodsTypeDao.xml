@@ -22,4 +22,14 @@
         select *
         from goodstype
     </select>
+
+    <select id="countAllGoodsTypes" resultType="java.lang.Integer">
+        select count(*) from goodstype
+    </select>
+
+    <select id="getGoodsType" resultType="com.zero.pojo.GoodsType">
+        select *
+        from goodstype
+        limit 6 offset #{offset}
+    </select>
 </mapper>

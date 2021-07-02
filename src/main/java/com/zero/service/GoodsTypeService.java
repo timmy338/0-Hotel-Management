@@ -32,4 +32,12 @@ public interface GoodsTypeService {
      * @return 一个带有所有商品类型的List
      */
     List<GoodsType> selectAllGoodsType();
+
+    List<GoodsType> getGoodsType(Integer page);
+
+    /**
+     * 获取货物类型总数
+     * @return 货物类型数量
+     */
+    int countAllGoodsTypes();
 }

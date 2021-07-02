@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class GoodsTypeServiceImpl implements GoodsTypeService{
 
+    private final GoodsTypeDao goodsTypeDao;
+
     @Autowired
-    private GoodsTypeDao goodsTypeDao;
+    public GoodsTypeServiceImpl(GoodsTypeDao goodsTypeDao) {
+        this.goodsTypeDao = goodsTypeDao;
+    }
 
     @Override
     public int insertGoodsType(GoodsType goodsType) {
@@ -33,5 +37,16 @@ public class GoodsTypeServiceImpl implements GoodsTypeService{
     @Override
     public List<GoodsType> selectAllGoodsType() {
         return goodsTypeDao.selectAllGoodsType();
+    }
+
+    @Override
+    public List<GoodsType> getGoodsType(Integer page) {
+        int TrueOffset=page*6-1;
+        return goodsTypeDao.getGoodsType(TrueOffset);
+    }
+
+    @Override
+    public int countAllGoodsTypes() {
+        return goodsTypeDao.countAllGoodsTypes();
     }
 }

@@ -32,4 +32,17 @@ public interface GoodsTypeDao {
      * @return 一个带有所有商品类型的List
      */
     List<GoodsType> selectAllGoodsType();
+
+    /**
+     * 分页获取货物类型
+     * @param offset 偏移数
+     * @return  货物List
+     */
+    List<GoodsType> getGoodsType(@Param("offset") Integer offset);
+
+    /**
+     * 获取货物类型总数
+     * @return 货物类型数量
+     */
+    int countAllGoodsTypes();
 }
