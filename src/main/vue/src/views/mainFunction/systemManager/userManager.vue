@@ -150,6 +150,7 @@
         layout="prev, pager, next"
         :total="300"
         @current-change="handleCurrentChange"
+        :current-page="nowpage"
       >
         <!--上面的屬性 :current-page="nowpage"-->
       </el-pagination>
@@ -167,11 +168,27 @@ export default {
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
-      this.addUser();
+      if(this.form.name==""||this.form.power==""|| this.form.pwd=="")
+      {
+        alert("请输入完整信息");
+      }
+      else
+      {
+        this.addUser();
+      }
+
     },
     onSearch() {
       console.log(this.formInline.search);
-      this.searchById(this.formInline.search);
+      if(this.value=="id")
+      {
+        this.searchById(this.formInline.search);
+      }
+      else
+      {
+        this.searchByName(this.formInline.search)
+      }
+
 
       /* this.searchById(); */
     },
@@ -214,6 +231,12 @@ export default {
          /* console.log(res);*/
 
           this.UserList = res.data.List;
+          if(res.data.List.length==0 && this.nowpage!=1)
+          {
+              this.nowpage--;
+              this.getUser(this.nowpage);
+          }
+
          /* if (res.data.length / 6 != 0) {
             this.totalPage = res.data.length / 6;
           } else {
@@ -232,12 +255,12 @@ export default {
           this.http+"addUser?uname=" +
             this.form.name +
             "&pwd=" +
-            this.form.pwd+"&power="+this.form
+            this.form.pwd+"&power="+this.form.power+"&remarks="+this.form.remarks
         )
         .then(
           (res) => {
             /* console.log("addFinish"); */
-            this.getUser();
+            this.getUser(this.nowpage);
           },
           (res) => {}
         );
@@ -249,7 +272,6 @@ export default {
         .then(
           (res) => {
             console.log(res.data);
-
             this.getUser(this.nowpage);
           },
           (res) => {}
@@ -257,34 +279,70 @@ export default {
 
     },
     searchById(search) {
-      axios
-        .get(
-          this.http+"getUserByID?id=" +
-            search
-        )
-        .then(
-          (res) => {
-            console.log(res);
-            this.UserList = res.data;
-          },
-          (res) => {}
-        );
+      if(search=="")
+      {
+        this.getUser(1);
+        this.nowpage=1;
+      }
+      else
+      {
+        axios
+            .get(
+                this.http+"searchUserById?id=" +
+                search
+            )
+            .then(
+                (res) => {
+                  /* console.log(res);*/
+
+                  this.UserList = res.data.List;
+                  this.nowpage=1;
+                },
+                (res) => {}
+            );
+      }
+
+    },
+    searchByName(search) {
+      if(search=="")
+      {
+        this.getUser(1);
+        this.nowpage=1;
+      }
+      else
+      {
+        axios
+            .get(
+                this.http+"searchUserByUname?uname=" +
+                search
+            )
+            .then(
+                (res) => {
+                  /* console.log(res);*/
+
+                  this.UserList = res.data.List;
+                  this.nowpage=1;
+                },
+                (res) => {}
+            );
+      }
+
     },
     editClick() {
       axios
         .get(
-          this.http+"updateUser?id=" +
+          this.http+"editUser?id="+
             this.editId +
             "&uname=" +
             this.form.name +
             "&pwd=" +
             this.form.pwd +
             "&power=" +
-            this.form.power
+            this.form.power+"&remarks="+this.form.remarks
         )
         .then(
           (res) => {
-            this.getUser();
+            this.getUser(this.nowpage);
             this.resetForm();
           },
           (res) => {}
@@ -372,7 +430,7 @@ export default {
   position: absolute;
 }
 
-#userManager #formDiv .el-table th,#userManager #formDiv .el-table tr,#userManager #formDiv .el-table__empty-block,#userManager .el-table__row
+#userManager #formDiv .el-table th,#userManager #formDiv .el-table tr,#userManager #formDiv .el-table__empty-block,#userManager .el-table__row td
 {
   border: 1px solid #CBCBCB;
  background-color: #EEEEEE;

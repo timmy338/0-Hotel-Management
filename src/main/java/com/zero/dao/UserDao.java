@@ -47,4 +47,10 @@ public interface UserDao {
      * @return 分页查询用户列表
      */
     List<User> getUser(@Param("page") int page);
+
+    /**
+     * 计算用户总数
+     * @return 用户总数
+     */
+    int countAllUsers();
 }

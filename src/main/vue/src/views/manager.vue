@@ -46,11 +46,10 @@
                 <span>房客管理</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="3-1" @click="clickFunction">客房预定管理</el-menu-item>
-                <el-menu-item index="3-2" @click="clickFunction">入住登记管理</el-menu-item>
-                <el-menu-item index="3-3" @click="clickFunction">预定转入住</el-menu-item>
-                <el-menu-item index="3-4" @click="clickFunction">换房管理</el-menu-item>
-                <el-menu-item index="3-5" @click="clickFunction">结帐管理</el-menu-item>
+                <el-menu-item index="reserveManager" @click="clickFunction">客房预定管理</el-menu-item>
+                <el-menu-item index="roomregister" @click="clickFunction">入住登记管理</el-menu-item>
+                <el-menu-item index="checkin" @click="clickFunction">预定转入住</el-menu-item>
+                <el-menu-item index="checkout" @click="clickFunction">结帐管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

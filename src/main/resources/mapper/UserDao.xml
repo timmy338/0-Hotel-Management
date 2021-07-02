@@ -34,4 +34,8 @@
         select * from user
         limit 6 offset #{page};
     </select>
+
+    <select id="countAllUsers" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
 </mapper>
