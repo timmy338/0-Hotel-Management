@@ -41,7 +41,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService{
 
     @Override
     public List<GoodsType> getGoodsType(Integer page) {
-        int TrueOffset=page*6-1;
+        int TrueOffset=6*(page-1);
         return goodsTypeDao.getGoodsType(TrueOffset);
     }
 
