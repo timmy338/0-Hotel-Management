@@ -132,7 +132,7 @@
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button @click="centerDialogVisible = false;resetForm()">取 消</el-button>
           <el-button
             type="primary"
             @click="
