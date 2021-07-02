@@ -22,4 +22,19 @@
         select *
         from roomtype
     </select>
+
+    <select id="selectRoomType" resultType="RoomType">
+        select *
+        from roomtype r
+        where r.name LIKE CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="getRoomType" resultType="com.zero.pojo.RoomType">
+        select * from roomtype
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllRoomTypes" resultType="java.lang.Integer">
+        select count(*) from roomtype
+    </select>
 </mapper>
