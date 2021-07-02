@@ -1,6 +1,5 @@
 package com.zero.controller;
 import com.zero.pojo.Room;
-import com.zero.pojo.User;
 import com.zero.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

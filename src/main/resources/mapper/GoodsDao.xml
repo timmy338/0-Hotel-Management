@@ -29,4 +29,13 @@
         from goods g
         where g.typeid LIKE CONCAT('%',#{type},'%')
     </select>
+
+    <select id="getGoods" resultType="com.zero.pojo.Goods">
+        select * from goods
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllGoods" resultType="java.lang.Integer">
+        select count(*) from goods
+    </select>
 </mapper>
