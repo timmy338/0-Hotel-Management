@@ -72,7 +72,7 @@
 
     <update id="changeRoom">
         update checkin
-        set preRoomID=(select roomregister.room from checkin join roomregister on checkin.roomRegister=roomregister.id where checkin.id=#{checkInId})
+        set preRoomID=(select room from(select roomregister.room from checkin join roomregister on checkin.roomRegister=roomregister.id where checkin.id=#{checkInId})as temp)
         where id=#{checkInId};
         update roomregister
         set room=#{roomId}
