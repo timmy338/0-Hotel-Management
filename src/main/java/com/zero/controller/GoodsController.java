@@ -14,7 +14,6 @@ import java.util.List;
 @Controller
 @RestController
 @CrossOrigin
-
 public class GoodsController {
     private final GoodsService goodsService;
 

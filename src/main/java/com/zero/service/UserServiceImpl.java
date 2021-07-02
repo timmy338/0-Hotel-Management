@@ -13,6 +13,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
+
     //改为构造器注入
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -46,8 +47,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getUser(int page) {
-        int offset =6*(page-1);
-        return userDao.getUser(offset);
+        return userDao.getUser(6*(page-1));
     }
 
     @Override

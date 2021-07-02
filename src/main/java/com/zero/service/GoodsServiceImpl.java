@@ -46,8 +46,7 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Override
     public List<Goods> getGoods(int page) {
-        int offset =6*(page-1);
-        return goodsDao.getGoods(offset);
+        return goodsDao.getGoods(6*(page-1));
     }
 
 

@@ -12,10 +12,12 @@ import java.util.List;
 @Transactional
 public class RoomServiceImpl implements RoomService{
     private final RoomDao roomDao;
+
     @Autowired
     public RoomServiceImpl(RoomDao roomDao){
         this.roomDao=roomDao;
     }
+
     @Override
     public int insertRoom(Room room) {
         return roomDao.insertRoom(room);
