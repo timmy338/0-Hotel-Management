@@ -63,6 +63,9 @@
             <if test="room.status!=null and room.status!=''">
                 and r.`status` LIKE CONCAT('%',#{room.status},'%')
             </if>
+            <if test="room.standardPrice!=null">
+                and (r.standardPrice LIKE #{rp} or r.vipPrice LIKE #{rp} or r.memberPrice LIKE #{rp} or r.discountPrice LIKE #{rp})
+            </if>
         </if>
         </where>
     </select>

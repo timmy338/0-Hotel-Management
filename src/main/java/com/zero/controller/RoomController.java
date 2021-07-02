@@ -68,5 +68,13 @@ public class RoomController {
         return map;
     }
 
-
+    @RequestMapping("selectRoom")
+    @ResponseBody
+    public HashMap<String,Object> selectRoom(Room room)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<Room> roomList= roomService.selectRoom(room);
+        map.put("List",roomList);
+        return map;
+    }
 }
