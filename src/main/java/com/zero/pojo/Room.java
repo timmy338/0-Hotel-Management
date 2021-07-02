@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
+    public Room getRoom()
+    {
+        return this;
+    }
     private Integer id;
     private String type;
     private String floor;
