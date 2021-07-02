@@ -3,35 +3,30 @@
     <div id="addAndSearch">
       <div id="add">
         <el-button type="text" @click="addDialogVisible = true"
-        >增加用户</el-button
+        >增加客房类型
+        </el-button
         >
         <el-dialog
-            title="增加用户"
+            title="增加客房类型"
             :visible.sync="addDialogVisible"
             width="50%"
             :before-close="handleClose"
         >
           <div>
             <el-form ref="form" :model="form" label-width="80px">
-              <el-form-item label="用户名">
+              <el-form-item label="类型名">
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
 
-              <el-form-item label="用户密码">
-                <el-input v-model="form.pwd"></el-input>
+              <el-form-item label="额定人数">
+                <el-input v-model="form.capacity"></el-input>
               </el-form-item>
 
               <el-form-item label="备注">
                 <el-input v-model="form.remarks"></el-input>
               </el-form-item>
 
-              <el-form-item label="权限">
-                <el-radio-group v-model="form.power">
-                  <el-radio label="管理员"></el-radio>
-                  <el-radio label="经理"></el-radio>
-                  <el-radio label="前台人员"></el-radio>
-                </el-radio-group>
-              </el-form-item>
+
             </el-form>
           </div>
           <span slot="footer" class="dialog-footer">
@@ -49,16 +44,9 @@
       </div>
       <div id="search">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-select v-model="value" filterable placeholder="请选择">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <el-input v-model="formInline.search"   @keyup.enter="onSearch()" placeholder="输入"></el-input>
+
+          <el-input v-model="formInline.search" @keyup.enter="onSearch()" placeholder="输入客房类型名"
+                    style="width: 140px;"></el-input>
 
           <el-form-item>
             <el-button type="primary" @click="onSearch()">查询</el-button>
@@ -68,19 +56,16 @@
     </div>
     <div id="formDiv">
       <el-table
-          :data="UserList"
+          :data="RoomTypeList"
           border
           style="width: 100%"
       >
-        <el-table-column fixed prop="id" label="用户编号" width="150">
+        <el-table-column fixed prop="name" label="类型名" width="270">
         </el-table-column>
-        <el-table-column prop="uname" label="用戶名" width="180">
+        <el-table-column prop="capacity" label="额定人数" width="270">
         </el-table-column>
-        <el-table-column prop="pwd" label="密码" width="180">
-        </el-table-column>
-        <el-table-column prop="power" label="权限" width="180">
-        </el-table-column>
-        <el-table-column prop="remarks" label="备注" width="268">
+
+        <el-table-column prop="remarks" label="备注" width="410">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
@@ -91,10 +76,12 @@
                 editButton(scope.row);
               "
                 size="small"
-            >编辑</el-button
+            >编辑
+            </el-button
             >
             <el-button @click="delClick(scope.row)" type="text" size="small"
-            >刪除</el-button
+            >刪除
+            </el-button
             >
           </template>
         </el-table-column>
@@ -110,25 +97,19 @@
       >
         <div>
           <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="用户名">
+            <el-form-item label="类型名">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-form-item label="用户密码" >
-              <el-input v-model="form.pwd"></el-input>
+            <el-form-item label="额定人数">
+              <el-input v-model="form.capacity"></el-input>
             </el-form-item>
 
             <el-form-item label="备注">
               <el-input v-model="form.remarks"></el-input>
             </el-form-item>
 
-            <el-form-item label="权限">
-              <el-radio-group v-model="form.power">
-                <el-radio label="管理员"></el-radio>
-                <el-radio label="经理"></el-radio>
-                <el-radio label="前台人员"></el-radio>
-              </el-radio-group>
-            </el-form-item>
+
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -162,32 +143,26 @@
 const axios = require("axios");
 export default {
   mounted() {
-    this.getUser("1");
+    this.getRoomType("1");
   },
   methods: {
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
-      if(this.form.name==""||this.form.power==""|| this.form.pwd=="")
-      {
+      if (this.form.name == "" || this.form.power == "" || this.form.capacity == "") {
         alert("请输入完整信息");
-      }
-      else
-      {
-        this.addUser();
+      } else {
+        this.addRoomType();
       }
 
     },
     onSearch() {
       console.log(this.formInline.search);
 
-      if(this.value=="id")
-      {
+      if (this.value == "id") {
 
         this.searchById(this.formInline.search);
-      }
-      else
-      {
+      } else {
         this.searchByName(this.formInline.search)
       }
 
@@ -198,18 +173,18 @@ export default {
       //刪除功能
       //row為當前用戶的數據
       console.log(row);
-      this.delUser(row.id);
+      this.delRoomType(row.id);
     },
     editButton(row) {
-      this.form.name = row.uname;
-      this.form.pwd = row.pwd;
+      this.form.name = row.name;
+      this.form.capacity = row.capacity;
       this.form.power = row.power;
       this.editId = row.id;
     },
 
     resetForm() {
       this.form.name = "";
-      this.form.pwd = "";
+      this.form.capacity = "";
       this.form.power = "";
       this.form.remarks = "";
     },
@@ -219,24 +194,24 @@ export default {
           .then((_) => {
             done();
           })
-          .catch((_) => {});
+          .catch((_) => {
+          });
     },
     handleCurrentChange(val) {
       /*console.log(val);*/
-      this.getUser(val);
-      this.nowpage=val;
+      this.getRoomType(val);
+      this.nowpage = val;
     },
 
-    getUser(page) {
-      axios.get(this.http+"getUser?page="+page).then(
+    getRoomType(page) {
+      axios.get(this.http + "getRoomType?page=" + page).then(
           (res) => {
             console.log(res);
 
-            this.UserList = res.data.List;
-            if(res.data.List.length==0 && this.nowpage!=1)
-            {
+            this.RoomTypeList = res.data.List;
+            if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
-              this.getUser(this.nowpage);
+              this.getRoomType(this.nowpage);
             }
 
             if (res.data.count / 6 != 0) {
@@ -248,84 +223,83 @@ export default {
             /* console.log(this.totalPage); */
 
           },
-          (res) => {}
+          (res) => {
+          }
       );
     },
-    addUser() {
+    addRoomType() {
       axios
           .get(
-              this.http+"addUser?uname=" +
+              this.http + "addRoomType?name=" +
               this.form.name +
-              "&pwd=" +
-              this.form.pwd+"&power="+this.form.power+"&remarks="+this.form.remarks
+              "&capacity=" +
+              this.form.capacity + "&remarks=" + this.form.remarks
           )
           .then(
               (res) => {
                 /* console.log("addFinish"); */
-                this.getUser(this.nowpage);
+                this.getRoomType(this.nowpage);
               },
-              (res) => {}
+              (res) => {
+              }
           );
     },
-    delUser(id) {
+    delRoomType(name) {
 
       axios
-          .get(this.http+"delUser?id=" + id)
+          .get(this.http + "delRoomType?id=" + name)
           .then(
               (res) => {
                 console.log(res.data);
-                this.getUser(this.nowpage);
+                this.getRoomType(this.nowpage);
               },
-              (res) => {}
+              (res) => {
+              }
           );
 
     },
     searchById(search) {
-      if(search=="")
-      {
-        this.getUser(1);
-        this.nowpage=1;
-      }
-      else
-      {
+      if (search == "") {
+        this.getRoomType(1);
+        this.nowpage = 1;
+      } else {
         axios
             .get(
-                this.http+"searchUserById?id=" +
+                this.http + "searchRoomTypeById?id=" +
                 search
             )
             .then(
                 (res) => {
                   /* console.log(res);*/
 
-                  this.UserList = res.data.List;
-                  this.nowpage=1;
+                  this.RoomTypeList = res.data.List;
+                  this.nowpage = 1;
                 },
-                (res) => {}
+                (res) => {
+                }
             );
       }
 
     },
     searchByName(search) {
-      if(search=="")
-      {
-        this.getUser(1);
-        this.nowpage=1;
-      }
-      else
-      {
+      if (search == "") {
+        this.getRoomType(1);
+        this.nowpage = 1;
+      } else {
         axios
             .get(
-                this.http+"searchUserByUname?uname=" +
+                this.http + "searchRoomTypeByUname?name=" +
                 search
             )
             .then(
                 (res) => {
                   /* console.log(res);*/
 
-                  this.UserList = res.data.List;
-                  this.nowpage=1;
+                  this.RoomTypeList = res.data.List;
+                  this.nowpage = 1;
                 },
-                (res) => {}
+                (res) => {
+                }
             );
       }
 
@@ -333,37 +307,29 @@ export default {
     editClick() {
       axios
           .get(
-              this.http+"editUser?id="+
+              this.http + "editRoomType?id=" +
               this.editId +
-              "&uname=" +
+              "&name=" +
               this.form.name +
-              "&pwd=" +
-              this.form.pwd +
-              "&power=" +
-              this.form.power+"&remarks="+this.form.remarks
+              "&capacity=" +
+              this.form.capacity +
+              "&remarks=" + this.form.remarks
           )
           .then(
               (res) => {
-                this.getUser(this.nowpage);
+                this.getRoomType(this.nowpage);
                 this.resetForm();
               },
-              (res) => {}
+              (res) => {
+              }
           );
     },
   },
 
   data() {
     return {
-      http:"http://localhost:8080/0_Hotel_Management_war/",
-      UserList: [
-        {
-          id:12,
-          uname:"timmy",
-          pwd:"1234",
-          power: "管理员",
-          remarks: "",
-        }
-      ],
+      http: "http://localhost:8080/0_Hotel_Management_war/",
+      RoomTypeList: [],
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -373,25 +339,14 @@ export default {
       form: {
         //用戶資料
         name: "",
-        pwd: "",
-        power: "",
-        remarks:"",
+        capacity: "",
+        remarks: "",
       },
       formInline: {
         //搜尋用戶
         search: "",
       },
-      options: [
-        {
-          value: "id",
-          label: "用户编号",
-        },
-        {
-          value: "name",
-          label: "用户名",
-        },
-      ],
-      value: "id",
+
     };
   },
 };
@@ -410,30 +365,35 @@ export default {
   width: 100%;
   height: 50px;
 }
+
 #roomtypeManager #addAndSearch .el-input {
   width: 200px;
 }
+
 #roomtypeManager #addAndSearch #add {
   float: left;
 }
+
 #roomtypeManager #addAndSearch #search {
   float: right;
   margin-right: 60px;
 }
+
 #roomtypeManager #addAndSearch #search .el-input {
   width: 120px;
 }
+
 #roomtypeManager #editDialog .el-input {
   width: 280px;
 }
+
 #roomtypeManager #page {
   bottom: 0;
-  left:50%;
+  left: 50%;
   position: absolute;
 }
 
-#roomtypeManager #formDiv .el-table th,#roomtypeManager #formDiv .el-table tr,#roomtypeManager #formDiv .el-table__empty-block,#roomtypeManager .el-table__row td
-{
+#roomtypeManager #formDiv .el-table th, #roomtypeManager #formDiv .el-table tr, #roomtypeManager #formDiv .el-table__empty-block, #roomtypeManager .el-table__row td {
   border: 1px solid #CBCBCB;
   background-color: #EEEEEE;
 }
