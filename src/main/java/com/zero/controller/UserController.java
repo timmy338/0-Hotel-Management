@@ -47,6 +47,8 @@ public class UserController {
     {
         HashMap<String,Object> map=new HashMap<>();
         List<User> userList= userService.getUser(Integer.parseInt(page));
+        int count=userService.countAllUsers();
+        map.put("count",count);
         map.put("List",userList);
         return map;
     }

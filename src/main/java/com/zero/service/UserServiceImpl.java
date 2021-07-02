@@ -49,4 +49,9 @@ public class UserServiceImpl implements UserService{
         int offset =6*(page-1);
         return userDao.getUser(offset);
     }
+
+    @Override
+    public int countAllUsers() {
+        return userDao.countAllUsers();
+    }
 }
