@@ -59,8 +59,8 @@
                 <span>基础信息维护</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="floorManager" @click="clickFunction">客房类型管理</el-menu-item>
-                <el-menu-item index="roomtypeManager" @click="clickFunction">楼层管理</el-menu-item>
+                <el-menu-item index="roomtypeManager" @click="clickFunction">客房类型管理</el-menu-item>
+                <el-menu-item index="floorManager" @click="clickFunction">楼层管理</el-menu-item>
                 <el-menu-item index="goodstypeManager" @click="clickFunction">商品类别管理</el-menu-item>
                 <el-menu-item index="goodsManager" @click="clickFunction">商品管理</el-menu-item>
                 <el-menu-item index="memberManager" @click="clickFunction">会员管理</el-menu-item>
