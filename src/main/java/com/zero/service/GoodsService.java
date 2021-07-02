@@ -1,18 +1,17 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.Goods;
-import com.zero.pojo.GoodsType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface GoodsDao {
+public interface GoodsService {
     /**
      * 增加商品
      * @param goods 商品对象
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-     int insertGoods(Goods goods);
+    int insertGoods(Goods goods);
 
     /**
      * 删除商品
