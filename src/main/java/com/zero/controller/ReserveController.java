@@ -33,4 +33,14 @@ public class ReserveController {
         map.put("handle",isSuccess);
         return map;
     }
+
+    @RequestMapping("getReserve")
+    @ResponseBody
+    public HashMap<String,Object> getReserve(String page)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("count",reserveService.countAllReserves());
+        map.put("List",reserveService.getReserve(Integer.parseInt(page)));
+        return map;
+    }
 }
