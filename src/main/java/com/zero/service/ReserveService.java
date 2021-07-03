@@ -1,12 +1,11 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.Reserve;
-import com.zero.pojo.RoomType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ReserveDao {
+public interface ReserveService {
     //查询客房信息请调用RoomDao接口
     /**
      * 增加预定
