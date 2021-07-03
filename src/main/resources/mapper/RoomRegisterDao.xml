@@ -3,6 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zero.dao.RoomRegisterDao">
 
+    <insert id="insertRoomRegister">
+        insert into roomregister
+        values (#{id},#{room},#{deposit},#{guestName},#{guestIdType},#{guestId},#{tel},#{arriveTime},#{leaveTime},#{guestCount},#{memberId})
+    </insert>
+
     <select id="selectRoomRegisterById" resultType="RoomRegister">
         select *
         from roomregister r
