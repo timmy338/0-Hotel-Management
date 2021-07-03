@@ -357,11 +357,7 @@ export default {
       http:"http://localhost:8080/0_Hotel_Management_war/",
       UserList: [
         {
-          id:12,
-          uname:"timmy",
-          pwd:"1234",
-          power: "管理员",
-          remarks: "",
+
         }
       ],
       page: 0,
