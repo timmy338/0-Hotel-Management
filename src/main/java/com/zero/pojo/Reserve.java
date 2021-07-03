@@ -13,7 +13,7 @@ public class Reserve {
     private Integer roomRegister;
     private Integer id;
     private String status;
-    private User user;
+    private Integer user;
     private Date reserveDate;
     private String remarks;
 }
