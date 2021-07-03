@@ -51,4 +51,13 @@
         from reserve join roomregister on reserve.roomRegister=roomregister.id
         where roomregister.guestName LIKE CONCAT('%',#{reserveGuestName},'%')
     </select>
+
+    <select id="getReserve" resultType="com.zero.pojo.Reserve">
+        select * from reserve
+        limit 6 offset #{page};
+    </select>
+
+    <select id="countAllReserves" resultType="java.lang.Integer">
+        select count(*) from reserve
+    </select>
 </mapper>
