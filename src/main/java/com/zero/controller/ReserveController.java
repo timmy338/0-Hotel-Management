@@ -43,4 +43,15 @@ public class ReserveController {
         map.put("List",reserveService.getReserve(Integer.parseInt(page)));
         return map;
     }
+
+    @RequestMapping("delReserve")
+    @ResponseBody
+    public HashMap<String,Object> delReserve(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryDelReserve:ID:"+id);
+        boolean isSuccess= reserveService.deleteReserve(Integer.parseInt(id))>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
 }

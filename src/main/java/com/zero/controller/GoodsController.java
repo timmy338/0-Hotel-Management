@@ -39,7 +39,7 @@ public class GoodsController {
     public HashMap<String,Object> delGoods(String id)
     {
         HashMap<String,Object> map=new HashMap<>();
-        System.out.println("TryDelGods:ID:"+id);
+        System.out.println("TryDelGoods:ID:"+id);
         boolean isSuccess= goodsService.deleteGoods(Integer.parseInt(id))>0;
         map.put("handle",isSuccess);
         return map;
