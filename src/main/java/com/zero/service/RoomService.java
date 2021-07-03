@@ -87,11 +87,11 @@ public interface RoomService {
      * 计算客房类型总数
      * @return 类型总数
      */
-    int countRoomTypes();
+    List<String> countRoomTypes();
 
     /**
      * 计算楼层类型总数
      * @return 楼层类型总数
      */
-    int countFloorTypes();
+    List<String> countFloorTypes();
 }

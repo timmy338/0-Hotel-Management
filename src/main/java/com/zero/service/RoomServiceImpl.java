@@ -74,12 +74,12 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public int countRoomTypes() {
+    public List<String> countRoomTypes() {
         return roomDao.countRoomTypes();
     }
 
     @Override
-    public int countFloorTypes() {
+    public List<String> countFloorTypes() {
         return roomDao.countFloorTypes();
     }
 }
