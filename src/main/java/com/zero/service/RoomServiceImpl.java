@@ -72,4 +72,14 @@ public class RoomServiceImpl implements RoomService{
     public int countAllRooms() {
         return roomDao.countAllRooms();
     }
+
+    @Override
+    public int countRoomTypes() {
+        return roomDao.countRoomTypes();
+    }
+
+    @Override
+    public int countFloorTypes() {
+        return roomDao.countFloorTypes();
+    }
 }

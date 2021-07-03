@@ -82,4 +82,16 @@ public interface RoomService {
      * @return 房间总数
      */
     int countAllRooms();
+
+    /**
+     * 计算客房类型总数
+     * @return 类型总数
+     */
+    int countRoomTypes();
+
+    /**
+     * 计算楼层类型总数
+     * @return 楼层类型总数
+     */
+    int countFloorTypes();
 }
