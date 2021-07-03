@@ -22,10 +22,10 @@ public interface MemberService {
 
     /**
      * 修改会员
-     * @param id 会员id
+     * @param member 会员
      * @return 0表明修改失败
      */
-    int updateMember(@Param("id")Integer id);
+    int updateMember(Member member);
 
     /**
      * 查询所有会员
@@ -53,4 +53,10 @@ public interface MemberService {
      * @return 会员List
      */
     List<Member> getMembers(Integer page);
+
+    /**
+     * 查询会员总数
+     * @return 会员总数
+     */
+    int countAllMembers();
 }

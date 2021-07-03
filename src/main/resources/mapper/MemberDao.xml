@@ -41,4 +41,8 @@
         limit 6 offset #{offset}
     </select>
 
+    <select id="countAllMembers" resultType="java.lang.Integer">
+    select count(*) from member
+    </select>
+
 </mapper>
