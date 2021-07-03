@@ -10,12 +10,27 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoomRegisterImpl implements RoomRegisterService{
+public class RoomRegisterServiceImpl implements RoomRegisterService{
     private final RoomRegisterDao roomRegisterDao;
 
     @Autowired
-    public RoomRegisterImpl(RoomRegisterDao roomRegisterDao) {
+    public RoomRegisterServiceImpl(RoomRegisterDao roomRegisterDao) {
         this.roomRegisterDao = roomRegisterDao;
+    }
+
+    @Override
+    public int insertRoomRegister(RoomRegister roomRegister) {
+        return roomRegisterDao.insertRoomRegister(roomRegister);
+    }
+
+    @Override
+    public int deleteRoomRegister(Integer roomRegisterId) {
+        return roomRegisterDao.deleteRoomRegister(roomRegisterId);
+    }
+
+    @Override
+    public int updateRoomRegister(RoomRegister roomRegister) {
+        return roomRegisterDao.updateRoomRegister(roomRegister);
     }
 
     @Override

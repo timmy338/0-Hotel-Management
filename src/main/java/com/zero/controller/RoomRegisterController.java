@@ -1,6 +1,5 @@
 package com.zero.controller;
 
-import com.zero.pojo.Room;
 import com.zero.pojo.RoomRegister;
 import com.zero.service.RoomRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,39 @@ public class RoomRegisterController {
     @Autowired
     public RoomRegisterController(RoomRegisterService roomRegisterService){
         this.roomRegisterService=roomRegisterService;
+    }
+
+    @RequestMapping("delRoomRegister")
+    @ResponseBody
+    public HashMap<String,Object> delRoomRegister(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryDelRoomRegister:ID:"+id);
+        boolean isSuccess= roomRegisterService.deleteRoomRegister(Integer.parseInt(id))>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
+
+    @RequestMapping("addRoomRegister")
+    @ResponseBody
+    public HashMap<String,Object> addRoomRegister(RoomRegister roomRegister)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryAddRoomRegister:"+roomRegister);
+        boolean isSuccess=roomRegisterService.insertRoomRegister(roomRegister)>0;
+        map.put("handle",isSuccess);
+        return map;
+    }
+
+    @RequestMapping("editRoomRegister")
+    @ResponseBody
+    public HashMap<String,Object> editRoomRegister(RoomRegister roomRegister)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryUpdateRoomRegister:"+roomRegister);
+        boolean isSuccess=roomRegisterService.updateRoomRegister(roomRegister)>0;
+        map.put("handle",isSuccess);
+        return map;
     }
 
     @RequestMapping("searchRoomRegister")
