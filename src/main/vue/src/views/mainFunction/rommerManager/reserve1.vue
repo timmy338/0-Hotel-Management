@@ -68,8 +68,97 @@
         </el-table-column>
         <el-table-column prop="remarks" label="备注" width="150">
         </el-table-column>
+        <el-table-column label="操作" width="130">
+          <template slot-scope="scope">
+            <el-button
+                type="text"
+                @click="
+                centerDialogVisible = true;
+                editButton(scope.row);
+              "
+                size="small"
+            >預定
+            </el-button
+            >
+
+          </template>
+        </el-table-column>
 
       </el-table>
+    </div>
+
+    <div id="editDialog">
+      <el-dialog
+          title="预定信息"
+          :visible.sync="centerDialogVisible"
+          width="30%"
+          center
+      >
+        <div>
+          <el-form ref="form" :model="form" label-width="80px">
+
+            <el-form-item label="预定人">
+              <el-input v-model="form.guestName"></el-input>
+            </el-form-item>
+
+            <el-form-item label="证件类别">
+              <el-select v-model="form.guestIdType" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in floorOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="证件号码">
+              <el-input v-model="form.guestId"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话">
+              <el-input v-model="form.tel"></el-input>
+            </el-form-item>
+
+            <div class="block">
+              <el-date-picker
+                  v-model="arriveTime"
+                  type="date"
+                  placeholder="抵店日期">
+              </el-date-picker>
+            </div>
+
+            <div class="block">
+              <el-date-picker
+                  v-model="leaveTime"
+                  type="date"
+                  placeholder="离店日期">
+              </el-date-picker>
+            </div>
+
+            <el-form-item label="入住人数">
+              <el-input v-model="form.guestCount "></el-input>
+            </el-form-item>
+
+            <el-form-item label="会员编号">
+              <el-input v-model="form.memberId"></el-input>
+            </el-form-item>
+
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="centerDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button
+              type="primary"
+              @click="
+              centerDialogVisible = false;
+              editClick();
+            "
+          >确 定</el-button
+          >
+        </span>
+      </el-dialog>
     </div>
 
     <div id="page">
@@ -296,6 +385,8 @@ export default {
       UserList: [
         {}
       ],
+      arriveTime:'',
+      leaveTime:'',
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -306,12 +397,13 @@ export default {
         //用戶資料
         type: "",
         floor: "",
-        status: "",
+        guestName: "",
         standardPrice: "",
-        discountPrice: "",
-        memberPrice: "",
-        vipPrice: "",
-        remarks: "",
+        guestIdType: "",
+        guestId: "",
+        tel: "",
+        guestCount: "",
+        memberId: "",
       },
       formInline: {
         //搜尋用戶
@@ -340,21 +432,14 @@ export default {
       ],
       floorOptions: [
         {
-          value: "一楼",
-          label: "一楼",
+          value: "身份证",
+          label: "身份证",
         },
         {
-          value: "二楼",
-          label: "二楼",
+          value: "居住证",
+          label: "居住证",
         },
-        {
-          value: "三楼",
-          label: "三楼",
-        },
-        {
-          value: "",
-          label: "无",
-        }
+
       ],
       statusOptions: [
         {
