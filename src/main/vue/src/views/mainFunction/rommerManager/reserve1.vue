@@ -27,7 +27,7 @@
           </el-select>
 
           <span class="searchSpan">状态: </span>
-          <el-select v-model="form.status" filterable placeholder="请选择">
+          <el-select v-model="formInline.status" filterable placeholder="请选择">
             <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -104,7 +104,7 @@
             <el-form-item label="证件类别">
               <el-select v-model="form.guestIdType" filterable placeholder="请选择">
                 <el-option
-                    v-for="item in floorOptions"
+                    v-for="item in guestTypeOptions"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -121,18 +121,13 @@
             </el-form-item>
 
             <div class="block">
+              <span class="demonstration">默认</span>
               <el-date-picker
-                  v-model="arriveTime"
-                  type="date"
-                  placeholder="抵店日期">
-              </el-date-picker>
-            </div>
-
-            <div class="block">
-              <el-date-picker
-                  v-model="leaveTime"
-                  type="date"
-                  placeholder="离店日期">
+                  v-model="Time"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
               </el-date-picker>
             </div>
 
@@ -153,7 +148,7 @@
               type="primary"
               @click="
               centerDialogVisible = false;
-              editClick();
+              addClick();
             "
           >确 定</el-button
           >
@@ -182,56 +177,58 @@ export default {
     this.getRoom("1");
   },
   methods: {
-    onSubmit() {
-      //增加用戶按鈕
-      console.log(this.form);
-      if (this.inspectInput()) {
-        alert("请输入完整信息");
-      } else {
-        this.addRoom();
-      }
 
-    },
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
     },
-    inspectSearch() {
-      return this.formInline.searchId=="" || this.formInline.type == "" || this.form.status == "" || this.formInline.floor == "" || this.form.standardPrice == ""
-    },
+
     onSearch() {
       console.log(this.formInline);
-
       this.selectRoom();
-
-      /* this.selectRoom(); */
     },
     delClick(row) {
       //刪除功能
       //row為當前用戶的數據
-      console.log(row);
+      /*console.log(row);*/
       this.delRoom(row.id);
     },
+    getM(month) {
+      if (month < 10) {
+        return '0' + month;
+      } else {
+        return month;
+      }
+    },
+    parseTime() {
+      for (var i = 0; i < 2; i++) {
+        var newDate = this.Time[i].getFullYear() + '-' + this.getM(this.Time[i].getMonth() + 1) + '-' + this.getM(this.Time[i].getDate()) +
+            '/' + this.getM(this.Time[i].getHours()) + ':' + this.getM(this.Time[i].getMinutes()) + ':' + this.getM(this.Time[i].getSeconds());
+        /*  console.log(newDate);*/
+        this.Time[i] = newDate;
+      }
+
+    },
+
     editButton(row) {
-      this.form.type = row.type;
-      this.form.floor = row.floor;
-      this.form.status = row.status;
-      this.form.standardPrice = row.standardPrice;
-      this.form.discountPrice = row.discountPrice;
-      this.form.memberPrice = row.memberPrice;
-      this.form.vipPrice = row.vipPrice;
-      console.log(this.form);
+      this.form.guestName = row.guestName;
+      this.form.guestIdType = row.guestIdType;
+      this.form.guestId = row.guestId;
+      this.form.tel = row.tel;
+      this.form.guestCount = row.guestCount;
+      this.form.memberId = row.memberId;
+      /*   console.log(this.form);*/
       this.editId = row.id;
     },
 
     resetForm() {
-      this.form.type = "";
-      this.form.floor = "";
-      this.form.status = "";
-      this.form.standardPrice = "";
-      this.form.discountPrice = "";
-      this.form.memberPrice = "";
-      this.form.vipPrice = "";
-      this.form.remarks = "";
+      this.form.guestName = "";
+      this.form.guestIdType = "";
+      this.form.guestId = "";
+      this.form.tel = "";
+      this.form.guestCount = "";
+      this.form.memberId = "";
+      this.arriveTime = "";
+      this.leaveTime = "";
     },
     handleClose(done) {
       //彈出框屬性
@@ -249,11 +246,14 @@ export default {
     },
 
     getRoom(page) {
+
       axios.get(this.http + "getRoom?page=" + page).then(
           (res) => {
-            console.log(res);
+            /*console.log(res);*/
 
             this.UserList = res.data.List;
+            this.floorOption = res.data.OptionFloor;
+            this.typeOption = res.data.OptionType;
             if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
               this.getRoom(this.nowpage);
@@ -265,6 +265,7 @@ export default {
               this.totalPage = res.data.count / 6 - 1;
             }
             this.totalPage = this.totalPage * 10;
+            this.getOption();
             /* console.log(this.totalPage); */
 
           },
@@ -272,27 +273,33 @@ export default {
           }
       );
     },
-    addRoom() {
-      axios
-          .get(
-              this.http + "addRoom?type=" +
-              this.form.type +
-              "&floor=" +
-              this.form.floor + "&status=" + this.form.status +
-              "&standardPrice=" + this.form.standardPrice +
-              "&discountPrice=" + this.form.discountPrice +
-              "&memberPrice=" + this.form.memberPrice +
-              "&vipPrice=" + this.form.vipPrice +
-              "&remarks=" + this.form.remarks
-          )
-          .then(
-              (res) => {
-                /* console.log("addFinish"); */
-                this.getRoom(this.nowpage);
-              },
-              (res) => {
-              }
-          );
+    getOption() {
+      this.typeOptions = [];
+      this.floorOptions = [];
+      var share = {
+        value: "",
+        label: "无",
+      }
+      this.typeOptions.push(share);
+      this.floorOptions.push(share);
+
+      for (var i = 0; i < this.typeOption.length; i++) {
+        var add = {
+          value: this.typeOption[i],
+          label: this.typeOption[i],
+        }
+        this.typeOptions.push(add);
+      }
+
+      for (var i = 0; i < this.floorOption.length; i++) {
+        var add = {
+          value: this.floorOption[i],
+          label: this.floorOption[i],
+        }
+        this.floorOptions.push(add);
+      }
+      /*console.log(this.floorOption);*/
+
     },
     delRoom(id) {
 
@@ -300,7 +307,7 @@ export default {
           .get(this.http + "delRoom?id=" + id)
           .then(
               (res) => {
-                console.log(res.data);
+                /*console.log(res.data);*/
                 this.getRoom(this.nowpage);
               },
               (res) => {
@@ -309,75 +316,50 @@ export default {
 
     },
     selectRoom() {
-      if (this.inspectSearch()) {
-        this.getRoom(1);
-        this.nowpage = 1;
-      } else {
-        axios
-            .get(
-                this.http + "selectRoom?id=" +
-                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.form.status+"&standardPrice="+this.formInline.standardPrice
-            )
-            .then(
-                (res) => {
-                  /* console.log(res);*/
-
-                  this.UserList = res.data.List;
-                  this.nowpage = 1;
-                },
-                (res) => {
-                }
-            );
-      }
-
-    },
-    searchByName(search) {
-      if (inspectSearch == true) {
-        this.getRoom(1);
-        this.nowpage = 1;
-      } else {
-        axios
-            .get(
-                this.http + "searchUserByUname?type=" +
-                search
-            )
-            .then(
-                (res) => {
-                  /* console.log(res);*/
-
-                  this.UserList = res.data.List;
-                  this.nowpage = 1;
-                },
-                (res) => {
-                }
-            );
-      }
-
-    },
-    editClick() {
-
       axios
           .get(
-              this.http + "editRoom?id="+this.editId+"&type=" +
-              this.form.type +
-              "&floor=" +
-              this.form.floor + "&status=" + this.form.status +
-              "&standardPrice=" + this.form.standardPrice +
-              "&discountPrice=" + this.form.discountPrice +
-              "&memberPrice=" + this.form.memberPrice +
-              "&vipPrice=" + this.form.vipPrice +
-              "&remarks=" + this.form.remarks
+              this.http + "selectRoom?id=" +
+              this.formInline.searchId + "&type=" + this.formInline.type + "&floor=" + this.formInline.floor + "&status=" + this.formInline.status + "&standardPrice=" + this.formInline.standardPrice
           )
           .then(
               (res) => {
+                /* console.log(res);*/
+
+                this.UserList = res.data.List;
+                this.nowpage = 1;
+              },
+              (res) => {
+              }
+          );
+    },
+    addClick() {
+      this.parseTime();
+      axios
+          .get(
+              this.http + "addReserve?id=" + this.editId + "&guestName=" +
+              this.form.guestName +
+              "&guestIdType=" +
+              this.form.guestIdType + "&guestId=" + this.form.guestId +
+              "&tel=" + this.form.tel +
+              "&arriveTime=" + this.Time[0] +
+              "&leaveTime=" + this.Time[1] +
+              "&guestCount=" + this.form.guestCount +
+              "&memberId=" + this.form.memberId
+          )
+          .then(
+              (res) => {
+
                 this.getRoom(this.nowpage);
                 this.resetForm();
               },
               (res) => {
               }
           );
+
     },
   },
+
+
 
   data() {
     return {
@@ -385,8 +367,11 @@ export default {
       UserList: [
         {}
       ],
+      floorOption:[],
+      typeOption:[],
       arriveTime:'',
       leaveTime:'',
+      Time:[],
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -414,23 +399,10 @@ export default {
         standardPrice:"",
       },
       typeOptions: [
-        {
-          value: "单人间",
-          label: "单人间",
-        },
-        {
-          value: "双人间",
-          label: "双人间",
-        },
-        {
-          value: "豪华双人间",
-          label: "豪华双人间",
-        }, {
-          value: "",
-          label: "无",
-        }
+
       ],
-      floorOptions: [
+      guestTypeOptions:
+      [
         {
           value: "身份证",
           label: "身份证",
@@ -439,6 +411,9 @@ export default {
           value: "居住证",
           label: "居住证",
         },
+
+      ],
+      floorOptions: [
 
       ],
       statusOptions: [

@@ -110,7 +110,7 @@
           </el-select>
 
           <span class="searchSpan">状态: </span>
-          <el-select v-model="form.status" filterable placeholder="请选择">
+          <el-select v-model="formInline.status" filterable placeholder="请选择">
             <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -282,12 +282,12 @@ const axios = require("axios");
 export default {
   mounted() {
     this.getRoom("1");
-    this.getOption();
+
   },
   methods: {
     onSubmit() {
       //增加用戶按鈕
-       console.log(this.form);
+       /*console.log(this.form);*/
       if (this.inspectInput()) {
         alert("请输入完整信息");
       } else {
@@ -297,21 +297,40 @@ export default {
     },
     getOption()
     {
+      this.typeOptions=[];
+      this.floorOptions=[];
       var share=  {
         value: "",
         label: "无",
       }
       this.typeOptions.push(share);
       this.floorOptions.push(share);
-      console.log(this.typeOptions);
-      console.log(this.floorOptions);
+
+      /*console.log(this.floorOptions);*/
+     for (var i=0;i<this.typeOption.length;i++)
+      {
+        var add=  {
+          value: this.typeOption[i],
+          label: this.typeOption[i],
+        }
+        this.typeOptions.push(add);
+      }
+
+      for (var i=0;i<this.floorOption.length;i++)
+      {
+        var add=  {
+          value: this.floorOption[i],
+          label: this.floorOption[i],
+        }
+        this.floorOptions.push(add);
+      }
+      /*console.log(this.floorOption);*/
+
     },
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
     },
-    inspectSearch() {
-      return this.formInline.searchId=="" || this.formInline.type == "" || this.form.status == "" || this.formInline.floor == "" || this.form.standardPrice == ""
-    },
+
     onSearch() {
       console.log(this.formInline);
 
@@ -322,7 +341,7 @@ export default {
     delClick(row) {
       //刪除功能
       //row為當前用戶的數據
-      console.log(row);
+     /* console.log(row);*/
       this.delRoom(row.id);
     },
     editButton(row) {
@@ -333,7 +352,7 @@ export default {
       this.form.discountPrice = row.discountPrice;
       this.form.memberPrice = row.memberPrice;
       this.form.vipPrice = row.vipPrice;
-      console.log(this.form);
+     /* console.log(this.form);*/
       this.editId = row.id;
     },
 
@@ -365,9 +384,12 @@ export default {
     getRoom(page) {
       axios.get(this.http + "getRoom?page=" + page).then(
           (res) => {
-            console.log(res);
+            /*console.log(res);*/
 
             this.UserList = res.data.List;
+            this.floorOption=res.data.OptionFloor;
+            this.typeOption=res.data.OptionType;
+
             if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
               this.getRoom(this.nowpage);
@@ -379,6 +401,7 @@ export default {
               this.totalPage = res.data.count / 6 - 1;
             }
             this.totalPage = this.totalPage * 10;
+            this.getOption();
             /* console.log(this.totalPage); */
 
           },
@@ -414,7 +437,7 @@ export default {
           .get(this.http + "delRoom?id=" + id)
           .then(
               (res) => {
-                console.log(res.data);
+               /* console.log(res.data);*/
                 this.getRoom(this.nowpage);
               },
               (res) => {
@@ -423,18 +446,14 @@ export default {
 
     },
     selectRoom() {
-      if (this.inspectSearch()) {
-        this.getRoom(1);
-        this.nowpage = 1;
-      } else {
         axios
             .get(
                 this.http + "selectRoom?id=" +
-                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.form.status+"&standardPrice="+this.formInline.standardPrice
+                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.formInline.status+"&standardPrice="+this.formInline.standardPrice
             )
             .then(
                 (res) => {
-                  /* console.log(res);*/
+                  console.log(res);
 
                   this.UserList = res.data.List;
                   this.nowpage = 1;
@@ -442,32 +461,10 @@ export default {
                 (res) => {
                 }
             );
-      }
+
 
     },
-    searchByName(search) {
-      if (inspectSearch == true) {
-        this.getRoom(1);
-        this.nowpage = 1;
-      } else {
-        axios
-            .get(
-                this.http + "searchUserByUname?type=" +
-                search
-            )
-            .then(
-                (res) => {
-                  /* console.log(res);*/
 
-                  this.UserList = res.data.List;
-                  this.nowpage = 1;
-                },
-                (res) => {
-                }
-            );
-      }
-
-    },
     editClick() {
 
       axios
@@ -499,6 +496,8 @@ export default {
       UserList: [
         {}
       ],
+      floorOption:[],
+      typeOption:[],
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -507,7 +506,15 @@ export default {
       editId: "",
       form: {
         //用戶資料
-        id:"",
+        type: "",
+        floor: "",
+        status: "",
+        standardPrice: "",
+        discountPrice: "",
+        memberPrice: "",
+        vipPrice: "",
+        remarks: "",
+      /*  id:"",
         room:"",
         type: "",
         standardPrice: "",
@@ -519,7 +526,7 @@ export default {
         arriveTime:"",
         leaveTime:"",
         guestCount:"",
-        memberId:"",
+        memberId:"",*/
       },
       formInline: {
         //搜尋用戶
@@ -530,32 +537,9 @@ export default {
         standardPrice:"",
       },
       typeOptions: [
-        {
-          value: "单人间",
-          label: "单人间",
-        },
-        {
-          value: "双人间",
-          label: "双人间",
-        },
-        {
-          value: "豪华双人间",
-          label: "豪华双人间",
-        }
+
       ],
       floorOptions: [
-        {
-          value: "一楼",
-          label: "一楼",
-        },
-        {
-          value: "二楼",
-          label: "二楼",
-        },
-        {
-          value: "三楼",
-          label: "三楼",
-        },
 
       ],
       statusOptions: [
