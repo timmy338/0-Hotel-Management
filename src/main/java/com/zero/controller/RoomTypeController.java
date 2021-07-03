@@ -1,6 +1,7 @@
 package com.zero.controller;
 
 import com.zero.pojo.RoomType;
+import com.zero.pojo.User;
 import com.zero.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,17 @@ public class RoomTypeController {
         HashMap<String,Object> map=new HashMap<>();
         List<RoomType> roomTypeList= roomTypeService.selectRoomType(name);
         map.put("List",roomTypeList);
+        return map;
+    }
+
+    @RequestMapping("editRoomType")
+    @ResponseBody
+        public HashMap<String,Object> editRoomType(RoomType roomType)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        System.out.println("TryUpdateRoomType:"+roomType);
+        boolean isSuccess=roomTypeService.updateRoomType(roomType)>0;
+        map.put("handle",isSuccess);
         return map;
     }
 }

@@ -46,7 +46,7 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 
     @Override
     public List<RoomType> getRoomType(int page) {
-        return roomTypeDao.getRoomType(page);
+        return roomTypeDao.getRoomType(6*(page-1));
     }
 
     @Override

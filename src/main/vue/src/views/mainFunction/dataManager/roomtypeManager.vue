@@ -149,7 +149,7 @@ export default {
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
-      if (this.form.name == "" || this.form.power == "" || this.form.capacity == "") {
+      if (this.form.name == "" || this.form.capacity == "") {
         alert("请输入完整信息");
       } else {
         this.addRoomType();
@@ -158,34 +158,26 @@ export default {
     },
     onSearch() {
       console.log(this.formInline.search);
-
-      if (this.value == "id") {
-
-        this.searchById(this.formInline.search);
-      } else {
-        this.searchByName(this.formInline.search)
-      }
+      this.searchRoomType(this.formInline.search)
 
 
-      /* this.searchById(); */
+
     },
     delClick(row) {
       //刪除功能
       //row為當前用戶的數據
       console.log(row);
-      this.delRoomType(row.id);
+      this.delRoomType(row.name);
     },
     editButton(row) {
       this.form.name = row.name;
       this.form.capacity = row.capacity;
-      this.form.power = row.power;
-      this.editId = row.id;
+      this.form.remarks=row.remarks;
     },
 
     resetForm() {
       this.form.name = "";
       this.form.capacity = "";
-      this.form.power = "";
       this.form.remarks = "";
     },
     handleClose(done) {
@@ -247,7 +239,7 @@ export default {
     delRoomType(name) {
 
       axios
-          .get(this.http + "delRoomType?id=" + name)
+          .get(this.http + "delRoomType?name=" + name)
           .then(
               (res) => {
                 console.log(res.data);
@@ -258,43 +250,20 @@ export default {
           );
 
     },
-    searchById(search) {
+
+    searchRoomType(search) {
       if (search == "") {
         this.getRoomType(1);
         this.nowpage = 1;
       } else {
         axios
             .get(
-                this.http + "searchRoomTypeById?id=" +
+                this.http + "searchRoomType?name=" +
                 search
             )
             .then(
                 (res) => {
                   /* console.log(res);*/
-
-                  this.RoomTypeList = res.data.List;
-                  this.nowpage = 1;
-                },
-                (res) => {
-                }
-            );
-      }
-
-    },
-    searchByName(search) {
-      if (search == "") {
-        this.getRoomType(1);
-        this.nowpage = 1;
-      } else {
-        axios
-            .get(
-                this.http + "searchRoomTypeByUname?name=" +
-                search
-            )
-            .then(
-                (res) => {
-                  /* console.log(res);*/
-
                   this.RoomTypeList = res.data.List;
                   this.nowpage = 1;
                 },
@@ -307,9 +276,7 @@ export default {
     editClick() {
       axios
           .get(
-              this.http + "editRoomType?id=" +
-              this.editId +
-              "&name=" +
+              this.http + "editRoomType?name=" +
               this.form.name +
               "&capacity=" +
               this.form.capacity +
@@ -335,7 +302,7 @@ export default {
       totalPage: 10,
       addDialogVisible: false, //add彈出框屬性
       centerDialogVisible: false, //
-      editId: "",
+      editName: "",
       form: {
         //用戶資料
         name: "",
