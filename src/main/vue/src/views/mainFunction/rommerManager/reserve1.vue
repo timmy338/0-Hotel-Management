@@ -1,103 +1,20 @@
 <template>
   <div id="roomManager">
     <div id="addAndSearch">
-      <div id="add">
-        <el-button type="text" @click="addDialogVisible = true"
-        >增加客房
-        </el-button
-        >
-        <el-dialog
-            title="增加客房"
-            :visible.sync="addDialogVisible"
-            width="50%"
-            :before-close="handleClose"
-        >
-          <div>
-            <el-form ref="form" :model="form" label-width="80px">
-              <el-form-item label="类型">
-                <el-select v-model="form.type" filterable placeholder="请选择">
-                  <el-option
-                      v-for="item in typeOptions"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-
-
-              <el-form-item label="楼层">
-                <el-select v-model="form.floor" filterable placeholder="请选择">
-                  <el-option
-                      v-for="item in floorOptions"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-
-
-              <el-form-item label="状态">
-                <el-radio-group v-model="form.status">
-                  <el-radio label="空房"></el-radio>
-                  <el-radio label="预定"></el-radio>
-                  <el-radio label="入住"></el-radio>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="标准价格">
-                <el-input v-model="form.standardPrice"></el-input>
-              </el-form-item>
-
-              <el-form-item label="折后价">
-                <el-input v-model="form.discountPrice"></el-input>
-              </el-form-item>
-
-              <el-form-item label="普通会员价">
-                <el-input v-model="form.memberPrice "></el-input>
-              </el-form-item>
-
-              <el-form-item label="会员价">
-                <el-input v-model="form.vipPrice"></el-input>
-              </el-form-item>
-
-              <el-form-item label="备注">
-                <el-input v-model="form.remarks"></el-input>
-              </el-form-item>
-
-
-            </el-form>
-          </div>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="addDialogVisible = false">取 消</el-button>
-            <el-button
-                type="primary"
-                @click="
-                addDialogVisible = false;
-                onSubmit();
-              "
-            >立即创建</el-button
-            >
-          </span>
-        </el-dialog>
-      </div>
       <div id="search">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <span class="searchSpan">编号: </span>
           <el-input v-model="formInline.searchId" placeholder="客房编号"></el-input>
           <span class="searchSpan">类型: </span>
-        <el-select v-model="formInline.type" filterable placeholder="请选择">
-          <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-          >
-          </el-option>
-        </el-select>
+          <el-select v-model="formInline.type" filterable placeholder="请选择">
+            <el-option
+                v-for="item in typeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
           <span class="searchSpan">楼层: </span>
           <el-select v-model="formInline.floor" filterable placeholder="请选择">
             <el-option
@@ -123,21 +40,7 @@
           <el-input v-model="formInline.standardPrice" placeholder="價格"></el-input>
           <el-button type="primary" @click="onSearch()">查询</el-button>
         </el-form>
-       <!-- >
-          <el-select v-model="value" filterable placeholder="请选择">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <el-input v-model="formInline.search" @keyup.enter="onSearch()" placeholder="输入"></el-input>
 
-          <el-form-item>
-            <el-button type="primary" @click="onSearch()">查询</el-button>
-          </el-form-item>-->
 
       </div>
     </div>
@@ -174,42 +77,32 @@
                 editButton(scope.row);
               "
                 size="small"
-            >编辑
+            >預定
             </el-button
             >
-            <el-button @click="delClick(scope.row)" type="text" size="small"
-            >刪除
-            </el-button
-            >
+
           </template>
         </el-table-column>
+
       </el-table>
     </div>
 
     <div id="editDialog">
       <el-dialog
-          title="修改客房资料"
+          title="预定信息"
           :visible.sync="centerDialogVisible"
           width="30%"
           center
       >
         <div>
           <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="类型">
-              <el-select v-model="form.type" filterable placeholder="请选择">
-                <el-option
-                    v-for="item in typeOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                >
-                </el-option>
-              </el-select>
+
+            <el-form-item label="预定人">
+              <el-input v-model="form.guestName"></el-input>
             </el-form-item>
 
-
-            <el-form-item label="楼层">
-              <el-select v-model="form.floor" filterable placeholder="请选择">
+            <el-form-item label="证件类别">
+              <el-select v-model="form.guestIdType" filterable placeholder="请选择">
                 <el-option
                     v-for="item in floorOptions"
                     :key="item.value"
@@ -220,33 +113,37 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.status">
-                <el-radio label="空房"></el-radio>
-                <el-radio label="预定"></el-radio>
-                <el-radio label="入住"></el-radio>
-              </el-radio-group>
+            <el-form-item label="证件号码">
+              <el-input v-model="form.guestId"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话">
+              <el-input v-model="form.tel"></el-input>
             </el-form-item>
 
-            <el-form-item label="标准价格">
-              <el-input v-model="form.standardPrice"></el-input>
+            <div class="block">
+              <el-date-picker
+                  v-model="arriveTime"
+                  type="date"
+                  placeholder="抵店日期">
+              </el-date-picker>
+            </div>
+
+            <div class="block">
+              <el-date-picker
+                  v-model="leaveTime"
+                  type="date"
+                  placeholder="离店日期">
+              </el-date-picker>
+            </div>
+
+            <el-form-item label="入住人数">
+              <el-input v-model="form.guestCount "></el-input>
             </el-form-item>
 
-            <el-form-item label="折后价">
-              <el-input v-model="form.discountPrice"></el-input>
+            <el-form-item label="会员编号">
+              <el-input v-model="form.memberId"></el-input>
             </el-form-item>
 
-            <el-form-item label="普通会员价">
-              <el-input v-model="form.memberPrice "></el-input>
-            </el-form-item>
-
-            <el-form-item label="会员价">
-              <el-input v-model="form.vipPrice"></el-input>
-            </el-form-item>
-
-            <el-form-item label="备注">
-              <el-input v-model="form.remarks"></el-input>
-            </el-form-item>
 
           </el-form>
         </div>
@@ -263,6 +160,7 @@
         </span>
       </el-dialog>
     </div>
+
     <div id="page">
       <el-pagination
           background
@@ -282,29 +180,17 @@ const axios = require("axios");
 export default {
   mounted() {
     this.getRoom("1");
-    this.getOption();
   },
   methods: {
     onSubmit() {
       //增加用戶按鈕
-       console.log(this.form);
+      console.log(this.form);
       if (this.inspectInput()) {
         alert("请输入完整信息");
       } else {
         this.addRoom();
       }
 
-    },
-    getOption()
-    {
-      var share=  {
-        value: "",
-        label: "无",
-      }
-      this.typeOptions.push(share);
-      this.floorOptions.push(share);
-      console.log(this.typeOptions);
-      console.log(this.floorOptions);
     },
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
@@ -499,6 +385,8 @@ export default {
       UserList: [
         {}
       ],
+      arriveTime:'',
+      leaveTime:'',
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -507,19 +395,15 @@ export default {
       editId: "",
       form: {
         //用戶資料
-        id:"",
-        room:"",
         type: "",
-        standardPrice: "",
-        deposit: "",
+        floor: "",
         guestName: "",
+        standardPrice: "",
         guestIdType: "",
         guestId: "",
-        tel:"",
-        arriveTime:"",
-        leaveTime:"",
-        guestCount:"",
-        memberId:"",
+        tel: "",
+        guestCount: "",
+        memberId: "",
       },
       formInline: {
         //搜尋用戶
@@ -541,20 +425,19 @@ export default {
         {
           value: "豪华双人间",
           label: "豪华双人间",
+        }, {
+          value: "",
+          label: "无",
         }
       ],
       floorOptions: [
         {
-          value: "一楼",
-          label: "一楼",
+          value: "身份证",
+          label: "身份证",
         },
         {
-          value: "二楼",
-          label: "二楼",
-        },
-        {
-          value: "三楼",
-          label: "三楼",
+          value: "居住证",
+          label: "居住证",
         },
 
       ],

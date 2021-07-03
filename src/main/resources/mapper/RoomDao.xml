@@ -86,4 +86,12 @@
         select count(*) from room
     </select>
 
+    <select id="countRoomTypes" resultType="java.lang.String">
+        select DISTINCT room.type from room
+    </select>
+
+    <select id="countFloorTypes" resultType="java.lang.String">
+        select DISTINCT room.floor from room
+    </select>
+
 </mapper>

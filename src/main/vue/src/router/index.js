@@ -11,6 +11,8 @@ const RoomManager = () => import('../views/mainFunction/roomManager/roomManager'
 //房客管理頁面
 const Roomregister = () => import('../views/mainFunction/rommerManager/roomregister')
 const ReserveManager = () => import('../views/mainFunction/rommerManager/reserveManager')
+const Reserve1 = () => import('../views/mainFunction/rommerManager/reserve1')
+const Reserve2 = () => import('../views/mainFunction/rommerManager/reserve2')
 const Checkin = () => import('../views/mainFunction/rommerManager/checkin')
 const Checkout = () => import('../views/mainFunction/rommerManager/checkout')
 
@@ -84,7 +86,21 @@ const routes = [
       },
       {
         path: 'reserveManager',
-        component:ReserveManager
+        component:ReserveManager,
+        children: [
+          {
+            path: '/',
+            redirect: 'reserve1'
+          },
+          {
+            path: 'reserve1',
+            component:Reserve1
+          },
+          {
+            path: 'reserve2',
+            component:Reserve2
+          },
+        ]
       },
       {
         path: 'checkin',

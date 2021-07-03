@@ -29,7 +29,11 @@ public class RoomController {
         HashMap<String,Object> map=new HashMap<>();
         List<Room> roomList= roomService.getRoom(Integer.parseInt(page));
         int count=roomService.countAllRooms();
+        List<String> rtype=roomService.countRoomTypes();
+        List<String> ftype=roomService.countFloorTypes();
         map.put("count",count);
+        map.put("OptionType",rtype);
+        map.put("OptionFloor",ftype);
         map.put("List",roomList);
         return map;
     }

@@ -3,11 +3,11 @@
     <div id="addAndSearch">
       <div id="add">
         <el-button type="text" @click="addDialogVisible = true"
-        >增加客房
+        >增加预定信息
         </el-button
         >
         <el-dialog
-            title="增加客房"
+            title="增加预定信息"
             :visible.sync="addDialogVisible"
             width="50%"
             :before-close="handleClose"
@@ -89,15 +89,15 @@
           <span class="searchSpan">编号: </span>
           <el-input v-model="formInline.searchId" placeholder="客房编号"></el-input>
           <span class="searchSpan">类型: </span>
-        <el-select v-model="formInline.type" filterable placeholder="请选择">
-          <el-option
-              v-for="item in typeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-          >
-          </el-option>
-        </el-select>
+          <el-select v-model="formInline.type" filterable placeholder="请选择">
+            <el-option
+                v-for="item in typeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
           <span class="searchSpan">楼层: </span>
           <el-select v-model="formInline.floor" filterable placeholder="请选择">
             <el-option
@@ -123,21 +123,6 @@
           <el-input v-model="formInline.standardPrice" placeholder="價格"></el-input>
           <el-button type="primary" @click="onSearch()">查询</el-button>
         </el-form>
-       <!-- >
-          <el-select v-model="value" filterable placeholder="请选择">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <el-input v-model="formInline.search" @keyup.enter="onSearch()" placeholder="输入"></el-input>
-
-          <el-form-item>
-            <el-button type="primary" @click="onSearch()">查询</el-button>
-          </el-form-item>-->
 
       </div>
     </div>
@@ -147,25 +132,33 @@
           border
           style="width: 100%"
       >
-        <el-table-column fixed prop="id" label="编号" width="100">
+        <el-table-column  prop="id" label="预定单号" width="100">
         </el-table-column>
-        <el-table-column prop="type" label="类型" width="150">
+        <el-table-column prop="room" label="客房编号" width="100">
         </el-table-column>
-        <el-table-column prop="floor" label="楼层" width="100">
-        </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
+        <el-table-column prop="type" label="客房类型" width="100">
         </el-table-column>
         <el-table-column prop="standardPrice" label="标准价格" width="100">
         </el-table-column>
-        <el-table-column prop="discountPrice" label="折后价" width="100">
+        <el-table-column prop="deposit" label="押金" width="100">
         </el-table-column>
-        <el-table-column prop="memberPrice" label="普通会员价" width="100">
+        <el-table-column prop="guestName" label="预定人" width="100">
         </el-table-column>
-        <el-table-column prop="vipPrice" label="Vip会员价" width="100">
+        <el-table-column prop="guestIdType" label="证件类别" width="100">
         </el-table-column>
-        <el-table-column prop="remarks" label="备注" width="150">
+        <el-table-column prop="guestId" label="证件号码" width="100">
         </el-table-column>
-        <el-table-column label="操作" width="130">
+        <el-table-column prop="tel" label="联系电话" width="100">
+        </el-table-column>
+        <el-table-column prop="arriveTime" label="抵店时间" width="100">
+        </el-table-column>
+        <el-table-column prop="leaveTime" label="离店时间" width="150">
+        </el-table-column>
+        <el-table-column prop="guestCount" label="入住人数" width="150">
+        </el-table-column>
+        <el-table-column prop="memberId" label="会员编号" width="150">
+        </el-table-column>
+        <el-table-column label="操作" width="130" fixed="right">
           <template slot-scope="scope">
             <el-button
                 type="text"
@@ -287,7 +280,7 @@ export default {
   methods: {
     onSubmit() {
       //增加用戶按鈕
-       console.log(this.form);
+      console.log(this.form);
       if (this.inspectInput()) {
         alert("请输入完整信息");
       } else {
@@ -507,19 +500,14 @@ export default {
       editId: "",
       form: {
         //用戶資料
-        id:"",
-        room:"",
         type: "",
+        floor: "",
+        status: "",
         standardPrice: "",
-        deposit: "",
-        guestName: "",
-        guestIdType: "",
-        guestId: "",
-        tel:"",
-        arriveTime:"",
-        leaveTime:"",
-        guestCount:"",
-        memberId:"",
+        discountPrice: "",
+        memberPrice: "",
+        vipPrice: "",
+        remarks: "",
       },
       formInline: {
         //搜尋用戶

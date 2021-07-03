@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int updateMember(Integer id) {
-        return memberDao.updateMember(id);
+    public int updateMember(Member member) {
+        return memberDao.updateMember(member);
     }
 
     @Override
@@ -51,5 +51,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public List<Member> selectMembersByName(String memberName) {
         return memberDao.selectMembersByName(memberName);
+    }
+
+    @Override
+    public int countAllMembers() {
+        return memberDao.countAllMembers();
     }
 }
