@@ -65,4 +65,13 @@ public class RoomRegisterController {
         map.put("List",roomRegisterList);
         return map;
     }
+
+    @RequestMapping("searchRoomRegisterByGuestId")
+    @ResponseBody
+    public HashMap<String,Object> selectRoomRegisterByGuestId(String guestId) {
+        HashMap<String,Object> map=new HashMap<>();
+        List<RoomRegister> roomRegisterList= roomRegisterService.selectRoomRegisterByGuestId(guestId);
+        map.put("List",roomRegisterList);
+        return map;
+    }
 }

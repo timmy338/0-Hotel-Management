@@ -304,7 +304,6 @@ export default {
 
     },
     delRoom(id) {
-
       axios
           .get(this.http + "delRoom?id=" + id)
           .then(
@@ -334,6 +333,37 @@ export default {
               }
           );
     },
+    addReserve()
+    {
+      axios
+          .get(
+              this.http + "addReserve?roomRegister="+"&user="+this.userID+"&remark="
+          )
+          .then(
+              (res) => {
+
+              },
+              (res) => {
+              }
+          );
+    },
+    getRegister(guestId)
+    {
+
+      axios
+          .get(
+              this.http + "searchRoomRegisterByGuestId?guestId="+guestId
+          )
+          .then(
+              (res) => {
+                console.log(res);
+              },
+              (res) => {
+              }
+          );
+
+    },
+
     addClick() {
       this.parseTime();
       axios
@@ -350,9 +380,9 @@ export default {
           )
           .then(
               (res) => {
+                this.getRegister( this.form.guestId);
+              /*  this.resetForm();*/
 
-                this.getRoom(this.nowpage);
-                this.resetForm();
               },
               (res) => {
               }

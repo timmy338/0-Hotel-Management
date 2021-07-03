@@ -34,4 +34,11 @@ public interface RoomRegisterDao {
      * @return 返回查询到的RoomRegister列表
      */
     List<RoomRegister> selectRoomRegisterById(@Param("id")Integer id);
+
+    /**
+     *通过guestId查询RoomRegister
+     * @param guestId RoomRegister的guestId
+     * @return 返回查询到的RoomRegister列表
+     */
+    List<RoomRegister> selectRoomRegisterByGuestId(@Param("guestId")String guestId);
 }

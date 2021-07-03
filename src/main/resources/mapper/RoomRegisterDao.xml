@@ -25,4 +25,9 @@
         where r.id=#{id}
     </select>
 
+    <select id="selectRoomRegisterByGuestId" resultType="RoomRegister">
+        select *
+        from roomregister r
+        where r.guestId=#{guestId}
+    </select>
 </mapper>

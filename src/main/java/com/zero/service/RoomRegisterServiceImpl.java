@@ -37,4 +37,9 @@ public class RoomRegisterServiceImpl implements RoomRegisterService{
     public List<RoomRegister> selectRoomRegisterById(Integer id) {
         return roomRegisterDao.selectRoomRegisterById(id);
     }
+
+    @Override
+    public List<RoomRegister> selectRoomRegisterByGuestId(String guestId) {
+        return roomRegisterDao.selectRoomRegisterByGuestId(guestId);
+    }
 }
