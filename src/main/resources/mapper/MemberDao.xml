@@ -4,7 +4,7 @@
 <mapper namespace="com.zero.dao.MemberDao">
     <insert id="insertMember">
         insert into member
-        values (#{id},#{name},#{sex},#{pwd},#{tel},#{addr},#{email},#{point},#{isVIP},#{lastIn},#{lastRe},#{remarks})
+        values (#{id},#{name},#{sex},#{pwd},#{tel},#{addr},#{email},null,null,null,null,#{remarks})
     </insert>
     
     <delete id="deleteMember">
@@ -14,7 +14,7 @@
     
     <update id="updateMember">
         update member
-        set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},point=#{point},lastIn=#{lastIn},lastRe=#{lastRe},remarks=#{remarks}
+        set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},remarks=#{remarks}
         where id=#{id}
     </update>
 
