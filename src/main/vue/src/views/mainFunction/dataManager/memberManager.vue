@@ -68,7 +68,7 @@
             >
             </el-option>
           </el-select>
-          <el-input v-model="formInline.search"   @keyup.enter="onSearch()" placeholder="输入"></el-input>
+          <el-input v-model="formInline.search"  placeholder="输入"></el-input>
 
           <el-form-item>
             <el-button type="primary" @click="onSearch()">查询</el-button>
@@ -202,7 +202,7 @@ export default {
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
-      if(this.form.name==""||this.form.power==""|| this.form.pwd=="")
+      if(this.form.name==""||this.form.sex==""|| this.form.pwd=="" || this.form.tel=="" || this.form.addr=="" || this.form.email=="" )
       {
         alert("请输入完整信息");
       }
@@ -235,6 +235,7 @@ export default {
       this.delMember(row.id);
     },
     editButton(row) {
+      this.editId=row.id;
       this.form.name = row.name;
       this.form.pwd = row.pwd;
       this.form.sex=row.sex;
@@ -359,7 +360,7 @@ export default {
       {
         axios
             .get(
-                this.http+"searchMemberByUname?name=" +
+                this.http+"searchMemberByName?name=" +
                 search
             )
             .then(
@@ -407,7 +408,6 @@ export default {
       http:"http://localhost:8080/0_Hotel_Management_war/",
       MemberList: [
         {
-          id:27,
           name:"qiqi",
           sex:"男",
           pwd:"aayuyuqi",
