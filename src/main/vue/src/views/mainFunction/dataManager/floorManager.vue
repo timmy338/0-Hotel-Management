@@ -1,25 +1,21 @@
 <template>
-  <div id="roomtypeManager">
+  <div id="floorManager">
     <div id="addAndSearch">
       <div id="add">
         <el-button type="text" @click="addDialogVisible = true"
-        >增加客房类型
+        >增加楼层
         </el-button
         >
         <el-dialog
-            title="增加客房类型"
+            title="增加楼层"
             :visible.sync="addDialogVisible"
             width="50%"
             :before-close="handleClose"
         >
           <div>
             <el-form ref="form" :model="form" label-width="80px">
-              <el-form-item label="类型名">
+              <el-form-item label="楼层">
                 <el-input v-model="form.name"></el-input>
-              </el-form-item>
-
-              <el-form-item label="额定人数">
-                <el-input v-model="form.capacity"></el-input>
               </el-form-item>
 
               <el-form-item label="备注">
@@ -45,7 +41,7 @@
       <div id="search">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
-          <el-input v-model="formInline.search" @keyup.enter="onSearch()" placeholder="输入客房类型名"
+          <el-input v-model="formInline.search" @keyup.enter="onSearch()" placeholder="输入楼层名"
                     style="width: 140px;"></el-input>
 
           <el-form-item>
@@ -56,16 +52,15 @@
     </div>
     <div id="formDiv">
       <el-table
-          :data="RoomTypeList"
+          :data="FloorList"
           border
           style="width: 100%"
       >
-        <el-table-column fixed prop="name" label="类型名" width="270">
-        </el-table-column>
-        <el-table-column prop="capacity" label="额定人数" width="270">
+        <el-table-column fixed prop="name" label="楼层" width="500">
         </el-table-column>
 
-        <el-table-column prop="remarks" label="备注" width="410">
+
+        <el-table-column prop="remarks" label="备注" width="430">
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
@@ -101,9 +96,6 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-form-item label="额定人数">
-              <el-input v-model="form.capacity"></el-input>
-            </el-form-item>
 
             <el-form-item label="备注">
               <el-input v-model="form.remarks"></el-input>
@@ -143,49 +135,37 @@
 const axios = require("axios");
 export default {
   mounted() {
-    this.getRoomType("1");
+    this.getFloor("1");
   },
   methods: {
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
-      if (this.form.name == "" || this.form.power == "" || this.form.capacity == "") {
+      if (this.form.name == "") {
         alert("请输入完整信息");
       } else {
-        this.addRoomType();
+        this.addFloor();
       }
 
     },
     onSearch() {
       console.log(this.formInline.search);
-
-      if (this.value == "id") {
-
-        this.searchById(this.formInline.search);
-      } else {
-        this.searchByName(this.formInline.search)
-      }
-
-
+      this.searchFloor(this.formInline.search);
       /* this.searchById(); */
     },
     delClick(row) {
       //刪除功能
       //row為當前用戶的數據
       console.log(row);
-      this.delRoomType(row.id);
+      this.delFloor(row.id);
     },
     editButton(row) {
       this.form.name = row.name;
-      this.form.capacity = row.capacity;
-      this.form.power = row.power;
-      this.editId = row.id;
+      this.editId = row.name;
     },
 
     resetForm() {
       this.form.name = "";
-      this.form.capacity = "";
-      this.form.power = "";
       this.form.remarks = "";
     },
     handleClose(done) {
@@ -199,19 +179,19 @@ export default {
     },
     handleCurrentChange(val) {
       /*console.log(val);*/
-      this.getRoomType(val);
+      this.getFloor(val);
       this.nowpage = val;
     },
 
-    getRoomType(page) {
-      axios.get(this.http + "getRoomType?page=" + page).then(
+    getFloor(page) {
+      axios.get(this.http + "getFloor?page=" + page).then(
           (res) => {
             console.log(res);
 
-            this.RoomTypeList = res.data.List;
+            this.FloorList = res.data.List;
             if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
-              this.getRoomType(this.nowpage);
+              this.getFloor(this.nowpage);
             }
 
             if (res.data.count / 6 != 0) {
@@ -227,75 +207,51 @@ export default {
           }
       );
     },
-    addRoomType() {
+    addFloor() {
       axios
           .get(
-              this.http + "addRoomType?name=" +
+              this.http + "addFloor?name=" +
               this.form.name +
-              "&capacity=" +
-              this.form.capacity + "&remarks=" + this.form.remarks
+                "&remarks=" + this.form.remarks
           )
           .then(
               (res) => {
                 /* console.log("addFinish"); */
-                this.getRoomType(this.nowpage);
+                this.getFloor(this.nowpage);
               },
               (res) => {
               }
           );
     },
-    delRoomType(name) {
-
+    delFloor(name) {
       axios
-          .get(this.http + "delRoomType?id=" + name)
+          .get(this.http + "delFloor?name=" + name)
           .then(
               (res) => {
                 console.log(res.data);
-                this.getRoomType(this.nowpage);
+                this.getFloor(this.nowpage);
               },
               (res) => {
               }
           );
 
     },
-    searchById(search) {
+
+    searchFloor(search) {
       if (search == "") {
-        this.getRoomType(1);
+        this.getFloor(1);
         this.nowpage = 1;
       } else {
         axios
             .get(
-                this.http + "searchRoomTypeById?id=" +
+                this.http + "searchFloor?name=" +
                 search
             )
             .then(
                 (res) => {
                   /* console.log(res);*/
 
-                  this.RoomTypeList = res.data.List;
-                  this.nowpage = 1;
-                },
-                (res) => {
-                }
-            );
-      }
-
-    },
-    searchByName(search) {
-      if (search == "") {
-        this.getRoomType(1);
-        this.nowpage = 1;
-      } else {
-        axios
-            .get(
-                this.http + "searchRoomTypeByUname?name=" +
-                search
-            )
-            .then(
-                (res) => {
-                  /* console.log(res);*/
-
-                  this.RoomTypeList = res.data.List;
+                  this.FloorList = res.data.List;
                   this.nowpage = 1;
                 },
                 (res) => {
@@ -307,17 +263,14 @@ export default {
     editClick() {
       axios
           .get(
-              this.http + "editRoomType?id=" +
-              this.editId +
-              "&name=" +
+              this.http + "editFloor?name="+
               this.form.name +
-              "&capacity=" +
-              this.form.capacity +
+
               "&remarks=" + this.form.remarks
           )
           .then(
               (res) => {
-                this.getRoomType(this.nowpage);
+                this.getFloor(this.nowpage);
                 this.resetForm();
               },
               (res) => {
@@ -329,7 +282,7 @@ export default {
   data() {
     return {
       http: "http://localhost:8080/0_Hotel_Management_war/",
-      RoomTypeList: [],
+      FloorList: [],
       page: 0,
       nowpage: 1,
       totalPage: 10,
@@ -339,7 +292,6 @@ export default {
       form: {
         //用戶資料
         name: "",
-        capacity: "",
         remarks: "",
       },
       formInline: {
@@ -353,47 +305,47 @@ export default {
 </script>
 
 <style>
-#roomtypeManager {
+#floorManager {
   width: 100%;
   height: 100%;
   position: relative;
 
 }
 
-#roomtypeManager #addAndSearch {
+#floorManager #addAndSearch {
   padding: 20px;
   width: 100%;
   height: 50px;
 }
 
-#roomtypeManager #addAndSearch .el-input {
+#floorManager #addAndSearch .el-input {
   width: 200px;
 }
 
-#roomtypeManager #addAndSearch #add {
+#floorManager #addAndSearch #add {
   float: left;
 }
 
-#roomtypeManager #addAndSearch #search {
+#floorManager #addAndSearch #search {
   float: right;
   margin-right: 60px;
 }
 
-#roomtypeManager #addAndSearch #search .el-input {
+#floorManager #addAndSearch #search .el-input {
   width: 120px;
 }
 
-#roomtypeManager #editDialog .el-input {
+#floorManager #editDialog .el-input {
   width: 280px;
 }
 
-#roomtypeManager #page {
+#floorManager #page {
   bottom: 0;
   left: 50%;
   position: absolute;
 }
 
-#roomtypeManager #formDiv .el-table th, #roomtypeManager #formDiv .el-table tr, #roomtypeManager #formDiv .el-table__empty-block, #roomtypeManager .el-table__row td {
+#floorManager #formDiv .el-table th, #floorManager #formDiv .el-table tr, #floorManager #formDiv .el-table__empty-block, #floorManager .el-table__row td {
   border: 1px solid #CBCBCB;
   background-color: #EEEEEE;
 }

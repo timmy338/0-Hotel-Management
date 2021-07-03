@@ -15,24 +15,33 @@
           <div>
             <el-form ref="form" :model="form" label-width="80px">
               <el-form-item label="类型">
-                <el-radio-group v-model="form.type ">
-                  <el-radio label="单人间"></el-radio>
-                  <el-radio label="双人间"></el-radio>
-                  <el-radio label="豪华双人间"></el-radio>
-                </el-radio-group>
+                <el-select v-model="form.type" filterable placeholder="请选择">
+                  <el-option
+                      v-for="item in typeOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
 
 
               <el-form-item label="楼层">
-                <el-radio-group v-model="form.floor ">
-                  <el-radio label="一楼"></el-radio>
-                  <el-radio label="二楼"></el-radio>
-                  <el-radio label="三楼"></el-radio>
-                </el-radio-group>
+                <el-select v-model="form.floor" filterable placeholder="请选择">
+                  <el-option
+                      v-for="item in floorOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
 
+
               <el-form-item label="状态">
-                <el-radio-group v-model="form.status ">
+                <el-radio-group v-model="form.status">
                   <el-radio label="空房"></el-radio>
                   <el-radio label="预定"></el-radio>
                   <el-radio label="入住"></el-radio>
@@ -101,7 +110,7 @@
           </el-select>
 
           <span class="searchSpan">状态: </span>
-          <el-select v-model="formInline.status" filterable placeholder="请选择">
+          <el-select v-model="form.status" filterable placeholder="请选择">
             <el-option
                 v-for="item in statusOptions"
                 :key="item.value"
@@ -187,24 +196,32 @@
         <div>
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="类型">
-              <el-radio-group v-model="form.type ">
-                <el-radio label="单人间"></el-radio>
-                <el-radio label="双人间"></el-radio>
-                <el-radio label="豪华双人间"></el-radio>
-              </el-radio-group>
+              <el-select v-model="form.type" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in typeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
 
 
             <el-form-item label="楼层">
-              <el-radio-group v-model="form.floor ">
-                <el-radio label="一楼"></el-radio>
-                <el-radio label="二楼"></el-radio>
-                <el-radio label="三楼"></el-radio>
-              </el-radio-group>
+              <el-select v-model="form.floor" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in floorOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
 
             <el-form-item label="状态">
-              <el-radio-group v-model="form.status ">
+              <el-radio-group v-model="form.status">
                 <el-radio label="空房"></el-radio>
                 <el-radio label="预定"></el-radio>
                 <el-radio label="入住"></el-radio>
@@ -269,7 +286,7 @@ export default {
   methods: {
     onSubmit() {
       //增加用戶按鈕
-      /* console.log(this.form); */
+       console.log(this.form);
       if (this.inspectInput()) {
         alert("请输入完整信息");
       } else {
@@ -280,13 +297,15 @@ export default {
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
     },
-
+    inspectSearch() {
+      return this.formInline.searchId=="" || this.formInline.type == "" || this.form.status == "" || this.formInline.floor == "" || this.form.standardPrice == ""
+    },
     onSearch() {
       console.log(this.formInline);
 
-      this.searchById();
+      this.selectRoom();
 
-      /* this.searchById(); */
+      /* this.selectRoom(); */
     },
     delClick(row) {
       //刪除功能
@@ -391,15 +410,15 @@ export default {
           );
 
     },
-    searchById() {
-      if (this.formInline == "") {
+    selectRoom() {
+      if (this.inspectSearch()) {
         this.getRoom(1);
         this.nowpage = 1;
       } else {
         axios
             .get(
                 this.http + "selectRoom?id=" +
-                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.formInline.status+"&standardPrice="+this.formInline.standardPrice
+                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.form.status+"&standardPrice="+this.formInline.standardPrice
             )
             .then(
                 (res) => {
@@ -415,7 +434,7 @@ export default {
 
     },
     searchByName(search) {
-      if (search == "") {
+      if (inspectSearch == true) {
         this.getRoom(1);
         this.nowpage = 1;
       } else {
@@ -438,6 +457,7 @@ export default {
 
     },
     editClick() {
+
       axios
           .get(
               this.http + "editRoom?id="+this.editId+"&type=" +
