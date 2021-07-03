@@ -507,14 +507,19 @@ export default {
       editId: "",
       form: {
         //用戶資料
+        id:"",
+        room:"",
         type: "",
-        floor: "",
-        status: "",
         standardPrice: "",
-        discountPrice: "",
-        memberPrice: "",
-        vipPrice: "",
-        remarks: "",
+        deposit: "",
+        guestName: "",
+        guestIdType: "",
+        guestId: "",
+        tel:"",
+        arriveTime:"",
+        leaveTime:"",
+        guestCount:"",
+        memberId:"",
       },
       formInline: {
         //搜尋用戶

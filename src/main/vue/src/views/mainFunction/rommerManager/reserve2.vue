@@ -1,5 +1,630 @@
 <template>
-  <div>
-    hello log
+  <div id="roomManager">
+    <div id="addAndSearch">
+      <div id="add">
+        <el-button type="text" @click="addDialogVisible = true"
+        >增加预定信息
+        </el-button
+        >
+        <el-dialog
+            title="增加预定信息"
+            :visible.sync="addDialogVisible"
+            width="50%"
+            :before-close="handleClose"
+        >
+          <div>
+            <el-form ref="form" :model="form" label-width="80px">
+              <el-form-item label="类型">
+                <el-select v-model="form.type" filterable placeholder="请选择">
+                  <el-option
+                      v-for="item in typeOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+
+              <el-form-item label="楼层">
+                <el-select v-model="form.floor" filterable placeholder="请选择">
+                  <el-option
+                      v-for="item in floorOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+
+              <el-form-item label="状态">
+                <el-radio-group v-model="form.status">
+                  <el-radio label="空房"></el-radio>
+                  <el-radio label="预定"></el-radio>
+                  <el-radio label="入住"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+
+              <el-form-item label="标准价格">
+                <el-input v-model="form.standardPrice"></el-input>
+              </el-form-item>
+
+              <el-form-item label="折后价">
+                <el-input v-model="form.discountPrice"></el-input>
+              </el-form-item>
+
+              <el-form-item label="普通会员价">
+                <el-input v-model="form.memberPrice "></el-input>
+              </el-form-item>
+
+              <el-form-item label="会员价">
+                <el-input v-model="form.vipPrice"></el-input>
+              </el-form-item>
+
+              <el-form-item label="备注">
+                <el-input v-model="form.remarks"></el-input>
+              </el-form-item>
+
+
+            </el-form>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="addDialogVisible = false">取 消</el-button>
+            <el-button
+                type="primary"
+                @click="
+                addDialogVisible = false;
+                onSubmit();
+              "
+            >立即创建</el-button
+            >
+          </span>
+        </el-dialog>
+      </div>
+      <div id="search">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <span class="searchSpan">编号: </span>
+          <el-input v-model="formInline.searchId" placeholder="客房编号"></el-input>
+          <span class="searchSpan">类型: </span>
+          <el-select v-model="formInline.type" filterable placeholder="请选择">
+            <el-option
+                v-for="item in typeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <span class="searchSpan">楼层: </span>
+          <el-select v-model="formInline.floor" filterable placeholder="请选择">
+            <el-option
+                v-for="item in floorOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
+
+          <span class="searchSpan">状态: </span>
+          <el-select v-model="form.status" filterable placeholder="请选择">
+            <el-option
+                v-for="item in statusOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <span class="searchSpan">价格: </span>
+          <el-input v-model="formInline.standardPrice" placeholder="價格"></el-input>
+          <el-button type="primary" @click="onSearch()">查询</el-button>
+        </el-form>
+
+      </div>
+    </div>
+    <div id="formDiv">
+      <el-table
+          :data="UserList"
+          border
+          style="width: 100%"
+      >
+        <el-table-column  prop="id" label="预定单号" width="100">
+        </el-table-column>
+        <el-table-column prop="room" label="客房编号" width="100">
+        </el-table-column>
+        <el-table-column prop="type" label="客房类型" width="100">
+        </el-table-column>
+        <el-table-column prop="standardPrice" label="标准价格" width="100">
+        </el-table-column>
+        <el-table-column prop="deposit" label="押金" width="100">
+        </el-table-column>
+        <el-table-column prop="guestName" label="预定人" width="100">
+        </el-table-column>
+        <el-table-column prop="guestIdType" label="证件类别" width="100">
+        </el-table-column>
+        <el-table-column prop="guestId" label="证件号码" width="100">
+        </el-table-column>
+        <el-table-column prop="tel" label="联系电话" width="100">
+        </el-table-column>
+        <el-table-column prop="arriveTime" label="抵店时间" width="100">
+        </el-table-column>
+        <el-table-column prop="leaveTime" label="离店时间" width="150">
+        </el-table-column>
+        <el-table-column prop="guestCount" label="入住人数" width="150">
+        </el-table-column>
+        <el-table-column prop="memberId" label="会员编号" width="150">
+        </el-table-column>
+        <el-table-column label="操作" width="130" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+                type="text"
+                @click="
+                centerDialogVisible = true;
+                editButton(scope.row);
+              "
+                size="small"
+            >编辑
+            </el-button
+            >
+            <el-button @click="delClick(scope.row)" type="text" size="small"
+            >刪除
+            </el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+
+    <div id="editDialog">
+      <el-dialog
+          title="修改客房资料"
+          :visible.sync="centerDialogVisible"
+          width="30%"
+          center
+      >
+        <div>
+          <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="类型">
+              <el-select v-model="form.type" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in typeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+
+            <el-form-item label="楼层">
+              <el-select v-model="form.floor" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in floorOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="状态">
+              <el-radio-group v-model="form.status">
+                <el-radio label="空房"></el-radio>
+                <el-radio label="预定"></el-radio>
+                <el-radio label="入住"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="标准价格">
+              <el-input v-model="form.standardPrice"></el-input>
+            </el-form-item>
+
+            <el-form-item label="折后价">
+              <el-input v-model="form.discountPrice"></el-input>
+            </el-form-item>
+
+            <el-form-item label="普通会员价">
+              <el-input v-model="form.memberPrice "></el-input>
+            </el-form-item>
+
+            <el-form-item label="会员价">
+              <el-input v-model="form.vipPrice"></el-input>
+            </el-form-item>
+
+            <el-form-item label="备注">
+              <el-input v-model="form.remarks"></el-input>
+            </el-form-item>
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="centerDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button
+              type="primary"
+              @click="
+              centerDialogVisible = false;
+              editClick();
+            "
+          >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
+    <div id="page">
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="this.totalPage"
+          @current-change="handleCurrentChange"
+          :current-page="nowpage"
+      >
+        <!--上面的屬性 :current-page="nowpage"-->
+      </el-pagination>
+    </div>
   </div>
 </template>
+
+<script>
+const axios = require("axios");
+export default {
+  mounted() {
+    this.getRoom("1");
+    this.getOption();
+  },
+  methods: {
+    onSubmit() {
+      //增加用戶按鈕
+      console.log(this.form);
+      if (this.inspectInput()) {
+        alert("请输入完整信息");
+      } else {
+        this.addRoom();
+      }
+
+    },
+    getOption()
+    {
+      var share=  {
+        value: "",
+        label: "无",
+      }
+      this.typeOptions.push(share);
+      this.floorOptions.push(share);
+      console.log(this.typeOptions);
+      console.log(this.floorOptions);
+    },
+    inspectInput() {
+      return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
+    },
+    inspectSearch() {
+      return this.formInline.searchId=="" || this.formInline.type == "" || this.form.status == "" || this.formInline.floor == "" || this.form.standardPrice == ""
+    },
+    onSearch() {
+      console.log(this.formInline);
+
+      this.selectRoom();
+
+      /* this.selectRoom(); */
+    },
+    delClick(row) {
+      //刪除功能
+      //row為當前用戶的數據
+      console.log(row);
+      this.delRoom(row.id);
+    },
+    editButton(row) {
+      this.form.type = row.type;
+      this.form.floor = row.floor;
+      this.form.status = row.status;
+      this.form.standardPrice = row.standardPrice;
+      this.form.discountPrice = row.discountPrice;
+      this.form.memberPrice = row.memberPrice;
+      this.form.vipPrice = row.vipPrice;
+      console.log(this.form);
+      this.editId = row.id;
+    },
+
+    resetForm() {
+      this.form.type = "";
+      this.form.floor = "";
+      this.form.status = "";
+      this.form.standardPrice = "";
+      this.form.discountPrice = "";
+      this.form.memberPrice = "";
+      this.form.vipPrice = "";
+      this.form.remarks = "";
+    },
+    handleClose(done) {
+      //彈出框屬性
+      this.$confirm("确认关闭？")
+          .then((_) => {
+            done();
+          })
+          .catch((_) => {
+          });
+    },
+    handleCurrentChange(val) {
+      /*console.log(val);*/
+      this.getRoom(val);
+      this.nowpage = val;
+    },
+
+    getRoom(page) {
+      axios.get(this.http + "getRoom?page=" + page).then(
+          (res) => {
+            console.log(res);
+
+            this.UserList = res.data.List;
+            if (res.data.List.length == 0 && this.nowpage != 1) {
+              this.nowpage--;
+              this.getRoom(this.nowpage);
+            }
+
+            if (res.data.count / 6 != 0) {
+              this.totalPage = res.data.count / 6;
+            } else {
+              this.totalPage = res.data.count / 6 - 1;
+            }
+            this.totalPage = this.totalPage * 10;
+            /* console.log(this.totalPage); */
+
+          },
+          (res) => {
+          }
+      );
+    },
+    addRoom() {
+      axios
+          .get(
+              this.http + "addRoom?type=" +
+              this.form.type +
+              "&floor=" +
+              this.form.floor + "&status=" + this.form.status +
+              "&standardPrice=" + this.form.standardPrice +
+              "&discountPrice=" + this.form.discountPrice +
+              "&memberPrice=" + this.form.memberPrice +
+              "&vipPrice=" + this.form.vipPrice +
+              "&remarks=" + this.form.remarks
+          )
+          .then(
+              (res) => {
+                /* console.log("addFinish"); */
+                this.getRoom(this.nowpage);
+              },
+              (res) => {
+              }
+          );
+    },
+    delRoom(id) {
+
+      axios
+          .get(this.http + "delRoom?id=" + id)
+          .then(
+              (res) => {
+                console.log(res.data);
+                this.getRoom(this.nowpage);
+              },
+              (res) => {
+              }
+          );
+
+    },
+    selectRoom() {
+      if (this.inspectSearch()) {
+        this.getRoom(1);
+        this.nowpage = 1;
+      } else {
+        axios
+            .get(
+                this.http + "selectRoom?id=" +
+                this.formInline.searchId+"&type="+this.formInline.type+"&floor="+this.formInline.floor+"&status="+this.form.status+"&standardPrice="+this.formInline.standardPrice
+            )
+            .then(
+                (res) => {
+                  /* console.log(res);*/
+
+                  this.UserList = res.data.List;
+                  this.nowpage = 1;
+                },
+                (res) => {
+                }
+            );
+      }
+
+    },
+    searchByName(search) {
+      if (inspectSearch == true) {
+        this.getRoom(1);
+        this.nowpage = 1;
+      } else {
+        axios
+            .get(
+                this.http + "searchUserByUname?type=" +
+                search
+            )
+            .then(
+                (res) => {
+                  /* console.log(res);*/
+
+                  this.UserList = res.data.List;
+                  this.nowpage = 1;
+                },
+                (res) => {
+                }
+            );
+      }
+
+    },
+    editClick() {
+
+      axios
+          .get(
+              this.http + "editRoom?id="+this.editId+"&type=" +
+              this.form.type +
+              "&floor=" +
+              this.form.floor + "&status=" + this.form.status +
+              "&standardPrice=" + this.form.standardPrice +
+              "&discountPrice=" + this.form.discountPrice +
+              "&memberPrice=" + this.form.memberPrice +
+              "&vipPrice=" + this.form.vipPrice +
+              "&remarks=" + this.form.remarks
+          )
+          .then(
+              (res) => {
+                this.getRoom(this.nowpage);
+                this.resetForm();
+              },
+              (res) => {
+              }
+          );
+    },
+  },
+
+  data() {
+    return {
+      http: "http://localhost:8080/0_Hotel_Management_war/",
+      UserList: [
+        {}
+      ],
+      page: 0,
+      nowpage: 1,
+      totalPage: 10,
+      addDialogVisible: false, //add彈出框屬性
+      centerDialogVisible: false, //
+      editId: "",
+      form: {
+        //用戶資料
+        type: "",
+        floor: "",
+        status: "",
+        standardPrice: "",
+        discountPrice: "",
+        memberPrice: "",
+        vipPrice: "",
+        remarks: "",
+      },
+      formInline: {
+        //搜尋用戶
+        searchId: "",
+        type: "",
+        floor: "",
+        status: "",
+        standardPrice:"",
+      },
+      typeOptions: [
+        {
+          value: "单人间",
+          label: "单人间",
+        },
+        {
+          value: "双人间",
+          label: "双人间",
+        },
+        {
+          value: "豪华双人间",
+          label: "豪华双人间",
+        }
+      ],
+      floorOptions: [
+        {
+          value: "一楼",
+          label: "一楼",
+        },
+        {
+          value: "二楼",
+          label: "二楼",
+        },
+        {
+          value: "三楼",
+          label: "三楼",
+        },
+
+      ],
+      statusOptions: [
+        {
+          value: "空房",
+          label: "空房",
+        },
+        {
+          value: "预定",
+          label: "预定",
+        },
+        {
+          value: "入住",
+          label: "入住",
+        },
+        {
+          value: "",
+          label: "无",
+        }
+      ],
+    };
+  },
+};
+</script>
+
+<style>
+#roomManager {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+}
+
+#roomManager #addAndSearch {
+  padding: 20px;
+  width: 100%;
+  height: 50px;
+}
+
+#roomManager #addAndSearch .el-input {
+  width: 200px;
+}
+
+#roomManager #addAndSearch #add {
+  float: left;
+}
+
+#roomManager #addAndSearch #search {
+  float: right;
+  margin-right: 60px;
+}
+#roomManager #addAndSearch #search .searchSpan
+{
+  margin-left: 20px;
+  font-size: 12px;
+}
+#roomManager #addAndSearch #search .el-input {
+  width: 120px;
+}
+
+#roomManager #editDialog .el-input {
+  width: 280px;
+}
+
+#roomManager #page {
+  bottom: 0;
+  left: 50%;
+  position: absolute;
+}
+
+#roomManager #formDiv .el-table th, #roomManager #formDiv .el-table tr, #roomManager #formDiv .el-table__empty-block, #roomManager .el-table__row td {
+  border: 1px solid #CBCBCB;
+  background-color: #EEEEEE;
+}
+
+#roomManager .el-form-item__label {
+  width: 100px !important;
+}
+
+#roomManager .el-dialog {
+  margin-top: 20px !important;
+}
+</style>
+
