@@ -1,5 +1,5 @@
 <template>
-  <div id="roomManager">
+  <div id="reserve1">
     <div id="addAndSearch">
       <div id="search">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -120,14 +120,14 @@
               <el-input v-model="form.tel"></el-input>
             </el-form-item>
 
-            <div class="block">
-              <span class="demonstration">默认</span>
+            <div class="block" >
               <el-date-picker
                   v-model="Time"
                   type="datetimerange"
                   range-separator="至"
                   start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  end-placeholder="结束日期"
+                  style="width: 350px;">
               </el-date-picker>
             </div>
 
@@ -173,11 +173,14 @@
 <script>
 const axios = require("axios");
 export default {
+  props:["userID"],
   mounted() {
     this.getRoom("1");
-  },
-  methods: {
+    console.log(this.userID);
 
+  },
+
+  methods: {
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
     },
@@ -202,11 +205,10 @@ export default {
     parseTime() {
       for (var i = 0; i < 2; i++) {
         var newDate = this.Time[i].getFullYear() + '-' + this.getM(this.Time[i].getMonth() + 1) + '-' + this.getM(this.Time[i].getDate()) +
-            '/' + this.getM(this.Time[i].getHours()) + ':' + this.getM(this.Time[i].getMinutes()) + ':' + this.getM(this.Time[i].getSeconds());
+            ' ' + this.getM(this.Time[i].getHours()) + ':' + this.getM(this.Time[i].getMinutes()) + ':' + this.getM(this.Time[i].getSeconds());
         /*  console.log(newDate);*/
         this.Time[i] = newDate;
       }
-
     },
 
     editButton(row) {
@@ -336,7 +338,7 @@ export default {
       this.parseTime();
       axios
           .get(
-              this.http + "addReserve?id=" + this.editId + "&guestName=" +
+              this.http + "addRoomRegister?room="+this.editId + "&deposit=100" + "&guestName=" +
               this.form.guestName +
               "&guestIdType=" +
               this.form.guestIdType + "&guestId=" + this.form.guestId +
@@ -360,9 +362,9 @@ export default {
   },
 
 
-
   data() {
     return {
+      id:"",
       http: "http://localhost:8080/0_Hotel_Management_war/",
       UserList: [
         {}
@@ -440,60 +442,64 @@ export default {
 </script>
 
 <style>
-#roomManager {
+#reserve1 {
   width: 100%;
   height: 100%;
   position: relative;
 
 }
 
-#roomManager #addAndSearch {
+#reserve1 #addAndSearch {
   padding: 20px;
   width: 100%;
   height: 50px;
 }
 
-#roomManager #addAndSearch .el-input {
+#reserve1 #addAndSearch .el-input {
   width: 200px;
 }
 
-#roomManager #addAndSearch #add {
+#reserve1 #addAndSearch #add {
   float: left;
 }
 
-#roomManager #addAndSearch #search {
+#reserve1 #addAndSearch #search {
   float: right;
   margin-right: 60px;
 }
-#roomManager #addAndSearch #search .searchSpan
+#reserve1 #addAndSearch #search .searchSpan
 {
   margin-left: 20px;
   font-size: 12px;
 }
-#roomManager #addAndSearch #search .el-input {
+#reserve1 #addAndSearch #search .el-input {
   width: 120px;
 }
 
-#roomManager #editDialog .el-input {
+#reserve1 #editDialog .el-input {
   width: 280px;
 }
 
-#roomManager #page {
-  bottom: 0;
+#reserve1 #page {
+  bottom: -50px;
   left: 50%;
   position: absolute;
 }
 
-#roomManager #formDiv .el-table th, #roomManager #formDiv .el-table tr, #roomManager #formDiv .el-table__empty-block, #roomManager .el-table__row td {
+#reserve1 #formDiv .el-table th, #reserve1 #formDiv .el-table tr, #reserve1 #formDiv .el-table__empty-block, #reserve1 .el-table__row td {
   border: 1px solid #CBCBCB;
   background-color: #EEEEEE;
 }
 
-#roomManager .el-form-item__label {
+#reserve1 .el-form-item__label {
   width: 100px !important;
 }
-
-#roomManager .el-dialog {
+#reserve1  .block
+{
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+#reserve1 .el-dialog {
   margin-top: 20px !important;
 }
 </style>

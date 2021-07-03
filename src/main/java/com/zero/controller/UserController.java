@@ -30,14 +30,17 @@ public class UserController {
         HashMap<String,Object> map=new HashMap<>();
         List<User> userList= userService.selectUserByName(uname);
         boolean isRight=false;
+        int id=0;
         for (User u:userList) {
             if(u.getPwd().equals(pwd))
             {
                 isRight=true;
+                id=u.getId();
                 break;
             }
         }
         map.put("contains",isRight);
+        map.put("id",id);
         return map;
     }
 

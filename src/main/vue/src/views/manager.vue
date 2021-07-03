@@ -81,7 +81,7 @@
       </div>
 
       <div id="mainFunction">
-        <router-view></router-view>
+        <router-view :userID="this.id"></router-view>
       </div>
     </div>
   </div>
@@ -95,21 +95,23 @@ export default {
   data() {
     return {
         uname:"",
+        id:"",
     };
-
   },
-
 
   methods: {
     getUserName()
     {
-      console.log(this.$route.query);
       this.uname=this.$route.query.name;
+      this.id=this.$route.query.id;
+      console.log(this.id);
     },
     oneClickFunction(keyPath)
     {
       /* console.log(keyPath.index); */
-      this.$router.push("/manager/"+keyPath.index);
+      this.$router.push("manager/"+keyPath.index);
+
+
     },
     clickFunction(keyPath)
     {

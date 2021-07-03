@@ -16,7 +16,6 @@ Vue.prototype.$axios = axios
 
 
 Vue.use(ElementUI);
-Vue.prototype.$bus = new Vue()
 
 /////////elementui///////
 

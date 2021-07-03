@@ -65,11 +65,11 @@ export default {
           .then(
               (res) => {
 
-                /*console.log(this.dynamicValidateForm.name+this.dynamicValidateForm.domains[0].value);//2個值
-                console.log(res.data.contains);*/
+                /*console.log(this.dynamicValidateForm.name+this.dynamicValidateForm.domains[0].value);//2個值*/
+                console.log(res);
                 if (res.data.contains==true)
                 {
-                  this.$router.push({path:'/manager', query :{ name: this.dynamicValidateForm.name} });
+                  this.$router.push({path:'/manager', query :{ name: this.dynamicValidateForm.name,id:res.data.id} });
 
                 }
                 else

@@ -156,7 +156,6 @@ export default {
     },
     delPageChange()
     {
-
       /* console.log("come?");*/
       this.nowpage=this.nowpage-1;
       this.page=this.page-6;
@@ -165,7 +164,7 @@ export default {
     getUserList() {
       axios.get(this.http+"getPUserList").then(
           (res) => {
-            /* console.log(res); */
+           /* console.log(res);*/
             this.UserList = res.data;
             if (res.data.length / 6 != 0) {
               this.totalPage = res.data.length / 6;

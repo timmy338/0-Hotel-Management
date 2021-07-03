@@ -40,8 +40,7 @@
               type="primary"
               @click="
                 addDialogVisible = false;
-                onSubmit();
-              "
+                onSubmit();"
               >立即创建</el-button
             >
           </span>

@@ -7,19 +7,27 @@
       </el-tabs>
     </div>
     <div>
-      <router-view></router-view>
+      <router-view :userID=this.userID></router-view>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props:['userID'],
+  mounted() {
+  },
   data() {
     return {
       activeName: 'reserve1'
     };
   },
   methods: {
+    /*getUserId()
+    {
+      this.id=this.$route.query.id;
+      console.log(this.id);
+    },*/
     handleClick(tab, event) {
       console.log(tab.name);
       this.$router.push('/manager/reserveManager/'+tab.name);
