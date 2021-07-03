@@ -32,7 +32,7 @@
     <select id="selectMembersByName" resultType="com.zero.pojo.Member">
         select *
         from member m
-        where m.name=#{memberName}
+        where m.name LIKE CONCAT('%',#{memberName},'%')
     </select>
 
     <select id="getMembers" resultType="com.zero.pojo.Member">
