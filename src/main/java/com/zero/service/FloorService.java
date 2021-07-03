@@ -1,11 +1,11 @@
-package com.zero.dao;
+package com.zero.service;
 
 import com.zero.pojo.Floor;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface FloorDao {
+public interface FloorService {
     /**
      *增加楼层
      * @param floor 楼层对象
