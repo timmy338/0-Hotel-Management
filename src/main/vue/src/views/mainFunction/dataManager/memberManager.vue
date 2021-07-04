@@ -270,6 +270,7 @@ export default {
             console.log(res);
 
             this.MemberList = res.data.List;
+            this.MemberList.
             if(res.data.List.length==0 && this.nowpage!=1)
             {
               this.nowpage--;
@@ -408,17 +409,7 @@ export default {
       http:"http://localhost:8080/0_Hotel_Management_war/",
       MemberList: [
         {
-          name:"qiqi",
-          sex:"男",
-          pwd:"aayuyuqi",
-          tel:"13308455385",
-          addr:"华科韵苑16栋",
-          email:"984459568@qq.com",
-          point:"9999",
-          isVIP:"究极大会员",
-          lastIn:"today",
-          lastRe:"tomorrow",
-          remark: "大客户",
+
         }
       ],
       page: 0,

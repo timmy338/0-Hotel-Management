@@ -37,7 +37,7 @@
             </el-option>
           </el-select>
           <span class="searchSpan">价格: </span>
-          <el-input v-model="formInline.standardPrice" placeholder="價格"></el-input>
+          <el-input v-model="formInline.standardPrice" placeholder="搜寻"></el-input>
           <el-button type="primary" @click="onSearch()">查询</el-button>
         </el-form>
 
@@ -369,7 +369,7 @@ export default {
       console.log(this.Time[0]);
       axios
           .get(
-              this.http + "addReserve?roomRegister="+this.GID+"&user=2"+"&remarks="+"&status="+this.form.status+"&reserveDate="+this.arriveTime
+              this.http + "addReserve?roomRegister="+this.GID+"&user=2"+"&remarks="+"&status=正常"+"&reserveDate="+this.arriveTime
           )
           .then(
               (res) => {
