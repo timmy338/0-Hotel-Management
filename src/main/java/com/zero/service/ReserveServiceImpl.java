@@ -67,4 +67,9 @@ public class ReserveServiceImpl implements ReserveService{
     public int countAllReserves() {
         return reserveDao.countAllReserves();
     }
+
+    @Override
+    public List<Reserve> selectReserveByRoomId(Integer roomId) {
+        return reserveDao.selectReserveByRoomId(roomId);
+    }
 }

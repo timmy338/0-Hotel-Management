@@ -66,4 +66,72 @@ public class ReserveController {
         map.put("handle",isSuccess);
         return map;
     }
+
+    @RequestMapping("getReserveById")
+    @ResponseBody
+    public HashMap<String,Object> getReserveById(String id)
+    {
+        if(id==null||id.equals(""))
+            return getReserve("1");
+        else {
+            HashMap<String,Object> map=new HashMap<>();
+            List<ReserveInfo> reserveInfoList=new ArrayList<>();
+            List<Reserve> reserveList=reserveService.selectReserveById(Integer.parseInt(id));
+            for(Reserve r:reserveList)
+                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            map.put("List",reserveInfoList);
+            return map;
+        }
+    }
+
+    @RequestMapping("getReserveByRoomId")
+    @ResponseBody
+    public HashMap<String,Object> getReserveByRoomId(String roomId)
+    {
+        if(roomId==null||roomId.equals(""))
+            return getReserve("1");
+        else{
+            HashMap<String,Object> map=new HashMap<>();
+            List<ReserveInfo> reserveInfoList=new ArrayList<>();
+            List<Reserve> reserveList=reserveService.selectReserveByRoomId(Integer.parseInt(roomId));
+            for(Reserve r:reserveList)
+                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            map.put("List",reserveInfoList);
+            return map;
+        }
+    }
+
+    @RequestMapping("getReserveByPersonName")
+    @ResponseBody
+    public HashMap<String,Object> getReserveByPersonName(String personName)
+    {
+        if(personName==null||personName.equals(""))
+            return getReserve("1");
+        else{
+            HashMap<String,Object> map=new HashMap<>();
+            List<ReserveInfo> reserveInfoList=new ArrayList<>();
+            List<Reserve> reserveList=reserveService.selectReserveByName(personName);
+            for(Reserve r:reserveList)
+                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            map.put("List",reserveInfoList);
+            return map;
+        }
+    }
+
+    @RequestMapping("getReserveByStatus")
+    @ResponseBody
+    public HashMap<String,Object> getReserveByStatus(String status)
+    {
+        if(status==null||status.equals(""))
+            return getReserve("1");
+        else{
+            HashMap<String,Object> map=new HashMap<>();
+            List<ReserveInfo> reserveInfoList=new ArrayList<>();
+            List<Reserve> reserveList=reserveService.selectReserveByStatus(status);
+            for(Reserve r:reserveList)
+                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            map.put("List",reserveInfoList);
+            return map;
+        }
+    }
 }

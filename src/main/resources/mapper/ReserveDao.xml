@@ -60,4 +60,10 @@
     <select id="countAllReserves" resultType="java.lang.Integer">
         select count(*) from reserve
     </select>
+
+    <select id="selectReserveByRoomId" resultType="com.zero.pojo.Reserve">
+        select *
+        from reserve r,roomregister rg,room ro
+        where r.roomRegister=rg.id and rg.room=ro.id and ro.id=#{roomId}
+    </select>
 </mapper>

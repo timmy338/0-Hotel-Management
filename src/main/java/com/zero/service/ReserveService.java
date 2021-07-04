@@ -76,4 +76,11 @@ public interface ReserveService {
      * @return 预定总数
      */
     int countAllReserves();
+
+    /**
+     * 通过房间编号查询预定信息
+     * @param roomId 房间编号
+     * @return 查询到的预定信息列表
+     */
+    List<Reserve> selectReserveByRoomId(@Param("roomId") Integer roomId);
 }
