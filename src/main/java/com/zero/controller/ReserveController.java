@@ -2,6 +2,9 @@ package com.zero.controller;
 
 import com.zero.pojo.Reserve;
 import com.zero.service.ReserveService;
+import com.zero.service.RoomRegisterService;
+import com.zero.service.UserService;
+import com.zero.info.ReserveInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +21,14 @@ import java.util.List;
 @CrossOrigin
 public class ReserveController {
     private final ReserveService reserveService;
+    private final UserService userService;
+    private final RoomRegisterService roomRegisterService;
 
     @Autowired
-    public ReserveController(ReserveService reserveService){
+    public ReserveController(ReserveService reserveService,UserService userService,RoomRegisterService roomRegisterService){
         this.reserveService=reserveService;
+        this.userService=userService;
+        this.roomRegisterService=roomRegisterService;
     }
 
     @RequestMapping("addReserve")
@@ -40,7 +48,11 @@ public class ReserveController {
     {
         HashMap<String,Object> map=new HashMap<>();
         map.put("count",reserveService.countAllReserves());
-        map.put("List",reserveService.getReserve(Integer.parseInt(page)));
+        List<ReserveInfo> list=new ArrayList<>();
+        List<Reserve> reserveList=reserveService.getReserve(Integer.parseInt(page));
+        for(Reserve r:reserveList)
+            list.add(new ReserveInfo(r,roomRegisterService,userService));
+        map.put("List",list);
         return map;
     }
 
