@@ -16,8 +16,9 @@
     </update>
 
     <delete id="deleteReserve">
-        delete from reserve
-        where reserve.id=#{reserveId}
+        update reserve
+        set status='已取消'
+        where id=#{reserveId}
     </delete>
 
     <select id="selectReserveById" resultType="Reserve">
