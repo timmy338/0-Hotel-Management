@@ -18,7 +18,14 @@
     <delete id="deleteReserve">
         update reserve
         set status='已取消'
-        where id=#{reserveId}
+        where id = #{reserveId};
+        update room
+        set status='空房'
+        where id=(
+            select room
+            from roomregister
+            where id = (select roomregister from reserve where id = #{reserveId})
+        );
     </delete>
 
     <select id="selectReserveById" resultType="Reserve">
