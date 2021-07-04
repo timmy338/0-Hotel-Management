@@ -2,6 +2,7 @@ package com.zero.service;
 
 import com.zero.dao.UserDao;
 import com.zero.pojo.User;
+import com.zero.util.SHA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int insertUser(User user) {
+        user.setPwd(SHA.getResult(user.getPwd()));
         return userDao.insertUser(user);
     }
 
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int updateUser(User user) {
+        user.setPwd(SHA.getResult(user.getPwd()));
         return userDao.updateUser(user);
     }
 

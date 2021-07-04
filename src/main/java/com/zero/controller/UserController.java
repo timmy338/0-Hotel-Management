@@ -2,6 +2,7 @@ package com.zero.controller;
 
 import com.zero.pojo.User;
 import com.zero.service.UserService;
+import com.zero.util.SHA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,11 +33,13 @@ public class UserController {
         boolean isRight=false;
         int id=0;
         for (User u:userList) {
-            if(u.getPwd().equals(pwd))
+            if(SHA.equals(pwd,u.getPwd()))
             {
                 isRight=true;
                 id=u.getId();
                 break;
+            }else {
+                System.out.println(u.getUname()+':'+u.getPwd());
             }
         }
         map.put("contains",isRight);
