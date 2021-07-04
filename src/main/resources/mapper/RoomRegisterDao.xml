@@ -10,7 +10,7 @@
 
     <update id="updateRoomRegister">
         update roomregister
-        set room=#{room},deposit=#{deposit},guestName=#{guestName},guestIdType=#{guestIdType},guestId=#{guestId},tel=#{tel},arriveTime=#{arriveTime},leaveTime=#{leaveTime},guestCount=#{guestCount},memberId=#{memberId}
+        set guestName=#{guestName},guestIdType=#{guestIdType},guestId=#{guestId},tel=#{tel},guestCount=#{guestCount},memberId=#{memberId}
         where id=#{id}
     </update>
 
