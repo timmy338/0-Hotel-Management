@@ -109,7 +109,7 @@ export default {
     oneClickFunction(keyPath)
     {
       /* console.log(keyPath.index); */
-      this.$router.push("manager/"+keyPath.index);
+      this.$router.push("/manager/"+keyPath.index);
 
 
     },

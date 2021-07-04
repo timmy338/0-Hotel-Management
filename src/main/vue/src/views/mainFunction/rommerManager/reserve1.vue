@@ -203,23 +203,33 @@ export default {
       }
     },
     parseTime() {
+      var Date=this.Time[0].getFullYear() + '-' + this.getM(this.Time[0].getMonth() + 1) + '-' + this.getM(this.Time[0].getDate());
+      this.arriveTime=Date;
+      var Date=this.Time[1].getFullYear() + '-' + this.getM(this.Time[1].getMonth() + 1) + '-' + this.getM(this.Time[1].getDate());
+      this.leaveTime=Date;
       for (var i = 0; i < 2; i++) {
         var newDate = this.Time[i].getFullYear() + '-' + this.getM(this.Time[i].getMonth() + 1) + '-' + this.getM(this.Time[i].getDate()) +
             ' ' + this.getM(this.Time[i].getHours()) + ':' + this.getM(this.Time[i].getMinutes()) + ':' + this.getM(this.Time[i].getSeconds());
-        /*  console.log(newDate);*/
+         /* console.log(newDate);*/
         this.Time[i] = newDate;
+
       }
+     /* console.log(this.arriveTime);
+      console.log(this.leaveTime);*/
     },
 
     editButton(row) {
-      this.form.guestName = row.guestName;
-      this.form.guestIdType = row.guestIdType;
-      this.form.guestId = row.guestId;
-      this.form.tel = row.tel;
-      this.form.guestCount = row.guestCount;
-      this.form.memberId = row.memberId;
+      console.log(row);
       /*   console.log(this.form);*/
+      this.form.type = row.type;
+      this.form.floor = row.floor;
+      this.form.standardPrice = row.standardPrice;
+      this.form.discountPrice = row.discountPrice;
+      this.form.memberPrice = row.memberPrice;
+      this.form.vipPrice = row.vipPrice;
       this.editId = row.id;
+      this.form.status=row.status;
+
     },
 
     resetForm() {
@@ -316,6 +326,27 @@ export default {
           );
 
     },
+    editStatus() {
+      axios
+          .get(
+              this.http + "editRoom?id="+this.editId+"&type=" +
+              this.form.type +
+              "&floor=" +
+              this.form.floor + "&status=预定"  +
+              "&standardPrice=" + this.form.standardPrice +
+              "&discountPrice=" + this.form.discountPrice +
+              "&memberPrice=" + this.form.memberPrice +
+              "&vipPrice=" + this.form.vipPrice +
+              "&remarks=" + this.form.remarks
+          )
+          .then(
+              (res) => {
+                this.getRoom(this.nowpage);
+              },
+              (res) => {
+              }
+          );
+    },
     selectRoom() {
       axios
           .get(
@@ -335,13 +366,14 @@ export default {
     },
     addReserve()
     {
+      console.log(this.Time[0]);
       axios
           .get(
-              this.http + "addReserve?roomRegister="+"&user="+this.userID+"&remark="
+              this.http + "addReserve?roomRegister="+this.GID+"&user=2"+"&remarks="+"&status="+this.form.status+"&reserveDate="+this.arriveTime
           )
           .then(
               (res) => {
-
+                this.resetForm();
               },
               (res) => {
               }
@@ -357,6 +389,10 @@ export default {
           .then(
               (res) => {
                 console.log(res);
+                this.GID=res.data.List[0].id;
+               /* this.addReserve();*/
+                this.editStatus();
+                this.addReserve();
               },
               (res) => {
               }
@@ -366,6 +402,7 @@ export default {
 
     addClick() {
       this.parseTime();
+      console.log(this.Time[0]);
       axios
           .get(
               this.http + "addRoomRegister?room="+this.editId + "&deposit=100" + "&guestName=" +
@@ -394,6 +431,7 @@ export default {
 
   data() {
     return {
+      GID:"",
       id:"",
       http: "http://localhost:8080/0_Hotel_Management_war/",
       UserList: [
@@ -421,6 +459,12 @@ export default {
         tel: "",
         guestCount: "",
         memberId: "",
+
+        status: "",
+        discountPrice: "",
+        memberPrice: "",
+        vipPrice: "",
+        remarks: "",
       },
       formInline: {
         //搜尋用戶
