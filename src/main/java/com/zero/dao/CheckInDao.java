@@ -97,6 +97,13 @@ public interface CheckInDao {
      */
     List<CheckIn> selectCheckInByRoomRegister(@Param("id")Integer id);
 
+    /**
+     *根据page查询入住客房信息
+     * @param page page
+     * @return 返回查询到的客房信息列表
+     */
+    List<CheckIn> getCheckIn(@Param("page")Integer page);
+
 //    /**
 //     * 预定转入住
 //     * @param id 预定id

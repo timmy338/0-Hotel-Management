@@ -29,33 +29,33 @@
       >
         <el-table-column  prop="reserve.id" label="预定单号" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].room" label="客房编号" width="100">
+        <el-table-column prop="roomRegisters[0].room" label="客房编号" width="100">
         </el-table-column>
         <el-table-column prop="reserve.status" label="预定状态" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].deposit" label="押金" width="100">
+        <el-table-column prop="roomRegisters[0].deposit" label="押金" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].guestName" label="预定人" width="100">
+        <el-table-column prop="roomRegisters[0].guestName" label="预定人" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].guestIdType" label="证件类别" width="100">
+        <el-table-column prop="roomRegisters[0].guestIdType" label="证件类别" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].guestId" label="证件号码" width="100">
+        <el-table-column prop="roomRegisters[0].guestId" label="证件号码" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].tel" label="联系电话" width="100">
+        <el-table-column prop="roomRegisters[0].tel" label="联系电话" width="100">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].arriveTime" label="抵店时间" width="180">
+        <el-table-column prop="roomRegisters[0].arriveTime" label="抵店时间" width="180">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].leaveTime" label="离店时间" width="180">
+        <el-table-column prop="roomRegisters[0].leaveTime" label="离店时间" width="180">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].guestCount" label="入住人数" width="150">
+        <el-table-column prop="roomRegisters[0].guestCount" label="入住人数" width="150">
         </el-table-column>
-        <el-table-column prop="roomRegister[0].memberId" label="会员编号" width="150">
+        <el-table-column prop="roomRegisters[0].memberId" label="会员编号" width="150">
         </el-table-column>
         <el-table-column label="操作" width="130" fixed="right">
           <template slot-scope="scope">
 
             <el-button @click="
-             getRow(scope.row);
+            getRow(scope.row);
             centerDialogVisible = true;
             " type="text" size="small">入住
             </el-button>
@@ -76,31 +76,72 @@
         <div>
 
           <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="预定人">
-              <el-input v-model="form.guestName"></el-input>
+            <el-form-item label="入住单号">
+              <el-input v-model="form.room"></el-input>
             </el-form-item>
 
 
 
+            <el-form-item label="客房编号">
+              <el-input v-model="form.room"></el-input>
+            </el-form-item>
+
+
+            <el-form-item label="标准价">
+              <el-input v-model="form.standardPrice "></el-input>
+            </el-form-item>
+
+            <el-form-item label="折后价">
+              <el-input v-model="form.discountPrice "></el-input>
+            </el-form-item>
+
+            <el-form-item label="押金">
+              <el-input v-model="form.deposit"></el-input>
+            </el-form-item>
+
+            <el-form-item label="入住人">
+              <el-input v-model="form.guestName "></el-input>
+            </el-form-item>
+
+            <el-form-item label="证件类别">
+              <el-input v-model="form.guestIdType "></el-input>
+            </el-form-item>
+
             <el-form-item label="证件号码">
-              <el-input v-model="form.guestId"></el-input>
+              <el-input v-model="form.guestId "></el-input>
             </el-form-item>
 
             <el-form-item label="联系电话">
               <el-input v-model="form.tel "></el-input>
             </el-form-item>
 
+            <el-form-item label="抵店时间">
+              <el-input v-model="form.arriveTime "></el-input>
+            </el-form-item>
 
-
+            <el-form-item label="离店时间">
+              <el-input v-model="form.leaveTime "></el-input>
+            </el-form-item>
 
             <el-form-item label="入住人数">
               <el-input v-model="form.guestCount "></el-input>
             </el-form-item>
 
-            <el-form-item label="会员编号 ">
+            <el-form-item label="会员编号">
               <el-input v-model="form.memberId "></el-input>
             </el-form-item>
 
+            <el-form-item label="会员价">
+              <el-input v-model="form.memberprice "></el-input>
+            </el-form-item>
+
+            <el-form-item label="提供早餐">
+              <el-input v-model="form.memberId "></el-input>
+            </el-form-item>
+
+            <el-form-item label="定时叫醒">
+              <el-input v-model="form.memberId "></el-input>
+            </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -263,8 +304,8 @@ export default {
       else
       {
         this.checkInDialogVisible= true;
-        this.form.guestName=row.roomRegister[0].guestName;
-        this.form.roomRegisterId = row.roomRegister[0].id;
+        this.form.guestName=row.roomRegisters[0].guestName;
+        this.form.roomRegistersId = row.roomRegisters[0].id;
       }
 
     },
@@ -289,15 +330,15 @@ export default {
     },
     editButton(row) {
       console.log('test');
-      this.form.guestName=row.roomRegister[0].guestName;
-      this.form.guestIdType=row.roomRegister[0].guestIdType;
-      this.form.guestId=row.roomRegister[0].guestId;
-      this.form.tel=row.roomRegister[0].tel;
-      this.form.guestCount=row.roomRegister[0].guestCount;
-      this.form.memberId=row.roomRegister[0].memberId;
+      this.form.guestName=row.roomRegisters[0].guestName;
+      this.form.guestIdType=row.roomRegisters[0].guestIdType;
+      this.form.guestId=row.roomRegisters[0].guestId;
+      this.form.tel=row.roomRegisters[0].tel;
+      this.form.guestCount=row.roomRegisters[0].guestCount;
+      this.form.memberId=row.roomRegisters[0].memberId;
       /*  console.log(row);
         console.log(this.form);*/
-      this.editId = row.roomRegister[0].id;
+      this.editId = row.roomRegisters[0].id;
     },
 
     resetForm() {
@@ -309,15 +350,18 @@ export default {
       this.form.memberId="";
     },
     getRow(row){
-          console.log(row);
-          this.form.guestName=row.roomRegister[0].guestName;
-          this.form.guestIdType=row.roomRegister[0].guestIdType;
-          this.form.guestId=row.roomRegister[0].guestId;
-          this.form.tel=row.roomRegister[0].tel;
-          this.form.guestCount=row.roomRegister[0].guestCount;
-          this.form.memberId=row.roomRegister[0].memberId;
+      console.log(row);
+          this.form.guestName=row.roomRegisters[0].guestName;
+          this.form.guestIdType=row.roomRegisters[0].guestIdType;
+          this.form.guestId=row.roomRegisters[0].guestId;
+          this.form.tel=row.roomRegisters[0].tel;
+          this.form.arriveTime=row.roomRegisters[0].arriveTime;
+          this.form.leaveTime=row.roomRegisters[0].leaveTime;
+          this.form.guestCount=row.roomRegisters[0].guestCount;
+          this.form.memberId=row.roomRegisters[0].memberId;
+          this.form.deposit=row.roomRegisters[0].deposit;
 
-          this.form.roomRegisterId=row.roomRegisterId;
+          this.form.roomRegistersId=row.roomRegistersId;
           this.form.provideBreakfast=row.provideBreakfast;
           this.form.provideClock=row.provideClock;
           this.form.checkInDate=row.checkInDate;
@@ -339,15 +383,15 @@ export default {
     },
 
     getRoom(page) {
-      axios.get(this.http + "getReserve?page=" + page).then(
+      axios.get(this.http + "getCheckIn?page=" + page).then(
           (res) => {
-            /* console.log(res);*/
+            console.log(res);
 
             this.UserList = res.data.List;
             for(var i=0;i<this.UserList.length;i++)
             {
-              this.UserList[i].roomRegister[0].arriveTime=this.formatDate(this.UserList[i].roomRegister[0].arriveTime);
-              this.UserList[i].roomRegister[0].leaveTime=this.formatDate(this.UserList[i].roomRegister[0].leaveTime);
+              this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
+              this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
             }
             if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
@@ -415,8 +459,8 @@ export default {
                 this.UserList = res.data.List;
                 for(var i=0;i<this.UserList.length;i++)
                 {
-                  this.UserList[i].roomRegister[0].arriveTime=this.formatDate(this.UserList[i].roomRegister[0].arriveTime);
-                  this.UserList[i].roomRegister[0].leaveTime=this.formatDate(this.UserList[i].roomRegister[0].leaveTime);
+                  this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
+                  this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
                 }
                 this.nowpage = 1;
               },
@@ -436,8 +480,8 @@ export default {
                 this.UserList = res.data.List;
                 for(var i=0;i<this.UserList.length;i++)
                 {
-                  this.UserList[i].roomRegister[0].arriveTime=this.formatDate(this.UserList[i].roomRegister[0].arriveTime);
-                  this.UserList[i].roomRegister[0].leaveTime=this.formatDate(this.UserList[i].roomRegister[0].leaveTime);
+                  this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
+                  this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
                 }
                 this.nowpage = 1;
               },
@@ -457,8 +501,8 @@ export default {
                 this.UserList = res.data.List;
                 for(var i=0;i<this.UserList.length;i++)
                 {
-                  this.UserList[i].roomRegister[0].arriveTime=this.formatDate(this.UserList[i].roomRegister[0].arriveTime);
-                  this.UserList[i].roomRegister[0].leaveTime=this.formatDate(this.UserList[i].roomRegister[0].leaveTime);
+                  this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
+                  this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
                 }
                 this.nowpage = 1;
               },
@@ -478,8 +522,8 @@ export default {
                 this.UserList = res.data.List;
                 for(var i=0;i<this.UserList.length;i++)
                 {
-                  this.UserList[i].roomRegister[0].arriveTime=this.formatDate(this.UserList[i].roomRegister[0].arriveTime);
-                  this.UserList[i].roomRegister[0].leaveTime=this.formatDate(this.UserList[i].roomRegister[0].leaveTime);
+                  this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
+                  this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
                 }
                 this.nowpage = 1;
               },
@@ -490,7 +534,7 @@ export default {
     editClick() {
       axios
           .get(
-              this.http + "editRoomRegister?id="+this.editId+"&guestName="+this.form.guestName+"&guestIdType="+this.form.guestIdType+"&guestId="+this.form.guestId+"&tel="+this.form.tel+"&guestCount="+this.form.guestCount+"&memberId="+this.form.memberId
+              this.http + "editroomRegisters?id="+this.editId+"&guestName="+this.form.guestName+"&guestIdType="+this.form.guestIdType+"&guestId="+this.form.guestId+"&tel="+this.form.tel+"&guestCount="+this.form.guestCount+"&memberId="+this.form.memberId
           )
           .then(
               (res) => {
@@ -526,8 +570,10 @@ export default {
         leaveTime:"",
         guestCount:"",
         memberId:"",
+        room:"",
+        deposit:"",
 
-        roomRegisterId:"",
+        roomRegistersId:"",
         provideBreakfast:"",
         provideClock:"",
         checkInDate:"",

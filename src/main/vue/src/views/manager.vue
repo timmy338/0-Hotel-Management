@@ -3,7 +3,7 @@
     <div id="managerTop">
       <div id="logo"></div>
       <span id="title">酒店管理系统</span>
-      <span id="user">用戶 {{this.uname}} , 你好</span>
+      <span id="user">用户 {{this.uname}} , 你好</span>
     </div>
 
     <div id="middle">
@@ -24,19 +24,6 @@
               <el-menu-item-group>
                 <el-menu-item index="userManager" @click="clickFunction">用户管理</el-menu-item>
                 <el-menu-item index="logManager" @click="clickFunction">日志管理</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>报表管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1" @click="clickFunction">预定客人报表</el-menu-item>
-                <el-menu-item index="2-2" @click="clickFunction">在住客人报表</el-menu-item>
-                <el-menu-item index="2-3" @click="clickFunction">离店客人报表</el-menu-item>
-                <el-menu-item index="2-4" @click="clickFunction">财务进帐报表</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

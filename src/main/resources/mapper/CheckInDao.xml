@@ -82,6 +82,11 @@
         where c.roomRegister=#{id}
     </select>
 
+    <select id="getCheckIn" resultType="com.zero.pojo.CheckIn">
+        select * from checkin
+        limit 6 offset #{page};
+    </select>
+
     <update id="changeRoom">
         update checkin
         set preRoomID=(select room from(select roomregister.room from checkin join roomregister on checkin.roomRegister=roomregister.id where checkin.id=#{checkInId})as temp)

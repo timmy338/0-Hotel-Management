@@ -76,6 +76,11 @@ public class CheckInServiceImpl implements CheckInService{
     }
 
     @Override
+    public List<CheckIn> getCheckIn(Integer page) {
+        return checkInDao.getCheckIn(6*(page-1));
+    }
+
+    @Override
     public int changeRoom(Integer checkInId, Integer roomId) {
         return checkInDao.changeRoom(checkInId,roomId);
     }

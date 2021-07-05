@@ -61,13 +61,13 @@ public class CheckInController {
 //        return map;
 //    }
 
-    @RequestMapping("getCheckInByRoomRegister")
+    @RequestMapping("getCheckIn")
     @ResponseBody
-    public HashMap<String,Object> getCheckInByRoomRegister(String id)
+    public HashMap<String,Object> getCheckIn(String page)
     {
         HashMap<String,Object> map=new HashMap<>();
         List<CheckInInfo> checkInInfoList=new ArrayList<>();
-        List<CheckIn> checkInList=checkInService.selectCheckInByRoomRegister(Integer.parseInt(id));
+        List<CheckIn> checkInList=checkInService.getCheckIn(Integer.parseInt(page));
         for(CheckIn c:checkInList)
             checkInInfoList.add(new CheckInInfo(c,roomRegisterService));
         map.put("List",checkInInfoList);
