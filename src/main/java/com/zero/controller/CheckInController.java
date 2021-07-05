@@ -32,4 +32,12 @@ public class CheckInController {
         map.put("handle",handle);
         return map;
     }
+
+    public HashMap<String,Object> changeRoom(String checkInId,String roomId)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        boolean handle=checkInService.changeRoom(Integer.parseInt(checkInId),Integer.parseInt(roomId))>0;
+        map.put("handle",handle);
+        return map;
+    }
 }
