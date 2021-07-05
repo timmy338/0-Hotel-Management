@@ -10,7 +10,7 @@
   <packaging>war</packaging>
 
   <name>0-Hotel-Management Maven Webapp</name>
-  <url></url>
+  <url/>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
