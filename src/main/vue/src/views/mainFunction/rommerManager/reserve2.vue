@@ -15,7 +15,7 @@
             </el-option>
           </el-select>
 
-          <el-input v-model="formInline.searchInfo" placeholder="價格"></el-input>
+          <el-input v-model="formInline.searchInfo" placeholder="查询"></el-input>
           <el-button type="primary" @click="onSearch()">查询</el-button>
         </el-form>
 
@@ -63,10 +63,11 @@
             >编辑
             </el-button
             >
-            <el-button @click="delClick(scope.row)" type="text" size="small"
-            >取消
-            </el-button
-            >
+            <el-button @click="onCheckin(scope.row)" type="text" size="small">入住
+            </el-button>
+            <el-button @click="delClick(scope.row)" type="text" size="small">取消
+            </el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -81,13 +82,10 @@
       >
         <div>
 
-
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="预定人">
               <el-input v-model="form.guestName"></el-input>
             </el-form-item>
-
-
 
             <el-form-item label="证件类别">
               <el-radio-group v-model="form.guestIdType">
@@ -95,7 +93,6 @@
                 <el-radio label="居住证"></el-radio>
               </el-radio-group>
             </el-form-item>
-
 
             <el-form-item label="证件号码">
               <el-input v-model="form.guestId"></el-input>
@@ -131,6 +128,54 @@
         </span>
       </el-dialog>
     </div>
+
+    <div id="checkInDialog">
+      <el-dialog
+          title="入住资料"
+          :visible.sync="checkInDialogVisible"
+          width="30%"
+          center
+      >
+        <div>
+
+          <el-form ref="form" :model="form" label-width="100px">
+            <el-form-item label="预定人">
+              <el-input v-model="form.guestName"></el-input>
+            </el-form-item>
+
+            <el-form-item label="早餐">
+              <el-radio-group v-model="form.provideBreakfast">
+                <el-radio label="需要"></el-radio>
+                <el-radio label="不需要"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="定时叫醒">
+              <el-radio-group v-model="form.provideClock">
+                <el-radio label="需要"></el-radio>
+                <el-radio label="不需要"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="备注 ">
+              <el-input v-model="form.remarks "></el-input>
+            </el-form-item>
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="checkInDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button
+              type="primary"
+              @click="
+              checkInDialogVisible = false;
+              checkinClick();
+            "
+          >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
+
     <div id="page">
       <el-pagination
           background
@@ -160,10 +205,19 @@ export default {
       }
     },
     formatDate(time) {
-      console.log(time);
+      /*console.log(time);*/
       var date=new Date(time);
       var date=date.getFullYear() + '-' + this.getM(date.getMonth() + 1) + '-' + this.getM(date.getDate())+ ' ' + this.getM(date.getHours()) + ':' + this.getM(date.getMinutes()) + ':' + this.getM(date.getSeconds());;
       return date;
+    },
+    getNowDate()
+    {
+      var aData = new Date();
+      console.log(aData)
+
+      this.form.date =
+          aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
+      console.log(this.form.date);
     },
     onSubmit() {
       //增加用戶按鈕
@@ -174,6 +228,7 @@ export default {
         this.addRoom();
       }
     },
+
 
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
@@ -203,11 +258,71 @@ export default {
 
       /* this.getReserveById(); */
     },
+    setChoice()
+    {
+      if(this.form.provideBreakfast=="需要")
+      {
+        this.form.provideBreakfast=1;
+      }
+      else
+      {
+        this.form.provideBreakfast=0;
+      }
+      if(this.form.provideClock=="需要")
+      {
+        this.form.provideClock=1;
+      }
+      else
+      {
+        this.form.provideClock=0;
+      }
+    },
+
+    onCheckin(row)
+    {
+      if( row.reserve.status!="正常"){
+        alert("预定状态有误");
+      }
+      else
+      {
+        this.checkInDialogVisible= true;
+        console.log(row);
+        this.getNowDate();
+        this.form.guestName=row.roomRegister[0].guestName;
+        this.form.roomRegisterId = row.roomRegister[0].id;
+      }
+
+    },
+    checkinClick()
+    {
+      this.setChoice();
+      axios
+          .get(
+              this.http + "addCheckIn?user=2"+"&roomRegister="+this.form.roomRegisterId+"&remarks="+this.form.remarks+"&provideBreakfast="+this.form.provideBreakfast+"&provideClock="+this.form.provideClock+"&checkInDate="+this.form.date
+
+          )
+          .then(
+              (res) => {
+                this.getRoom(this.nowpage);
+              },
+              (res) => {
+              }
+          );
+    },
+
+
     delClick(row) {
       //刪除功能
       //row為當前用戶的數據
-      console.log(row);
-      this.delRoom(row.reserve.id);
+      /*console.log(row);*/
+      if(row.reserve.status!="正常")
+      {
+        alert("预定状态有误");
+      }
+      else{
+        this.delRoom(row.reserve.id);
+      }
+
     },
     editButton(row) {
       console.log('test');
@@ -217,8 +332,8 @@ export default {
       this.form.tel=row.roomRegister[0].tel;
       this.form.guestCount=row.roomRegister[0].guestCount;
       this.form.memberId=row.roomRegister[0].memberId;
-      console.log(row);
-      console.log(this.form);
+    /*  console.log(row);
+      console.log(this.form);*/
       this.editId = row.roomRegister[0].id;
     },
 
@@ -248,7 +363,7 @@ export default {
     getRoom(page) {
       axios.get(this.http + "getReserve?page=" + page).then(
           (res) => {
-            console.log(res);
+           /* console.log(res);*/
 
             this.UserList = res.data.List;
             for(var i=0;i<this.UserList.length;i++)
@@ -302,7 +417,7 @@ export default {
           .get(this.http + "delReserve?id=" + id)
           .then(
               (res) => {
-                console.log(res.data);
+               /* console.log(res.data);*/
                 this.getRoom(this.nowpage);
               },
               (res) => {
@@ -395,7 +510,6 @@ export default {
           );
     },
     editClick() {
-
       axios
           .get(
               this.http + "editRoomRegister?id="+this.editId+"&guestName="+this.form.guestName+"&guestIdType="+this.form.guestIdType+"&guestId="+this.form.guestId+"&tel="+this.form.tel+"&guestCount="+this.form.guestCount+"&memberId="+this.form.memberId
@@ -421,7 +535,7 @@ export default {
       page: 0,
       nowpage: 1,
       totalPage: 10,
-      addDialogVisible: false, //add彈出框屬性
+      checkInDialogVisible: false, //add彈出框屬性
       centerDialogVisible: false, //
       editId: "",
       form: {
@@ -435,6 +549,12 @@ export default {
         guestCount:"",
         memberId:"",
 
+        date:"",
+        roomRegisterId:"",
+        provideBreakfast:"",
+        provideClock:"",
+        checkInDate:"",
+        remarks:"",
       },
       formInline: {
         //搜尋用戶
@@ -471,24 +591,7 @@ export default {
           label: "预定状态",
         },
       ],
-      statusOptions: [
-        {
-          value: "空房",
-          label: "空房",
-        },
-        {
-          value: "预定",
-          label: "预定",
-        },
-        {
-          value: "入住",
-          label: "入住",
-        },
-        {
-          value: "",
-          label: "无",
-        }
-      ],
+
     };
   },
 };
@@ -530,6 +633,10 @@ export default {
 }
 
 #reserve2 #editDialog .el-input {
+  width: 280px;
+}
+
+#reserve2 #checkInDialog .el-input {
   width: 280px;
 }
 

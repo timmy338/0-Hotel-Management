@@ -33,6 +33,8 @@ public class CheckInController {
         return map;
     }
 
+    @RequestMapping("changeRoom")
+    @ResponseBody
     public HashMap<String,Object> changeRoom(String checkInId,String roomId)
     {
         HashMap<String,Object> map=new HashMap<>();

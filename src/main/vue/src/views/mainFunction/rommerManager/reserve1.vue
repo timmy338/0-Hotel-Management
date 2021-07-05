@@ -73,7 +73,6 @@
             <el-button
                 type="text"
                 @click="
-                centerDialogVisible = true;
                 editButton(scope.row);
               "
                 size="small"
@@ -81,6 +80,16 @@
             </el-button
             >
 
+            <el-button
+                type="text"
+                @click="
+                checkInButton(scope.row);
+              "
+            size="small"
+            >入住
+            </el-button
+            >
+            <el-button type="text" @click="changeButton(scope.row)" size="small">換房</el-button>
           </template>
         </el-table-column>
 
@@ -155,7 +164,121 @@
         </span>
       </el-dialog>
     </div>
+    <div id="checkinDialog">
+      <el-dialog
+          title="预定信息"
+          :visible.sync="checkinDialogVisible"
+          width="30%"
+          center
+      >
+        <div>
+          <el-form ref="form" :model="form" label-width="80px">
 
+            <el-form-item label="预定人">
+              <el-input v-model="form.guestName"></el-input>
+            </el-form-item>
+
+            <el-form-item label="证件类别">
+              <el-select v-model="form.guestIdType" filterable placeholder="请选择">
+                <el-option
+                    v-for="item in guestTypeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="证件号码">
+              <el-input v-model="form.guestId"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话">
+              <el-input v-model="form.tel"></el-input>
+            </el-form-item>
+
+            <div class="block" >
+              <el-date-picker
+                  v-model="Time"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  style="width: 350px;">
+              </el-date-picker>
+            </div>
+
+            <el-form-item label="入住人数">
+              <el-input v-model="form.guestCount "></el-input>
+            </el-form-item>
+
+            <el-form-item label="会员编号">
+              <el-input v-model="form.memberId"></el-input>
+            </el-form-item>
+
+            <el-form-item label="早餐">
+              <el-radio-group v-model="form.provideBreakfast">
+                <el-radio label="需要"></el-radio>
+                <el-radio label="不需要"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="定时叫醒">
+              <el-radio-group v-model="form.provideClock">
+                <el-radio label="需要"></el-radio>
+                <el-radio label="不需要"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="备注 ">
+              <el-input v-model="form.remarks "></el-input>
+            </el-form-item>
+
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="checkinDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button
+              type="primary"
+              @click="
+              checkinDialogVisible = false;
+              addClickDirect();
+            "
+          >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
+    <div id="changRoomDialog">
+      <el-dialog
+          title="换房服务"
+          :visible.sync="changeRoomDialog"
+          width="30%"
+          center
+      >
+        <div>
+          <el-form ref="form" :model="form" label-width="80px">
+
+            <el-form-item label="入住单号">
+              <el-input v-model="form.changeId"></el-input>
+            </el-form-item>
+
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="changeRoomDialog = false;resetForm()">取 消</el-button>
+          <el-button
+              type="primary"
+              @click="
+              changeRoomDialog = false;
+              changeRoom();
+            "
+          >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
     <div id="page">
       <el-pagination
           background
@@ -202,6 +325,15 @@ export default {
         return month;
       }
     },
+    getNowDate()
+    {
+      var aData = new Date();
+      console.log(aData)
+
+      this.form.date =
+          aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
+      console.log(this.form.date);
+    },
     parseTime() {
       var Date=this.Time[0].getFullYear() + '-' + this.getM(this.Time[0].getMonth() + 1) + '-' + this.getM(this.Time[0].getDate());
       this.arriveTime=Date;
@@ -217,18 +349,74 @@ export default {
      /* console.log(this.arriveTime);
       console.log(this.leaveTime);*/
     },
+    changeButton(row)
+    {
+      if(row.status!="空房")
+      {
+        alert("这不是一间空房");
+      }
+      else
+      {
+        this.changeRoomDialog = true;
+        console.log(row);
+        this.form.changeRoomId=row.id;
+      }
 
+    },
+    checkInButton(row)
+    {
+      if(row.status!="空房")
+      {
+        alert("这不是一间空房");
+      }
+
+      else{
+        this.checkinDialogVisible = true;
+        this.form.type = row.type;
+        this.form.floor = row.floor;
+        this.form.standardPrice = row.standardPrice;
+        this.form.discountPrice = row.discountPrice;
+        this.form.memberPrice = row.memberPrice;
+        this.form.vipPrice = row.vipPrice;
+        this.editId = row.id;
+        this.form.status=row.status;
+
+      }
+    },
     editButton(row) {
       console.log(row);
+      if(row.status!="空房")
+      {
+        alert("这不是一间空房");
+      }
+
+      else{
+        this.centerDialogVisible = true;
+        this.form.type = row.type;
+        this.form.floor = row.floor;
+        this.form.standardPrice = row.standardPrice;
+        this.form.discountPrice = row.discountPrice;
+        this.form.memberPrice = row.memberPrice;
+        this.form.vipPrice = row.vipPrice;
+        this.editId = row.id;
+        this.form.status=row.status;
+      }
       /*   console.log(this.form);*/
-      this.form.type = row.type;
-      this.form.floor = row.floor;
-      this.form.standardPrice = row.standardPrice;
-      this.form.discountPrice = row.discountPrice;
-      this.form.memberPrice = row.memberPrice;
-      this.form.vipPrice = row.vipPrice;
-      this.editId = row.id;
-      this.form.status=row.status;
+
+
+    },
+    changeRoom()
+    {
+      axios
+          .get(this.http + "changeRoom?checkInId=" + this.form.changeId+"&roomId="+this.form.changeRoomId)
+          .then(
+              (res) => {
+                /*console.log(res.data);*/
+                this.getRoom("1");
+              },
+              (res) => {
+              }
+          );
 
     },
 
@@ -256,9 +444,26 @@ export default {
       this.getRoom(val);
       this.nowpage = val;
     },
-
+    setChoice()
+    {
+      if(this.form.provideBreakfast=="需要")
+      {
+        this.form.provideBreakfast=1;
+      }
+      else
+      {
+        this.form.provideBreakfast=0;
+      }
+      if(this.form.provideClock=="需要")
+      {
+        this.form.provideClock=1;
+      }
+      else
+      {
+        this.form.provideClock=0;
+      }
+    },
     getRoom(page) {
-
       axios.get(this.http + "getRoom?page=" + page).then(
           (res) => {
             /*console.log(res);*/
@@ -379,28 +584,56 @@ export default {
               }
           );
     },
-    getRegister(guestId)
-    {
 
+    addCheckIn()
+    {
+      this.setChoice();
+      this.getNowDate();
       axios
           .get(
-              this.http + "searchRoomRegisterByGuestId?guestId="+guestId
+              this.http + "addCheckIn?user=2"+"&roomRegister="+this.GID+"&remarks="+this.form.remarks+"&provideBreakfast="+this.form.provideBreakfast+"&provideClock="+this.form.provideClock+"&checkInDate="+this.form.date
+
           )
           .then(
               (res) => {
-                console.log(res);
-                this.GID=res.data.List[0].id;
-               /* this.addReserve();*/
+                this.getRoom(this.nowpage);
+              },
+              (res) => {
+              }
+          );
+    },
+    addClick() {
+      this.parseTime();
+
+      console.log(this.Time[0]);
+      axios
+          .get(
+              this.http + "addRoomRegister?room="+this.editId + "&deposit=100" + "&guestName=" +
+              this.form.guestName +
+              "&guestIdType=" +
+              this.form.guestIdType + "&guestId=" + this.form.guestId +
+              "&tel=" + this.form.tel +
+              "&arriveTime=" + this.Time[0] +
+              "&leaveTime=" + this.Time[1] +
+              "&guestCount=" + this.form.guestCount +
+              "&memberId=" + this.form.memberId
+          )
+          .then(
+              (res) => {
+                console.log(res.data);
+                this.GID=res.data.id;
+                /* this.addReserve();*/
                 this.editStatus();
                 this.addReserve();
+              /*  this.resetForm();*/
+
               },
               (res) => {
               }
           );
 
     },
-
-    addClick() {
+    addClickDirect() {
       this.parseTime();
       console.log(this.Time[0]);
       axios
@@ -417,8 +650,9 @@ export default {
           )
           .then(
               (res) => {
-                this.getRegister( this.form.guestId);
-              /*  this.resetForm();*/
+                this.GID=res.data.id;
+                /* this.addReserve();*/
+                this.addCheckIn();
 
               },
               (res) => {
@@ -426,6 +660,7 @@ export default {
           );
 
     },
+
   },
 
 
@@ -445,7 +680,8 @@ export default {
       page: 0,
       nowpage: 1,
       totalPage: 10,
-      addDialogVisible: false, //add彈出框屬性
+      changeRoomDialog: false,
+      checkinDialogVisible: false, //add彈出框屬性
       centerDialogVisible: false, //
       editId: "",
       form: {
@@ -460,11 +696,19 @@ export default {
         guestCount: "",
         memberId: "",
 
+        date:"",
         status: "",
         discountPrice: "",
         memberPrice: "",
         vipPrice: "",
+        roomRegisterId:"",
+        provideBreakfast:"",
+        provideClock:"",
+        checkInDate:"",
         remarks: "",
+
+        changeId:"",
+        changeRoomId:"",
       },
       formInline: {
         //搜尋用戶
@@ -550,9 +794,10 @@ export default {
   width: 120px;
 }
 
-#reserve1 #editDialog .el-input {
+#reserve1 #editDialog .el-input,#reserve1 #checkinDialog .el-input,#reserve1 #changRoomDialog .el-input {
   width: 280px;
 }
+
 
 #reserve1 #page {
   bottom: -50px;
