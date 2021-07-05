@@ -83,6 +83,12 @@
         update roomregister
         set room=#{roomId}
         where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId});
+        update room
+        set `status`='空房'
+        where id=(select preRoomID from checkin where checkin.id=#{checkInId});
+        update room
+        set `status`='入住'
+        where id=#{roomId};
     </update>
 
 </mapper>
