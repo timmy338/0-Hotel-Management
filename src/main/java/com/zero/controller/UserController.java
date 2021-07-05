@@ -38,8 +38,6 @@ public class UserController {
                 isRight=true;
                 id=u.getId();
                 break;
-            }else {
-                System.out.println(u.getUname()+':'+u.getPwd());
             }
         }
         map.put("contains",isRight);
