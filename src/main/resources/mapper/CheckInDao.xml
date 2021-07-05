@@ -42,7 +42,13 @@
 
     <insert id="insertCheckIn">
         insert into checkin
-        values (#{id},#{user},#{roomRegister},#{remarks},#{provideBreakfast},#{provideClock},#{preRoomID},#{checkInDate})
+        values (#{id},#{user},#{roomRegister},#{remarks},#{provideBreakfast},#{provideClock},#{preRoomID},#{checkInDate});
+        update reserve
+        set `status`='已入住'
+        where roomRegister=#{roomRegister};
+        update room
+        set `status`='入住'
+        where id=(select room from roomRegister where id=#{roomRegister});
     </insert>
 
     <select id="selectCheckInById" resultType="com.zero.pojo.CheckIn">
