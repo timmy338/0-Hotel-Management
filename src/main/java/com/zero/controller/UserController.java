@@ -40,8 +40,6 @@ public class UserController {
                 id=u.getId();
                 power=u.getPower();
                 break;
-            }else {
-                System.out.println(u.getUname()+':'+u.getPwd());
             }
         }
         map.put("contains",isRight);
