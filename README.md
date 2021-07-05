@@ -14,8 +14,6 @@ jdbc.password=你的密码
 jdbc.connTimeout=10000
 ```
 
-应该是要移除出数据库，在项目根目录下打开gitbash 输入 git rm --cached src/main/resources/jdbc.properties,使git不再跟踪该文件
-
 ## git
 
 **所有修改在dev上进行，master仅用于发布**
