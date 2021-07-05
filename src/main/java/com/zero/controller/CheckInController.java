@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RestController
@@ -40,6 +41,16 @@ public class CheckInController {
         HashMap<String,Object> map=new HashMap<>();
         boolean handle=checkInService.changeRoom(Integer.parseInt(checkInId),Integer.parseInt(roomId))>0;
         map.put("handle",handle);
+        return map;
+    }
+
+    @RequestMapping("getCheckInByRoomRegister")
+    @ResponseBody
+    public HashMap<String,Object> getCheckInByRoomRegister(String id)
+    {
+        HashMap<String,Object> map=new HashMap<>();
+        List<CheckIn> checkInList=checkInService.selectCheckInByRoomRegister(Integer.parseInt(id));
+        map.put("List",checkInList);
         return map;
     }
 }

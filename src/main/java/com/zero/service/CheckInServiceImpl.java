@@ -71,6 +71,11 @@ public class CheckInServiceImpl implements CheckInService{
     }
 
     @Override
+    public List<CheckIn> selectCheckInByRoomRegister(Integer id) {
+        return checkInDao.selectCheckInByRoomRegister(id);
+    }
+
+    @Override
     public int changeRoom(Integer checkInId, Integer roomId) {
         return checkInDao.changeRoom(checkInId,roomId);
     }

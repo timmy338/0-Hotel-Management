@@ -90,6 +90,13 @@ public interface CheckInDao {
      */
     List<CheckIn> selectCheckInByUser(@Param("guest") String guest);
 
+    /**
+     *根据RoomRegister的id查询入住客房信息
+     * @param id RoomRegister的id
+     * @return 返回查询到的客房信息列表
+     */
+    List<CheckIn> selectCheckInByRoomRegister(@Param("id")Integer id);
+
 //    /**
 //     * 预定转入住
 //     * @param id 预定id

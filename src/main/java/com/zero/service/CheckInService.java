@@ -99,6 +99,13 @@ public interface CheckInService {
 //    List<CheckIn> reserveToCheckIn(@Param("id") Integer id);
 
     /**
+     *根据RoomRegister的id查询入住客房信息
+     * @param id RoomRegister的id
+     * @return 返回查询到的客房信息列表
+     */
+    List<CheckIn> selectCheckInByRoomRegister(@Param("id")Integer id);
+
+    /**
      * 换房
      * @param checkInId 需要更改的CheckInId
      * @param roomId 更改后的roomId
