@@ -22,7 +22,7 @@
                 f.name=#{floor.name},
             </if>
         </set>
-        where f.name=#{name}
+        where f.name=#{target}
     </update>
 
     <select id="selectFloor" resultType="Floor">
