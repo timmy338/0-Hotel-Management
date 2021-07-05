@@ -14,8 +14,15 @@
 
     <update id="updateFloor">
         update floor f
-        set f.remarks=#{floor.remarks},f.name=#{floor.name}
-        where name=#{name}
+        <set>
+            <if test="floor.remarks!=null and floor.remarks neq ''">
+                f.remarks=#{floor.remarks},
+            </if>
+            <if test="floor.name!=null and floor.name neq ''">
+                f.name=#{floor.name},
+            </if>
+        </set>
+        where f.name=#{name}
     </update>
 
     <select id="selectFloor" resultType="Floor">

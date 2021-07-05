@@ -1,8 +1,6 @@
 package com.zero.controller;
 import com.zero.pojo.Floor;
-import com.zero.pojo.RoomType;
 import com.zero.service.FloorService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -70,7 +68,7 @@ public class FloorController {
 
     @RequestMapping("editFloor")
     @ResponseBody
-    public HashMap<String,Object> editFloor(@Param("target") String target,@Param("floor") Floor floor)
+    public HashMap<String,Object> editFloor(String target,Floor floor)
     {
         HashMap<String,Object> map=new HashMap<>();
         System.out.println("TryUpdateFloor:"+target);
