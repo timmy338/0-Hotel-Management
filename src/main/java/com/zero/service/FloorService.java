@@ -22,10 +22,11 @@ public interface FloorService {
 
     /**
      *修改楼层
-     * @param name 楼层名
+     * @param target 楼层名
+     * @param floor 更改之后的楼层信息
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int updateFloor(@Param("name") String name,@Param("floor")Floor floor);
+    int updateFloor(@Param("target") String target,@Param("floor")Floor floor);
 
     /**
      * 查寻楼层
