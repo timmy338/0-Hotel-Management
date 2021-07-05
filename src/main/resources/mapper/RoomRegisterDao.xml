@@ -30,4 +30,10 @@
         from roomregister r
         where r.guestId=#{guestId}
     </select>
+    <select id="selectNextAutoId" resultType="java.lang.Integer">
+        select AUTO_INCREMENT
+        from information_schema.TABLES
+        where TABLE_SCHEMA = 'zerohotel'
+          and TABLE_NAME = 'roomRegister'
+    </select>
 </mapper>

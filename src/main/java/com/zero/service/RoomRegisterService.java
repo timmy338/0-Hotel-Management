@@ -40,4 +40,10 @@ public interface RoomRegisterService {
      * @return 返回查询到的RoomRegister列表
      */
     List<RoomRegister> selectRoomRegisterByGuestId(@Param("guestId")String guestId);
+
+    /**
+     * 获得下一个自增id
+     * @return id
+     */
+    int selectNextAutoId();
 }

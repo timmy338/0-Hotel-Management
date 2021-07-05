@@ -40,8 +40,10 @@ public class RoomRegisterController {
     {
         HashMap<String,Object> map=new HashMap<>();
         System.out.println("TryAddRoomRegister:"+roomRegister);
+        int nextId= roomRegisterService.selectNextAutoId();
         boolean isSuccess=roomRegisterService.insertRoomRegister(roomRegister)>0;
         map.put("handle",isSuccess);
+        map.put("id",nextId);
         return map;
     }
 
