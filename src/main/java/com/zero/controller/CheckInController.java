@@ -6,6 +6,7 @@ import com.zero.pojo.CheckIn;
 import com.zero.pojo.Reserve;
 import com.zero.service.CheckInService;
 import com.zero.service.RoomRegisterService;
+import com.zero.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,12 +24,14 @@ import java.util.List;
 public class CheckInController {
     private final CheckInService checkInService;
     private final RoomRegisterService roomRegisterService;
+    private final RoomService roomService;
 
     @Autowired
-    public CheckInController(CheckInService checkInService,RoomRegisterService roomRegisterService)
+    public CheckInController(CheckInService checkInService,RoomRegisterService roomRegisterService,RoomService roomService)
     {
         this.checkInService=checkInService;
         this.roomRegisterService=roomRegisterService;
+        this.roomService=roomService;
     }
 
     @RequestMapping("addCheckIn")
@@ -69,7 +72,7 @@ public class CheckInController {
         List<CheckInInfo> checkInInfoList=new ArrayList<>();
         List<CheckIn> checkInList=checkInService.getCheckIn(Integer.parseInt(page));
         for(CheckIn c:checkInList)
-            checkInInfoList.add(new CheckInInfo(c,roomRegisterService));
+            checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
         map.put("List",checkInInfoList);
         return map;
     }
