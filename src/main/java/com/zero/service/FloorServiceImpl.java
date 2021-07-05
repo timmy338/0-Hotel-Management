@@ -29,8 +29,8 @@ public class FloorServiceImpl implements FloorService{
     }
 
     @Override
-    public int updateFloor(String name) {
-        return floorDao.updateFloor(name);
+    public int updateFloor(String name,Floor floor) {
+        return floorDao.updateFloor(name,floor);
     }
 
     @Override

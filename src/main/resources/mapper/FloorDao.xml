@@ -14,7 +14,7 @@
 
     <update id="updateFloor">
         update floor f
-        set f.remarks=#{remarks}
+        set f.remarks=#{floor.remarks},f.name=#{floor.name}
         where name=#{name}
     </update>
 

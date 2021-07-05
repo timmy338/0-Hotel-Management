@@ -25,7 +25,7 @@ public interface FloorService {
      * @param name 楼层名
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
-    int updateFloor(@Param("name") String name);
+    int updateFloor(@Param("name") String name,@Param("floor")Floor floor);
 
     /**
      * 查寻楼层
