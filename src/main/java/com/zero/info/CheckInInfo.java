@@ -19,6 +19,6 @@ public class CheckInInfo {
     {
         this.checkIn=checkIn;
         roomRegisters=roomRegisterService.selectRoomRegisterById(checkIn.getRoomRegister());
-        rooms=roomService.selectRoom(roomRegisters.get(0).getRoom());
+        rooms=roomService.selectRoomById(roomRegisters.get(0).getRoom());
     }
 }
