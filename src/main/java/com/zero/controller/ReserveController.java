@@ -50,8 +50,9 @@ public class ReserveController {
         map.put("count",reserveService.countAllReserves());
         List<ReserveInfo> list=new ArrayList<>();
         List<Reserve> reserveList=reserveService.getReserve(Integer.parseInt(page));
-        for(Reserve r:reserveList)
+        for(Reserve r:reserveList){
             list.add(new ReserveInfo(r,roomRegisterService,userService));
+        }
         map.put("List",list);
         return map;
     }
@@ -77,8 +78,9 @@ public class ReserveController {
             HashMap<String,Object> map=new HashMap<>();
             List<ReserveInfo> reserveInfoList=new ArrayList<>();
             List<Reserve> reserveList=reserveService.selectReserveById(Integer.parseInt(id));
-            for(Reserve r:reserveList)
-                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            for(Reserve r:reserveList) {
+                reserveInfoList.add(new ReserveInfo(r, roomRegisterService, userService));
+            }
             map.put("List",reserveInfoList);
             return map;
         }
@@ -94,8 +96,9 @@ public class ReserveController {
             HashMap<String,Object> map=new HashMap<>();
             List<ReserveInfo> reserveInfoList=new ArrayList<>();
             List<Reserve> reserveList=reserveService.selectReserveByRoomId(Integer.parseInt(roomId));
-            for(Reserve r:reserveList)
-                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            for(Reserve r:reserveList) {
+                reserveInfoList.add(new ReserveInfo(r, roomRegisterService, userService));
+            }
             map.put("List",reserveInfoList);
             return map;
         }
@@ -111,8 +114,9 @@ public class ReserveController {
             HashMap<String,Object> map=new HashMap<>();
             List<ReserveInfo> reserveInfoList=new ArrayList<>();
             List<Reserve> reserveList=reserveService.selectReserveByName(personName);
-            for(Reserve r:reserveList)
-                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            for(Reserve r:reserveList) {
+                reserveInfoList.add(new ReserveInfo(r, roomRegisterService, userService));
+            }
             map.put("List",reserveInfoList);
             return map;
         }
@@ -128,8 +132,9 @@ public class ReserveController {
             HashMap<String,Object> map=new HashMap<>();
             List<ReserveInfo> reserveInfoList=new ArrayList<>();
             List<Reserve> reserveList=reserveService.selectReserveByStatus(status);
-            for(Reserve r:reserveList)
-                reserveInfoList.add(new ReserveInfo(r,roomRegisterService,userService));
+            for(Reserve r:reserveList) {
+                reserveInfoList.add(new ReserveInfo(r, roomRegisterService, userService));
+            }
             map.put("List",reserveInfoList);
             return map;
         }
