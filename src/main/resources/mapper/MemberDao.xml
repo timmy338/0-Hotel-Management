@@ -14,7 +14,21 @@
     
     <update id="updateMember">
         update member
-        set name=#{name},sex=#{sex},pwd=#{pwd},tel=#{tel},addr=#{addr},email=#{email},remarks=#{remarks}
+        <set>
+            name=#{name},
+            sex=#{sex},
+            pwd=#{pwd},
+            tel=#{tel},
+            addr=#{addr},
+            email=#{email},
+            remarks=#{remarks},
+            <if test="lastIn!=null">
+                lastIn=#{lastIn},
+            </if>
+            <if test="lastRe!=null">
+                lastRe=#{lastRe},
+            </if>
+        </set>
         where id=#{id}
     </update>
 

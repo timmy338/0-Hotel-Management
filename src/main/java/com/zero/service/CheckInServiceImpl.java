@@ -60,7 +60,7 @@ public class CheckInServiceImpl implements CheckInService{
         if(tempReg.getMemberId()!=null)
         {
             Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
-            tempMember.setLastIn(new Timestamp(checkIn.getCheckInDate().getTime()));
+            tempMember.setLastIn(new Timestamp(System.currentTimeMillis()));
             memberDao.updateMember(tempMember);
         }
         return checkInDao.insertCheckIn(checkIn);
