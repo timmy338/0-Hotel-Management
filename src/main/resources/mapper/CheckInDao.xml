@@ -93,6 +93,12 @@
         where roomregister.guestName=#{guest}
     </select>
 
+    <select id="selectCheckInByGuestId" resultType="com.zero.pojo.CheckIn">
+        select *
+        from checkin join roomregister on checkin.roomRegister=roomregister.id
+        where roomregister.guestId=#{id}
+    </select>
+
     <select id="selectCheckInByRoomRegister" resultType="com.zero.pojo.CheckIn">
         select *
         from checkin c
