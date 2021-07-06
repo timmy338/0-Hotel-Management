@@ -7,6 +7,7 @@ const Login = () => import('../views/login')
 const UserManager = () => import('../views/mainFunction/systemManager/userManager')
 const LogManager = () => import('../views/mainFunction/systemManager/logManager')
 const RoomManager = () => import('../views/mainFunction/roomManager/roomManager')
+const Welcome = () => import('../views/mainFunction/welcome')
 
 //房客管理頁面
 const Roomregister = () => import('../views/mainFunction/rommerManager/roomregister')
@@ -42,7 +43,12 @@ const routes = [
     children: [
       {
         path: '/',
-        redirect: 'userManager'
+        redirect: 'welcome'
+      },
+
+      {
+        path: 'welcome',
+        component: Welcome
       },
       {
         path: 'userManager',

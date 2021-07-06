@@ -127,7 +127,7 @@
 
     <div id="editDialog">
       <el-dialog
-          title="修改用户资料"
+          title="修改会员资料"
           :visible.sync="centerDialogVisible"
           width="30%"
           center

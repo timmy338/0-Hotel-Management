@@ -90,7 +90,7 @@
 
     <div id="editDialog">
       <el-dialog
-          title="修改用户资料"
+          title="修改客房资料"
           :visible.sync="centerDialogVisible"
           width="30%"
           center

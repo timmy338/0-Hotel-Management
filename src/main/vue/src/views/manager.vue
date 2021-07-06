@@ -10,13 +10,12 @@
       <div id="function">
         <el-col :span="12">
           <el-menu
-            default-active="userManager"
             class="el-menu-vertical-demo"
             background-color="#002244"
             text-color="#fff"
             active-text-color="#ffd04b"
           >
-            <el-submenu index="1">
+            <el-submenu index="1" v-show="(this.power!='前台人员')">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>系统管理</span>
@@ -38,7 +37,7 @@
               </el-menu-item-group>
             </el-submenu>
 
-            <el-submenu index="4">
+            <el-submenu index="4" v-show="(this.power!='前台人员')">
               <template slot="title">
                 <i class="el-icon-document-copy"></i>
                 <span>基础信息维护</span>
@@ -52,12 +51,12 @@
               </el-menu-item-group>
             </el-submenu>
 
-            <el-menu-item index="consumeManager" @click="oneClickFunction">
+            <el-menu-item index="consumeManager" @click="oneClickFunction" v-show="(this.power!='前台人员')">
               <i class="el-icon-shopping-cart-2"></i>
               <span slot="title">消费管理</span>
             </el-menu-item>
 
-            <el-menu-item index="roomManager" @click="oneClickFunction">
+            <el-menu-item index="roomManager" @click="oneClickFunction" v-show="(this.power!='前台人员')">
               <i class="el-icon-setting"></i>
               <span slot="title">客房管理</span>
             </el-menu-item>
@@ -81,14 +80,20 @@ export default {
     return {
         uname:"",
         id:"",
+      power:"",
     };
   },
 
   methods: {
+    show()
+    {
+
+    },
     getUserName()
     {
       this.uname=this.$route.query.name;
       this.id=this.$route.query.id;
+      this.power=this.$route.query.power;
       console.log(this.id);
     },
     oneClickFunction(keyPath)
@@ -148,8 +153,8 @@ export default {
 }
 .manager #middle #mainFunction
 {
-  width: 1140px;
-  height: 600px;
+  width: 1280px;
+  height: 650px;
 
 }
 .manager #middle #function,.manager #middle #mainFunction
