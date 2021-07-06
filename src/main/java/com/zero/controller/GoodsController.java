@@ -81,16 +81,20 @@ public class GoodsController {
     @ResponseBody
     public HashMap<String,Object> searchGoods(String id)
     {
-        HashMap<String,Object> map=new HashMap<>();
-        List<Goods> GoodsList= goodsService.selectGoodsById(Integer.parseInt(id));
-        List<GoodsInfo> goodsInfoList=new ArrayList<>();
-        for(Goods goods : GoodsList){
-            goodsInfoList.add(new GoodsInfo(goods,goodsTypeService));
+        if(id==null||id.equals(""))
+            return getGoods("1");
+        {
+            List<Goods> GoodsList = goodsService.selectGoodsById(Integer.parseInt(id));
+            List<GoodsInfo> goodsInfoList = new ArrayList<>();
+            for (Goods goods : GoodsList) {
+                goodsInfoList.add(new GoodsInfo(goods, goodsTypeService));
+            }
+            HashMap<String, Object> map = new HashMap<>();
+            int count = goodsService.countAllGoods();
+            map.put("count", count);
+            map.put("List", goodsInfoList);
+            map.put("NameList", goodsTypeService.selectAllGoodsType());
+            return map;
         }
-        int count=goodsService.countAllGoods();
-        map.put("count",count);
-        map.put("List",goodsInfoList);
-        map.put("NameList",goodsTypeService.selectAllGoodsType());
-        return map;
     }
 }
