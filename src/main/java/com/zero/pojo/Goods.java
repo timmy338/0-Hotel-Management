@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Goods {
     private Integer id;
     private String name;
-    private String type;
+    private Integer typeid;
     private Double price;
     private String unit;
     private String remarks;

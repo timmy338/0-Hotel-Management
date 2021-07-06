@@ -35,8 +35,13 @@ public class GoodsTypeServiceImpl implements GoodsTypeService{
     }
 
     @Override
-    public List<GoodsType> selectGoodsTypeById(String name) {
-        return goodsTypeDao.selectGoodsTypeById(name);
+    public List<GoodsType> selectGoodsTypeByName(String name) {
+        return goodsTypeDao.selectGoodsTypeByName(name);
+    }
+
+    @Override
+    public List<GoodsType> selectGoodsTypeById(Integer id) {
+        return goodsTypeDao.selectGoodsTypeById(id);
     }
 
     @Override

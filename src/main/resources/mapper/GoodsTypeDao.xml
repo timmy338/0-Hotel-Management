@@ -33,8 +33,13 @@
         limit 6 offset #{offset}
     </select>
 
-    <select id="selectGoodsTypeById" resultType="com.zero.pojo.GoodsType">
+    <select id="selectGoodsTypeByName" resultType="com.zero.pojo.GoodsType">
         select  * from goodstype
         where name=#{name}
+    </select>
+    <select id="selectGoodsTypeById" resultType="com.zero.pojo.GoodsType">
+        select *
+        from goodstype
+        where id=#{id}
     </select>
 </mapper>

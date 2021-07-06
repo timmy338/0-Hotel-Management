@@ -45,7 +45,14 @@ public interface GoodsTypeDao {
      * @param name 商品类型name
      * @return 返回查询到的商品列表
      */
-    List<GoodsType> selectGoodsTypeById(@Param("name") String name);
+    List<GoodsType> selectGoodsTypeByName(@Param("name") String name);
+
+    /**
+     * 通过商品类型id查询商品类型
+     * @param id 商品类型id
+     * @return 查询到的商品类型
+     */
+    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
 
     /**
      * 获取货物类型总数

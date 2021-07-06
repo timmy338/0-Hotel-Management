@@ -1,6 +1,8 @@
 package com.zero.controller;
+import com.zero.info.GoodsInfo;
 import com.zero.pojo.Goods;
 import com.zero.service.GoodsService;
+import com.zero.service.GoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,10 +19,12 @@ import java.util.List;
 @CrossOrigin
 public class GoodsController {
     private final GoodsService goodsService;
+    private final GoodsTypeService goodsTypeService;
 
     @Autowired
-    public GoodsController(GoodsService goodsService){
+    public GoodsController(GoodsService goodsService,GoodsTypeService goodsTypeService){
         this.goodsService=goodsService;
+        this.goodsTypeService=goodsTypeService;
     }
 
     @RequestMapping("getGoods")
@@ -28,9 +33,14 @@ public class GoodsController {
     {
         HashMap<String,Object> map=new HashMap<>();
         List<Goods> goodsList= goodsService.getGoods(Integer.parseInt(page));
+        List<GoodsInfo> goodsInfoList=new ArrayList<>();
+        for(Goods goods : goodsList){
+            goodsInfoList.add(new GoodsInfo(goods,goodsTypeService));
+        }
         int count=goodsService.countAllGoods();
         map.put("count",count);
-        map.put("List",goodsList);
+        map.put("List",goodsInfoList);
+        map.put("NameList",goodsTypeService.selectAllGoodsType());
         return map;
     }
 

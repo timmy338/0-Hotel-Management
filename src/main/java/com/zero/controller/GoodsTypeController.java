@@ -73,7 +73,7 @@ public class GoodsTypeController {
     public HashMap<String,Object> searchGoodsType(String name)
     {
         HashMap<String,Object> map=new HashMap<>();
-        List<GoodsType> GoodsTypeList= goodsTypeService.selectGoodsTypeById(name);
+        List<GoodsType> GoodsTypeList= goodsTypeService.selectGoodsTypeByName(name);
         map.put("List",GoodsTypeList);
         return map;
     }
