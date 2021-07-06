@@ -69,7 +69,7 @@ export default {
                 console.log(res);
                 if (res.data.contains==true)
                 {
-                  this.$router.push({path:'/manager', query :{ name: this.dynamicValidateForm.name,id:res.data.id} });
+                  this.$router.push({path:'/manager', query :{ name: this.dynamicValidateForm.name,id:res.data.id,power:res.data.power} });
 
                 }
                 else

@@ -71,8 +71,7 @@
           width="30%"
           center
       >
-        <div>
-
+        <div id="print">
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="入住单号">
               <el-input v-model="form.checkInId"></el-input>
@@ -143,8 +142,7 @@
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-           <div id="printMe" ></div>
-            <el-button v-print="'#printMe'">打印</el-button>
+            <el-button v-print="'#print'">打印</el-button>
         </span>
       </el-dialog>
     </div>
@@ -722,12 +720,11 @@ export default {
           label: "客房类型",
         },
         {
-          value: "预定人",
-          label: "预定人",
+          value: "证件号码",
+          label: "证件号码",
         },
 
       ],
-
     };
   },
 };

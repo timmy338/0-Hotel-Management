@@ -29,8 +29,8 @@ public interface GoodsDao {
     int  updateGoods(Goods goods);
 
     /**
-     * 通过商品id查询商品
-     * @param id 商品id
+     * 通过商品类别id查询商品
+     * @param id 商品类别id
      * @return 返回查询到的商品列表
      */
     List<Goods> selectGoodsById(@Param("id") Integer id);

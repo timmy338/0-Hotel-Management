@@ -514,19 +514,7 @@ export default {
         memberPrice: "",
         vipPrice: "",
         remarks: "",
-      /*  id:"",
-        room:"",
-        type: "",
-        standardPrice: "",
-        deposit: "",
-        guestName: "",
-        guestIdType: "",
-        guestId: "",
-        tel:"",
-        arriveTime:"",
-        leaveTime:"",
-        guestCount:"",
-        memberId:"",*/
+
       },
       formInline: {
         //搜尋用戶
