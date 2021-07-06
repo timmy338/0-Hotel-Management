@@ -110,6 +110,10 @@
         limit 6 offset #{page};
     </select>
 
+    <select id="countAllCheckIn" resultType="java.lang.Integer">
+        select count(*) from checkin
+    </select>
+
     <update id="changeRoom">
         update checkin
         set preRoomID=(select room from(select roomregister.room from checkin join roomregister on checkin.roomRegister=roomregister.id where checkin.id=#{checkInId})as temp)

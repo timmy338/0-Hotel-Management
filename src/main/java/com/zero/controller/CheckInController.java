@@ -71,6 +71,7 @@ public class CheckInController {
         List<CheckIn> checkInList=checkInService.getCheckIn(Integer.parseInt(page));
         for(CheckIn c:checkInList)
             checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
+        map.put("count",checkInService.countAllCheckIn());
         map.put("List",checkInInfoList);
         return map;
     }

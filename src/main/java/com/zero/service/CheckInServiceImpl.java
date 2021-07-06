@@ -95,4 +95,9 @@ public class CheckInServiceImpl implements CheckInService{
     public int delCheckIn(Integer checkInId, Integer roomId) {
         return checkInDao.delCheckIn(checkInId,roomId);
     }
+
+    @Override
+    public int countAllCheckIn() {
+        return checkInDao.countAllCheckIn();
+    }
 }

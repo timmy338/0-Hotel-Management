@@ -135,4 +135,10 @@ public interface CheckInService {
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
     int delCheckIn(@Param("checkInId")Integer checkInId,@Param("roomId")Integer roomId);
+
+    /**
+     * 统计入住信息总数
+     * @return 入住信息总数
+     */
+    int countAllCheckIn();
 }
