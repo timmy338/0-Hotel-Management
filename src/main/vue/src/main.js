@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import router from './router'
-
+import Print from 'vue-print-nb'
 Vue.config.productionTip = false
 
 /////////elementui///////
@@ -16,7 +16,7 @@ Vue.prototype.$axios = axios
 
 
 Vue.use(ElementUI);
-
+Vue.use(Print);
 /////////elementui///////
 
 

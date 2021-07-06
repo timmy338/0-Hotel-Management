@@ -34,9 +34,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item index="reserveManager" @click="clickFunction">客房预定管理</el-menu-item>
-                <el-menu-item index="roomregister" @click="clickFunction">入住登记管理</el-menu-item>
-                <el-menu-item index="checkin" @click="clickFunction">预定转入住</el-menu-item>
-                <el-menu-item index="checkout" @click="clickFunction">结帐管理</el-menu-item>
+                <el-menu-item index="checkin" @click="clickFunction">入住与结帐管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

@@ -27,11 +27,11 @@
           border
           style="width: 100%"
       >
-        <el-table-column  prop="reserve.id" label="预定单号" width="100">
+        <el-table-column  prop="checkIn.id" label="入住单号" width="100">
         </el-table-column>
         <el-table-column prop="roomRegisters[0].room" label="客房编号" width="100">
         </el-table-column>
-        <el-table-column prop="reserve.status" label="预定状态" width="100">
+        <el-table-column prop="rooms[0].type" label="客房类型" width="100">
         </el-table-column>
         <el-table-column prop="roomRegisters[0].deposit" label="押金" width="100">
         </el-table-column>
@@ -51,16 +51,14 @@
         </el-table-column>
         <el-table-column prop="roomRegisters[0].memberId" label="会员编号" width="150">
         </el-table-column>
-        <el-table-column label="操作" width="130" fixed="right">
+        <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
-
             <el-button @click="
             getRow(scope.row);
             centerDialogVisible = true;
-            " type="text" size="small">入住
+            " type="text" size="small">打印入住单
             </el-button>
-
-
+            <el-button type="text" @click="checkoutDialogVisible = true;checkoutButton(scope.row)"  size="small">結帳</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,7 +66,7 @@
 
     <div id="editDialog">
       <el-dialog
-          title="确认预定资料"
+          title="确认入住资料"
           :visible.sync="centerDialogVisible"
           width="30%"
           center
@@ -77,7 +75,7 @@
 
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="入住单号">
-              <el-input v-model="form.room"></el-input>
+              <el-input v-model="form.checkInId"></el-input>
             </el-form-item>
 
 
@@ -88,11 +86,11 @@
 
 
             <el-form-item label="标准价">
-              <el-input v-model="form.standardPrice "></el-input>
+              <el-input v-model="form.standardPrice"></el-input>
             </el-form-item>
 
             <el-form-item label="折后价">
-              <el-input v-model="form.discountPrice "></el-input>
+              <el-input v-model="form.discountPrice"></el-input>
             </el-form-item>
 
             <el-form-item label="押金">
@@ -132,72 +130,91 @@
             </el-form-item>
 
             <el-form-item label="会员价">
-              <el-input v-model="form.memberprice "></el-input>
+              <el-input v-model="form.memberPrice"></el-input>
             </el-form-item>
 
             <el-form-item label="提供早餐">
-              <el-input v-model="form.memberId "></el-input>
+              <el-input v-model="form.provideBreakfast "></el-input>
             </el-form-item>
 
             <el-form-item label="定时叫醒">
-              <el-input v-model="form.memberId "></el-input>
+              <el-input v-model="form.provideClock"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="centerDialogVisible = false;resetForm()">取 消</el-button>
-          <el-button
-              type="primary"
-              @click="
-              centerDialogVisible = false;
-              editClick();
-            "
-          >确 定</el-button
-          >
+           <div id="printMe" ></div>
+            <el-button v-print="'#printMe'">打印</el-button>
         </span>
       </el-dialog>
     </div>
 
+
+
     <div id="checkInDialog">
       <el-dialog
           title="入住资料"
-          :visible.sync="checkInDialogVisible"
+          :visible.sync="checkoutDialogVisible"
           width="30%"
           center
       >
         <div>
 
           <el-form ref="form" :model="form" label-width="100px">
-            <el-form-item label="预定人">
-              <el-input v-model="form.guestName"></el-input>
+            <el-form-item label="入住单号">
+              <el-input v-model="form.checkInId"></el-input>
+            </el-form-item>
+            <el-form-item label="客房编号">
+              <el-input v-model="form.room"></el-input>
+            </el-form-item>
+            <el-form-item label="房价">
+              <el-input v-model="form.discountPrice"></el-input>
+            </el-form-item>
+            <el-form-item label="押金">
+              <el-input v-model="form.deposit"></el-input>
             </el-form-item>
 
-            <el-form-item label="早餐">
-              <el-radio-group v-model="form.provideBreakfast">
-                <el-radio label="需要"></el-radio>
-                <el-radio label="不需要"></el-radio>
-              </el-radio-group>
+            <el-form-item label="住宿天数">
+              <el-input v-model="form.stayPeriod"></el-input>
             </el-form-item>
-            <el-form-item label="定时叫醒">
-              <el-radio-group v-model="form.provideClock">
-                <el-radio label="需要"></el-radio>
-                <el-radio label="不需要"></el-radio>
+
+            <el-form-item label="住宿费">
+              <el-input v-model="form.cost"></el-input>
+            </el-form-item>
+
+
+            <el-form-item label="实际应收">
+              <el-input v-model="form.pay"></el-input>
+            </el-form-item>
+
+            <el-form-item label="付款方式 ">
+              <el-radio-group v-model="form.payType">
+                <el-radio label="现金"></el-radio>
+                <el-radio label="微信"></el-radio>
+                <el-radio label="支付宝"></el-radio>
               </el-radio-group>
             </el-form-item>
 
+            <el-form-item label="实收">
+              <el-input v-model="form.getCost"></el-input>
+            </el-form-item>
+
+            <el-form-item label="找零">
+              <el-input v-model="form.returnCost"></el-input>
+            </el-form-item>
             <el-form-item label="备注 ">
               <el-input v-model="form.remarks "></el-input>
             </el-form-item>
-
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="checkInDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button @click="checkoutDialogVisible = false;resetForm()">取 消</el-button>
+          <el-button @click="getReturnCost()">找回零钱</el-button>
           <el-button
               type="primary"
               @click="
-              checkInDialogVisible = false;
-              checkinClick();
+              checkoutDialogVisible = false;
+              checkOut();0
             "
           >确 定</el-button
           >
@@ -209,7 +226,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
-          :total="this.totalPage"
+          :total="100"
           @current-change="handleCurrentChange"
           :current-page="nowpage"
       >
@@ -226,6 +243,36 @@ export default {
     this.getRoom("1");
   },
   methods: {
+
+    changeStatus(object)
+    {
+      if(object==true)
+      {
+        return "需要";
+      }
+      else
+      {
+        return "不需要";
+      }
+    },
+    stringToDate(dateStr,separator){
+      if(!separator){
+        separator="-";
+      }
+      var dateArr = dateStr.split(separator);
+      var year = parseInt(dateArr[0]);
+      var month;
+//处理月份为04这样的情况
+      if(dateArr[1].indexOf("0") == 0){
+        month = parseInt(dateArr[1].substring(1));
+      }else{
+        month = parseInt(dateArr[1]);
+      }
+      var day = parseInt(dateArr[2]);
+      var date = new Date(year,month -1,day);
+      return date;
+    },
+
     getM(month) {
       if (month < 10) {
         return '0' + month;
@@ -248,7 +295,28 @@ export default {
         this.addRoom();
       }
     },
+    getReturnCost()
+    {
 
+      if(this.form.getCost=="")
+      {
+        alert("请输入付款金额");
+      }
+      else
+      {
+        if(this.form.getCost-this.form.pay<0)
+        {
+          alert("付款金额不足");
+        }
+        else
+        {
+          this.form.returnCost=(this.form.getCost-this.form.pay);
+          this.form.payType=this.form.payType;
+        }
+
+      }
+
+    },
     inspectInput() {
       return this.form.type == "" || this.form.status == "" || this.form.floor == "" || this.form.memberPrice == "" || this.form.discountPrice == "" || this.form.standardPrice == "" || this.form.vipPrice == ""
     },
@@ -277,25 +345,7 @@ export default {
 
       /* this.getReserveById(); */
     },
-    setChoice()
-    {
-      if(this.form.provideBreakfast=="需要")
-      {
-        this.form.provideBreakfast=1;
-      }
-      else
-      {
-        this.form.provideBreakfast=0;
-      }
-      if(this.form.provideClocke=="需要")
-      {
-        this.form.provideClocke=1;
-      }
-      else
-      {
-        this.form.provideClocke=0;
-      }
-    },
+
     onCheckin(row)
     {
       if( row.reserve.status!="正常"){
@@ -303,17 +353,13 @@ export default {
       }
       else
       {
-        this.checkInDialogVisible= true;
+        this.checkoutDialogVisible= true;
         this.form.guestName=row.roomRegisters[0].guestName;
         this.form.roomRegistersId = row.roomRegisters[0].id;
       }
 
     },
-    checkinClick()
-    {
-      console.log(this.form);
 
-    },
 
     delClick(row) {
       //刪除功能
@@ -348,9 +394,43 @@ export default {
       this.form.tel="";
       this.form.guestCount="";
       this.form.memberId="";
+      this.form.payType="";
+      this.form.getCost="";
+      this.form.returnCost="";
+    },
+    checkoutButton(row)
+    {
+      this.resetForm();
+      console.log(row);
+      this.form.checkInId=row.checkIn.id;
+      this.form.room=row.rooms[0].id;
+      this.form.discountPrice=row.rooms[0].discountPrice;
+      this.form.deposit=row.roomRegisters[0].deposit;
+      this.form.stayPeriod=(this.stringToDate(row.roomRegisters[0].leaveTime)-this.stringToDate(row.roomRegisters[0].arriveTime))/86400000;
+      this.form.cost=this.form.stayPeriod*this.form.discountPrice;
+      this.form.pay=this.form.stayPeriod*this.form.discountPrice- this.form.deposit;
+
+    },
+    checkOut()
+    {
+      axios.get(this.http + "delCheckIn?checkInId=" + this.form.checkInId+"&roomId="+this.form.room).then(
+          (res) => {
+            console.log("成功");
+            this.getRoom(1);
+          },
+          (res) => {
+          }
+      );
+
+
     },
     getRow(row){
       console.log(row);
+      this.form.checkInId=row.checkIn.id;
+      this.form.memberPrice=row.rooms[0].memberPrice;
+      this.form.standardPrice=row.rooms[0].standardPrice;
+      this.form.room=row.roomRegisters[0].room;
+      this.form.discountPrice=row.rooms[0].discountPrice;
           this.form.guestName=row.roomRegisters[0].guestName;
           this.form.guestIdType=row.roomRegisters[0].guestIdType;
           this.form.guestId=row.roomRegisters[0].guestId;
@@ -362,8 +442,8 @@ export default {
           this.form.deposit=row.roomRegisters[0].deposit;
 
           this.form.roomRegistersId=row.roomRegistersId;
-          this.form.provideBreakfast=row.provideBreakfast;
-          this.form.provideClock=row.provideClock;
+          this.form.provideBreakfast=row.checkIn.provideBreakfast;
+          this.form.provideClock=row.checkIn.provideClock;
           this.form.checkInDate=row.checkInDate;
           this.form.remarks=row.remarks;
     },
@@ -388,11 +468,15 @@ export default {
             console.log(res);
 
             this.UserList = res.data.List;
+
             for(var i=0;i<this.UserList.length;i++)
             {
               this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
               this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
+              this.UserList[i].checkIn.provideBreakfast=this.changeStatus( this.UserList[i].checkIn.provideBreakfast);
+              this.UserList[i].checkIn.provideClock=this.changeStatus( this.UserList[i].checkIn.provideClock);
             }
+
             if (res.data.List.length == 0 && this.nowpage != 1) {
               this.nowpage--;
               this.getRoom(this.nowpage);
@@ -549,6 +633,8 @@ export default {
 
   data() {
     return {
+
+
       Time:[],
       http: "http://localhost:8080/0_Hotel_Management_war/",
       UserList: [
@@ -557,7 +643,8 @@ export default {
       page: 0,
       nowpage: 1,
       totalPage: 10,
-      checkInDialogVisible: false, //add彈出框屬性
+      checkoutDialogVisible: false, //add彈出框屬性
+
       centerDialogVisible: false, //
       editId: "",
       form: {
@@ -573,11 +660,28 @@ export default {
         room:"",
         deposit:"",
 
+        checkInId:"",
+        type: "",
+        floor: "",
+        status: "",
+        standardPrice: "",
+        discountPrice: "",
+        memberPrice: "",
+        vipPrice: "",
         roomRegistersId:"",
         provideBreakfast:"",
         provideClock:"",
         checkInDate:"",
         remarks:"",
+
+        stayPeriod:"",
+        cost:"",
+        pay:"",
+        payType:"",
+        getCost:"",
+        returnCost:"",
+
+
       },
       formInline: {
         //搜尋用戶
