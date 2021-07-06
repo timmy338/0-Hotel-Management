@@ -22,16 +22,23 @@ public interface GoodsTypeService {
 
     /**
      * 修改商品类型
-     * @param id 商品id
+     * @param goodsType 商品类型
      * @return 0表明修改失败
      */
-    int updateGoodsType(Integer id);
+    int updateGoodsType(GoodsType goodsType);
 
     /**
      * 查询所有商品类型
      * @return 一个带有所有商品类型的List
      */
     List<GoodsType> selectAllGoodsType();
+
+    /**
+     * 通过商品id查询商品类型
+     * @param id 商品类型id
+     * @return 返回查询到的商品列表
+     */
+    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
 
     List<GoodsType> getGoodsType(Integer page);
 

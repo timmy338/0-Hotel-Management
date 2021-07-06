@@ -22,10 +22,10 @@ public interface GoodsTypeDao {
 
     /**
      * 修改商品类型
-     * @param id 商品id
+     * @param goodsType 商品类型
      * @return 0表明修改失败
      */
-    int updateGoodsType(Integer id);
+    int updateGoodsType(GoodsType goodsType);
 
     /**
      * 查询所有商品类型
@@ -39,6 +39,13 @@ public interface GoodsTypeDao {
      * @return  货物List
      */
     List<GoodsType> getGoodsType(@Param("offset") Integer offset);
+
+    /**
+     * 通过商品id查询商品类型
+     * @param id 商品类型id
+     * @return 返回查询到的商品列表
+     */
+    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
 
     /**
      * 获取货物类型总数
