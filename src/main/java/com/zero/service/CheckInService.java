@@ -119,4 +119,12 @@ public interface CheckInService {
      * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
      */
     int changeRoom(@Param("checkInId") Integer checkInId,@Param("roomId") Integer roomId);
+
+    /**
+     * 删除入住信息
+     * @param checkInId 入住信息Id
+     * @param roomId 房间号
+     * @return 返回0表示失败 返回正整数表示数据库中受影响的条数
+     */
+    int delCheckIn(@Param("checkInId")Integer checkInId,@Param("roomId")Integer roomId);
 }

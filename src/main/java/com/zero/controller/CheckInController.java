@@ -76,4 +76,14 @@ public class CheckInController {
         map.put("List",checkInInfoList);
         return map;
     }
+
+    @RequestMapping("delCheckIn")
+    @ResponseBody
+    public HashMap<String,Object> delCheckIn(String checkInId,String roomId)
+    {
+        boolean handle=checkInService.delCheckIn(Integer.parseInt(checkInId),Integer.parseInt(roomId))>0;
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("handle",handle);
+        return map;
+    }
 }

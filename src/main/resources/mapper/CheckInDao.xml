@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zero.dao.CheckInDao">
+    <delete id="delCheckIn">
+        update room
+        set status='空房'
+        where id=#{roomId};
+        delete from reserve
+        where roomRegister=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId});
+        insert into guesthistory
+        set
+            name=(select guestName from roomRegister where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId})),
+            guestIdType=(select guestIdType from roomRegister where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId})),
+            guestId=(select guestId from roomRegister where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId})),
+            tel=(select tel from roomRegister where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId}));
+        delete from roomRegister
+        where id=(select checkIn.roomRegister from checkin where checkin.id=#{checkInId});
+        delete from checkin
+        where id=#{checkInId};
+    </delete>
 
     <select id="selectRoomById" resultType="com.zero.pojo.Room">
         select *
