@@ -34,6 +34,7 @@ public class ReserveServiceImpl implements ReserveService{
         {
             Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
             tempMember.setLastRe(new Timestamp(reserve.getReserveDate().getTime()));
+            memberDao.updateMember(tempMember);
         }
         return reserveDao.insertReserve(reserve);
     }
