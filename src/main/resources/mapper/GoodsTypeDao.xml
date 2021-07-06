@@ -35,6 +35,6 @@
 
     <select id="selectGoodsTypeById" resultType="com.zero.pojo.GoodsType">
         select  * from goodstype
-        where id=#{id}
+        where name=#{name}
     </select>
 </mapper>

@@ -41,11 +41,11 @@ public interface GoodsTypeDao {
     List<GoodsType> getGoodsType(@Param("offset") Integer offset);
 
     /**
-     * 通过商品id查询商品类型
-     * @param id 商品类型id
+     * 通过商品name查询商品类型
+     * @param name 商品类型name
      * @return 返回查询到的商品列表
      */
-    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
+    List<GoodsType> selectGoodsTypeById(@Param("name") String name);
 
     /**
      * 获取货物类型总数

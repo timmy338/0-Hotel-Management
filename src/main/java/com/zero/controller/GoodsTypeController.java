@@ -70,10 +70,10 @@ public class GoodsTypeController {
 
     @RequestMapping("searchGoodsType")
     @ResponseBody
-    public HashMap<String,Object> searchGoodsType(String id)
+    public HashMap<String,Object> searchGoodsType(String name)
     {
         HashMap<String,Object> map=new HashMap<>();
-        List<GoodsType> GoodsTypeList= goodsTypeService.selectGoodsTypeById(Integer.parseInt(id));
+        List<GoodsType> GoodsTypeList= goodsTypeService.selectGoodsTypeById(name);
         map.put("List",GoodsTypeList);
         return map;
     }

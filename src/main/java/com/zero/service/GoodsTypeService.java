@@ -34,11 +34,11 @@ public interface GoodsTypeService {
     List<GoodsType> selectAllGoodsType();
 
     /**
-     * 通过商品id查询商品类型
-     * @param id 商品类型id
+     * 通过商品name查询商品类型
+     * @param name 商品类型name
      * @return 返回查询到的商品列表
      */
-    List<GoodsType> selectGoodsTypeById(@Param("id") Integer id);
+    List<GoodsType> selectGoodsTypeById(@Param("name") String name);
 
     List<GoodsType> getGoodsType(Integer page);
 
