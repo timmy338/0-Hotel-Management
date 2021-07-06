@@ -90,51 +90,67 @@ public class CheckInController {
     @ResponseBody
     public HashMap<String,Object> selectCheckInById(String id)
     {
-        HashMap<String,Object> map=new HashMap<>();
-        List<CheckInInfo> checkInInfoList=new ArrayList<>();
-        List<CheckIn> checkInList=checkInService.selectCheckInById(Integer.parseInt(id));
-        for(CheckIn c:checkInList)
-            checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
-        map.put("List",checkInInfoList);
-        return map;
+        if(id==null||id.equals(""))
+            return getCheckIn("1");
+        else {
+            HashMap<String, Object> map = new HashMap<>();
+            List<CheckInInfo> checkInInfoList = new ArrayList<>();
+            List<CheckIn> checkInList = checkInService.selectCheckInById(Integer.parseInt(id));
+            for (CheckIn c : checkInList)
+                checkInInfoList.add(new CheckInInfo(c, roomRegisterService, roomService));
+            map.put("List", checkInInfoList);
+            return map;
+        }
     }
 
     @RequestMapping("selectCheckInByRoomType")
     @ResponseBody
     public HashMap<String,Object> selectCheckInByRoomType(String type)
     {
-        HashMap<String,Object> map=new HashMap<>();
-        List<CheckInInfo> checkInInfoList=new ArrayList<>();
-        List<CheckIn> checkInList=checkInService.selectCheckInByRoomType(type);
-        for(CheckIn c:checkInList)
-            checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
-        map.put("List",checkInInfoList);
-        return map;
+        if(type==null||type.equals(""))
+            return getCheckIn("1");
+        else {
+            HashMap<String, Object> map = new HashMap<>();
+            List<CheckInInfo> checkInInfoList = new ArrayList<>();
+            List<CheckIn> checkInList = checkInService.selectCheckInByRoomType(type);
+            for (CheckIn c : checkInList)
+                checkInInfoList.add(new CheckInInfo(c, roomRegisterService, roomService));
+            map.put("List", checkInInfoList);
+            return map;
+        }
     }
 
     @RequestMapping("selectCheckInByRoomId")
     @ResponseBody
     public HashMap<String,Object> selectCheckInByRoomId(String id)
     {
-        HashMap<String,Object> map=new HashMap<>();
-        List<CheckInInfo> checkInInfoList=new ArrayList<>();
-        List<CheckIn> checkInList=checkInService.selectCheckInByRoomId(Integer.parseInt(id));
-        for(CheckIn c:checkInList)
-            checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
-        map.put("List",checkInInfoList);
-        return map;
+        if(id==null||id.equals(""))
+            return getCheckIn("1");
+        else {
+            HashMap<String, Object> map = new HashMap<>();
+            List<CheckInInfo> checkInInfoList = new ArrayList<>();
+            List<CheckIn> checkInList = checkInService.selectCheckInByRoomId(Integer.parseInt(id));
+            for (CheckIn c : checkInList)
+                checkInInfoList.add(new CheckInInfo(c, roomRegisterService, roomService));
+            map.put("List", checkInInfoList);
+            return map;
+        }
     }
 
     @RequestMapping("selectCheckInByGuestId")
     @ResponseBody
     public HashMap<String,Object> selectCheckInByGuestId(String id)
     {
-        HashMap<String,Object> map=new HashMap<>();
-        List<CheckInInfo> checkInInfoList=new ArrayList<>();
-        List<CheckIn> checkInList=checkInService.selectCheckInByGuestId(Integer.parseInt(id));
-        for(CheckIn c:checkInList)
-            checkInInfoList.add(new CheckInInfo(c,roomRegisterService,roomService));
-        map.put("List",checkInInfoList);
-        return map;
+        if(id==null||id.equals(""))
+            return getCheckIn("1");
+        else {
+            HashMap<String, Object> map = new HashMap<>();
+            List<CheckInInfo> checkInInfoList = new ArrayList<>();
+            List<CheckIn> checkInList = checkInService.selectCheckInByGuestId(Integer.parseInt(id));
+            for (CheckIn c : checkInList)
+                checkInInfoList.add(new CheckInInfo(c, roomRegisterService, roomService));
+            map.put("List", checkInInfoList);
+            return map;
+        }
     }
 }

@@ -226,7 +226,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
-          :total="100"
+          :total="this.totalPage"
           @current-change="handleCurrentChange"
           :current-page="nowpage"
       >
@@ -325,7 +325,7 @@ export default {
     },
     onSearch() {
       console.log(this.formInline);
-      if(this.formInline.searchType=="预定单号")
+      if(this.formInline.searchType=="入住单号")
       {
         this.getReserveById();
       }
@@ -333,7 +333,7 @@ export default {
       {
         this.getReserveByRoomId();
       }
-      else if(this.formInline.searchType=="预定状态")
+      else if(this.formInline.searchType=="客房类型")
       {
         this.getReserveByStatus();
       }
@@ -534,7 +534,7 @@ export default {
     getReserveById() {
       axios
           .get(
-              this.http + "getReserveById?id=" +this.formInline.searchInfo
+              this.http + "selectCheckInById?id=" +this.formInline.searchInfo
           )
           .then(
               (res) => {
@@ -545,6 +545,8 @@ export default {
                 {
                   this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
                   this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
+                  this.UserList[i].checkIn.provideBreakfast=this.changeStatus( this.UserList[i].checkIn.provideBreakfast);
+                  this.UserList[i].checkIn.provideClock=this.changeStatus( this.UserList[i].checkIn.provideClock);
                 }
                 this.nowpage = 1;
               },
@@ -555,7 +557,7 @@ export default {
     getReserveByRoomId() {
       axios
           .get(
-              this.http + "getReserveByRoomId?roomId=" +this.formInline.searchInfo
+              this.http + "selectCheckInByRoomId?id=" +this.formInline.searchInfo
           )
           .then(
               (res) => {
@@ -566,6 +568,8 @@ export default {
                 {
                   this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
                   this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
+                  this.UserList[i].checkIn.provideBreakfast=this.changeStatus( this.UserList[i].checkIn.provideBreakfast);
+                  this.UserList[i].checkIn.provideClock=this.changeStatus( this.UserList[i].checkIn.provideClock);
                 }
                 this.nowpage = 1;
               },
@@ -576,7 +580,7 @@ export default {
     getReserveByStatus() {
       axios
           .get(
-              this.http + "getReserveByStatus?status=" +this.formInline.searchInfo
+              this.http + "selectCheckInByRoomType?type=" +this.formInline.searchInfo
           )
           .then(
               (res) => {
@@ -587,6 +591,8 @@ export default {
                 {
                   this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
                   this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
+                  this.UserList[i].checkIn.provideBreakfast=this.changeStatus( this.UserList[i].checkIn.provideBreakfast);
+                  this.UserList[i].checkIn.provideClock=this.changeStatus( this.UserList[i].checkIn.provideClock);
                 }
                 this.nowpage = 1;
               },
@@ -597,7 +603,7 @@ export default {
     getReserveByPersonName() {
       axios
           .get(
-              this.http + "getReserveByPersonName?personName=" +this.formInline.searchInfo
+              this.http + "selectCheckInByGuestId?id=" +this.formInline.searchInfo
           )
           .then(
               (res) => {
@@ -608,6 +614,8 @@ export default {
                 {
                   this.UserList[i].roomRegisters[0].arriveTime=this.formatDate(this.UserList[i].roomRegisters[0].arriveTime);
                   this.UserList[i].roomRegisters[0].leaveTime=this.formatDate(this.UserList[i].roomRegisters[0].leaveTime);
+                  this.UserList[i].checkIn.provideBreakfast=this.changeStatus( this.UserList[i].checkIn.provideBreakfast);
+                  this.UserList[i].checkIn.provideClock=this.changeStatus( this.UserList[i].checkIn.provideClock);
                 }
                 this.nowpage = 1;
               },
@@ -686,7 +694,7 @@ export default {
       formInline: {
         //搜尋用戶
         searchInfo:"",
-        searchType:"预定单号",
+        searchType:"入住单号",
       },
       guestTypeOptions:
           [
@@ -702,21 +710,22 @@ export default {
           ],
       searchOptions: [
         {
-          value: "预定单号",
-          label: "预定单号",
+          value: "入住单号",
+          label: "入住单号",
         },
         {
           value: "客房编号",
           label: "客房编号",
         },
         {
+          value: "客房类型",
+          label: "客房类型",
+        },
+        {
           value: "预定人",
           label: "预定人",
         },
-        {
-          value: "预定状态",
-          label: "预定状态",
-        },
+
       ],
 
     };
@@ -769,7 +778,7 @@ export default {
 
 #checkin #page {
   bottom:-40px;
-  left: 50%;
+  left:50%;
   position: absolute;
 }
 
