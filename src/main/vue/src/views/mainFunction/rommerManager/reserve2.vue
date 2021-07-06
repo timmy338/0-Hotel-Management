@@ -56,7 +56,7 @@
             <el-button
                 type="text"
                 @click="
-                centerDialogVisible = true;
+
                 editButton(scope.row);
               "
                 size="small"
@@ -325,16 +325,23 @@ export default {
 
     },
     editButton(row) {
-      console.log('test');
-      this.form.guestName=row.roomRegister[0].guestName;
-      this.form.guestIdType=row.roomRegister[0].guestIdType;
-      this.form.guestId=row.roomRegister[0].guestId;
-      this.form.tel=row.roomRegister[0].tel;
-      this.form.guestCount=row.roomRegister[0].guestCount;
-      this.form.memberId=row.roomRegister[0].memberId;
-    /*  console.log(row);
+      if(row.reserve.status!="正常")
+      {
+        alert("预定状态有误");
+      }
+      else {
+        this.centerDialogVisible = true;
+        console.log('test');
+        this.form.guestName = row.roomRegister[0].guestName;
+        this.form.guestIdType = row.roomRegister[0].guestIdType;
+        this.form.guestId = row.roomRegister[0].guestId;
+        this.form.tel = row.roomRegister[0].tel;
+        this.form.guestCount = row.roomRegister[0].guestCount;
+        this.form.memberId = row.roomRegister[0].memberId;
+        /*  console.log(row);
       console.log(this.form);*/
-      this.editId = row.roomRegister[0].id;
+        this.editId = row.roomRegister[0].id;
+      }
     },
 
     resetForm() {
@@ -510,6 +517,10 @@ export default {
           );
     },
     editClick() {
+      if(this.form.memberId==null)
+      {
+        this.form.memberId="";
+      }
       axios
           .get(
               this.http + "editRoomRegister?id="+this.editId+"&guestName="+this.form.guestName+"&guestIdType="+this.form.guestIdType+"&guestId="+this.form.guestId+"&tel="+this.form.tel+"&guestCount="+this.form.guestCount+"&memberId="+this.form.memberId

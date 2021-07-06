@@ -190,11 +190,16 @@ export default {
   methods: {
     changeGoodsType(type)
     {
+      /*console.log(this.value);*/
       for (var i=0;i<this.typeOption.length;i++) {
-
+        /*console.log(this.typeOption.name);*/
+        if(type==this.typeOption[i].name)
+        {
           return this.typeOption[i].id;
+        }
 
       }
+
     },
     onSubmit() {
       //增加用戶按鈕
@@ -238,7 +243,7 @@ export default {
     },
 
     onSearch() {
-      console.log(this.formInline);
+     /* console.log(this.formInline);*/
       this.searchGoods();
 
     },
@@ -283,7 +288,7 @@ export default {
     getGoods(page) {
       axios.get(this.http + "getGoods?page=" + page).then(
           (res) => {
-            console.log(res);
+            /*console.log(res);*/
 
             this.UserList = res.data.List;
             this.typeOption=res.data.NameList;
@@ -340,8 +345,15 @@ export default {
 
     },
     searchGoods() {
-      console.log(this.value);
-      this.form.type=this.changeGoodsType(this.value);
+      console.log(this.formInline.type);
+      if(this.formInline.type!="")
+      {
+        this.form.type=this.changeGoodsType(this.formInline.type);
+      }
+      else
+      {
+        this.form.type="";
+      }
       axios
           .get(
               this.http + "searchGoods?id=" +
@@ -349,9 +361,10 @@ export default {
           )
           .then(
               (res) => {
-                console.log(res);
+                /*console.log(res);*/
 
                 this.UserList = res.data.List;
+                this.typeOption=res.data.NameList;
                 this.nowpage = 1;
               },
               (res) => {
@@ -386,7 +399,7 @@ export default {
 
   data() {
     return {
-      value:"",
+      value:"无",
       http: "http://localhost:8080/0_Hotel_Management_war/",
       UserList: [
         {}

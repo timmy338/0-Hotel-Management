@@ -58,7 +58,7 @@
             centerDialogVisible = true;
             " type="text" size="small">打印入住单
             </el-button>
-            <el-button type="text" @click="checkoutDialogVisible = true;checkoutButton(scope.row)"  size="small">結帳</el-button>
+            <el-button type="text" @click="checkoutDialogVisible = true;checkoutButton(scope.row)"  size="small">结帐</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -151,7 +151,7 @@
 
     <div id="checkInDialog">
       <el-dialog
-          title="入住资料"
+          title="账单"
           :visible.sync="checkoutDialogVisible"
           width="30%"
           center

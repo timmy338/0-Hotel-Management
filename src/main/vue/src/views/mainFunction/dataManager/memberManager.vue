@@ -82,7 +82,7 @@
           border
           style="width: 100%"
       >
-        <el-table-column fixed prop="id" label="用户编号" width="80">
+        <el-table-column fixed prop="id" label="会员编号" width="80">
         </el-table-column>
         <el-table-column prop="name" label="会员名" width="80">
         </el-table-column>
@@ -199,6 +199,37 @@ export default {
     this.getMember("1");
   },
   methods: {
+    stringToDate(dateStr,separator){
+      if(!separator){
+        separator="-";
+      }
+      var dateArr = dateStr.split(separator);
+      var year = parseInt(dateArr[0]);
+      var month;
+//处理月份为04这样的情况
+      if(dateArr[1].indexOf("0") == 0){
+        month = parseInt(dateArr[1].substring(1));
+      }else{
+        month = parseInt(dateArr[1]);
+      }
+      var day = parseInt(dateArr[2]);
+      var date = new Date(year,month -1,day);
+      return date;
+    },
+
+    getM(month) {
+      if (month < 10) {
+        return '0' + month;
+      } else {
+        return month;
+      }
+    },
+    formatDate(time) {
+      /*console.log(time);*/
+      var date=new Date(time);
+      var date=date.getFullYear() + '-' + this.getM(date.getMonth() + 1) + '-' + this.getM(date.getDate())+ ' ' + this.getM(date.getHours()) + ':' + this.getM(date.getMinutes()) + ':' + this.getM(date.getSeconds());;
+      return date;
+    },
     onSubmit() {
       //增加用戶按鈕
       /* console.log(this.form); */
@@ -270,7 +301,11 @@ export default {
             console.log(res);
 
             this.MemberList = res.data.List;
-            this.MemberList.
+            for(var i=0;i<this.MemberList.length;i++)
+            {
+              this.MemberList[i].lastIn=this.formatDate(this.MemberList[i].lastIn);
+              this.MemberList[i].lastRe=this.formatDate(this.MemberList[i].lastRe);
+            }
             if(res.data.List.length==0 && this.nowpage!=1)
             {
               this.nowpage--;

@@ -22,7 +22,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item index="userManager" @click="clickFunction">用户管理</el-menu-item>
-                <el-menu-item index="logManager" @click="clickFunction">日志管理</el-menu-item>
+             <!--   <el-menu-item index="logManager" @click="clickFunction">日志管理</el-menu-item>-->
               </el-menu-item-group>
             </el-submenu>
 
@@ -51,10 +51,10 @@
               </el-menu-item-group>
             </el-submenu>
 
-            <el-menu-item index="consumeManager" @click="oneClickFunction" v-show="(this.power!='前台人员')">
+         <!--   <el-menu-item index="consumeManager" @click="oneClickFunction" v-show="(this.power!='前台人员')">
               <i class="el-icon-shopping-cart-2"></i>
               <span slot="title">消费管理</span>
-            </el-menu-item>
+            </el-menu-item>-->
 
             <el-menu-item index="roomManager" @click="oneClickFunction" v-show="(this.power!='前台人员')">
               <i class="el-icon-setting"></i>

@@ -76,7 +76,7 @@
                 editButton(scope.row);
               "
                 size="small"
-            >預定
+            >预定
             </el-button
             >
 
@@ -89,7 +89,7 @@
             >入住
             </el-button
             >
-            <el-button type="text" @click="changeButton(scope.row)" size="small">換房</el-button>
+            <el-button type="text" @click="changeButton(scope.row)" size="small">换房</el-button>
           </template>
         </el-table-column>
 
@@ -166,7 +166,7 @@
     </div>
     <div id="checkinDialog">
       <el-dialog
-          title="预定信息"
+          title="入住信息"
           :visible.sync="checkinDialogVisible"
           width="30%"
           center
@@ -764,7 +764,6 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
-
 }
 
 #reserve1 #addAndSearch {

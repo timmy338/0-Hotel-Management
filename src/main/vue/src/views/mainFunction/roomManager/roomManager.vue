@@ -285,6 +285,37 @@ export default {
 
   },
   methods: {
+    stringToDate(dateStr,separator){
+      if(!separator){
+        separator="-";
+      }
+      var dateArr = dateStr.split(separator);
+      var year = parseInt(dateArr[0]);
+      var month;
+//处理月份为04这样的情况
+      if(dateArr[1].indexOf("0") == 0){
+        month = parseInt(dateArr[1].substring(1));
+      }else{
+        month = parseInt(dateArr[1]);
+      }
+      var day = parseInt(dateArr[2]);
+      var date = new Date(year,month -1,day);
+      return date;
+    },
+
+    getM(month) {
+      if (month < 10) {
+        return '0' + month;
+      } else {
+        return month;
+      }
+    },
+    formatDate(time) {
+      /*console.log(time);*/
+      var date=new Date(time);
+      var date=date.getFullYear() + '-' + this.getM(date.getMonth() + 1) + '-' + this.getM(date.getDate())+ ' ' + this.getM(date.getHours()) + ':' + this.getM(date.getMinutes()) + ':' + this.getM(date.getSeconds());;
+      return date;
+    },
     onSubmit() {
       //增加用戶按鈕
        /*console.log(this.form);*/
