@@ -1,25 +1,40 @@
 package com.zero.service;
 
+import com.zero.dao.MemberDao;
 import com.zero.dao.ReserveDao;
+import com.zero.dao.RoomRegisterDao;
+import com.zero.pojo.Member;
 import com.zero.pojo.Reserve;
+import com.zero.pojo.RoomRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 @Transactional
 public class ReserveServiceImpl implements ReserveService{
     private final ReserveDao reserveDao;
+    private final RoomRegisterDao roomRegisterDao;
+    private final MemberDao memberDao;
 
     @Autowired
-    public ReserveServiceImpl(ReserveDao reserveDao){
+    public ReserveServiceImpl(ReserveDao reserveDao,RoomRegisterDao roomRegisterDao,MemberDao memberDao){
         this.reserveDao=reserveDao;
+        this.roomRegisterDao=roomRegisterDao;
+        this.memberDao=memberDao;
     }
 
     @Override
     public int insertReserve(Reserve reserve) {
+        RoomRegister tempReg=roomRegisterDao.selectRoomRegisterById(reserve.getRoomRegister()).get(0);
+        if(tempReg.getMemberId()!=null)
+        {
+            Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
+            tempMember.setLastRe(new Timestamp(reserve.getReserveDate().getTime()));
+        }
         return reserveDao.insertReserve(reserve);
     }
 

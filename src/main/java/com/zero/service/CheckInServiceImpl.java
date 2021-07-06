@@ -1,23 +1,32 @@
 package com.zero.service;
 
 import com.zero.dao.CheckInDao;
+import com.zero.dao.MemberDao;
+import com.zero.dao.RoomRegisterDao;
 import com.zero.pojo.CheckIn;
+import com.zero.pojo.Member;
 import com.zero.pojo.Room;
+import com.zero.pojo.RoomRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 @Transactional
 public class CheckInServiceImpl implements CheckInService{
     private final CheckInDao checkInDao;
+    private final RoomRegisterDao roomRegisterDao;
+    private final MemberDao memberDao;
 
     @Autowired
-    public CheckInServiceImpl(CheckInDao checkInDao)
+    public CheckInServiceImpl(CheckInDao checkInDao,RoomRegisterDao roomRegisterDao,MemberDao memberDao)
     {
         this.checkInDao=checkInDao;
+        this.roomRegisterDao=roomRegisterDao;
+        this.memberDao=memberDao;
     }
 
     @Override
@@ -47,6 +56,12 @@ public class CheckInServiceImpl implements CheckInService{
 
     @Override
     public int insertCheckIn(CheckIn checkIn) {
+        RoomRegister tempReg=roomRegisterDao.selectRoomRegisterById(checkIn.getRoomRegister()).get(0);
+        if(tempReg.getMemberId()!=null)
+        {
+            Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
+            tempMember.setLastIn(new Timestamp(checkIn.getCheckInDate().getTime()));
+        }
         return checkInDao.insertCheckIn(checkIn);
     }
 
