@@ -83,7 +83,14 @@ public class GoodsController {
     {
         HashMap<String,Object> map=new HashMap<>();
         List<Goods> GoodsList= goodsService.selectGoodsById(Integer.parseInt(id));
-        map.put("List",GoodsList);
+        List<GoodsInfo> goodsInfoList=new ArrayList<>();
+        for(Goods goods : GoodsList){
+            goodsInfoList.add(new GoodsInfo(goods,goodsTypeService));
+        }
+        int count=goodsService.countAllGoods();
+        map.put("count",count);
+        map.put("List",goodsInfoList);
+        map.put("NameList",goodsTypeService.selectAllGoodsType());
         return map;
     }
 }
