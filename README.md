@@ -84,7 +84,4 @@ jdbc.connTimeout=10000
 
 10. ....（待补充）
 
-~~没有遵守的给我买瓶可乐~~:sweat_smile:
-
-家人们自觉遵守嗷:family:
 
