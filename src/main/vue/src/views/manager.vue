@@ -22,7 +22,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item index="userManager" @click="clickFunction">用户管理</el-menu-item>
-             <!--   <el-menu-item index="logManager" @click="clickFunction">日志管理</el-menu-item>-->
+               <el-menu-item index="logManager" @click="clickFunction">日志管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

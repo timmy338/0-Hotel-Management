@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Console;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class ReserveServiceImpl implements ReserveService{
         {
             Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
             tempMember.setLastRe(new Timestamp(System.currentTimeMillis()));
-            memberDao.updateMember(tempMember);
+            System.out.println(memberDao.updateMember(tempMember));
         }
         return reserveDao.insertReserve(reserve);
     }

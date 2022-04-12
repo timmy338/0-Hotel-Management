@@ -25,8 +25,14 @@
       required: true, message: '密码不能为空', trigger: 'blur'
     }"
   >
+
     <el-input v-model="domain.value" :show-password=true></el-input>
+
   </el-form-item>
+       <div id="checkDiv">
+         <div id="check"></div>
+         <div id="checkImg"></div>
+       </div>
   <el-form-item>
     <!--submitForm('dynamicValidateForm')-->
     <el-button type="primary" @click="login()">提交</el-button>
@@ -197,5 +203,31 @@ export default {
   width: 253.5px;
   height: 40px;
   margin-left: 123px;
+}
+#checkDiv{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#check{
+  width: 100px;
+  height: 30px;
+  background-color: white;
+  margin-left: 100px;
+
+
+  border-radius: 0.1em;
+
+}
+#checkImg{
+  margin-left: 20px;
+  width: 100px;
+  height: 30px;
+  background: url("../assets/test.png") no-repeat center center; /*加载背景图*/ /* 背景图不平铺 */
+  background-size:100% 100%;
+
 }
 </style>

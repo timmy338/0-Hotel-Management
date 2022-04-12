@@ -57,11 +57,14 @@ public class CheckInServiceImpl implements CheckInService{
     @Override
     public int insertCheckIn(CheckIn checkIn) {
         RoomRegister tempReg=roomRegisterDao.selectRoomRegisterById(checkIn.getRoomRegister()).get(0);
+        System.out.println(checkIn);
+        System.out.println(tempReg);
         if(tempReg.getMemberId()!=null)
         {
             Member tempMember=memberDao.selectMemberById(tempReg.getMemberId()).get(0);
             tempMember.setLastIn(new Timestamp(System.currentTimeMillis()));
-            memberDao.updateMember(tempMember);
+            System.out.println(tempMember);
+            System.out.println(memberDao.updateMember(tempMember));
         }
         return checkInDao.insertCheckIn(checkIn);
     }
