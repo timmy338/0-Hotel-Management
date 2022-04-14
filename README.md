@@ -14,8 +14,11 @@ jdbc.password=你的密码
 jdbc.connTimeout=10000
 ```
 
+登入演示
+![image](https://github.com/timmy338/0-Hotel-Management/blob/dev/src/main/vue/gitGIF/login.gif?raw=true)   
 
-![image](https://github.com/timmy338/0-Hotel-Management/tree/dev/src/main/vue/gitGIF/login.gif)   
+整體展示
+![image](https://github.com/timmy338/0-Hotel-Management/blob/dev/src/main/vue/gitGIF/show.gif?raw=true)   
 
 ## git
 
