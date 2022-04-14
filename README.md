@@ -14,6 +14,9 @@ jdbc.password=你的密码
 jdbc.connTimeout=10000
 ```
 
+
+![image](https://github.com/timmy338/0-Hotel-Management/tree/dev/src/main/vue/gitGIF/login.gif)   
+
 ## git
 
 **所有修改在dev上进行，master仅用于发布**
